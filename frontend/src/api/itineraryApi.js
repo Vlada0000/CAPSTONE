@@ -1,5 +1,3 @@
-// frontend/src/api/itineraryApi.js
-
 const API_URL = `${process.env.REACT_APP_BACKEND_URL}/api/itineraries`;
 
 // Funzione per ottenere tutti gli itinerari
@@ -19,7 +17,7 @@ export const getItineraries = async (tripId, token, page = 1, limit = 10) => {
   
    
     const data = await response.json();
-    return data.itineraries || []; // Ritorna l'
+    return data.itineraries || [];
   };
 export const getAllItineraries = async (token) => {
     const response = await fetch(`${API_URL}`, {

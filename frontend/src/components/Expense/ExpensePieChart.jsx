@@ -1,4 +1,3 @@
-// src/components/Expenses/ExpensePieChart.jsx
 import React from 'react';
 import { Pie } from '@ant-design/plots';
 import { Typography } from 'antd';
@@ -14,7 +13,7 @@ const ExpensePieChart = ({ data }) => {
     colorField: 'name',
     radius: 1,
     innerRadius: 0.6,
-    // Rimozione temporanea delle etichette
+ 
     label: null,
     interactions: [{ type: 'element-active' }],
     legend: {

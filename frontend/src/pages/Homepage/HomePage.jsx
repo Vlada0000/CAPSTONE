@@ -1,4 +1,3 @@
-// src/pages/HomePage.jsx
 import React, { useEffect, useState } from 'react';
 import {
   Row,
@@ -35,8 +34,8 @@ const { Title, Text } = Typography;
 const HomePage = () => {
   const { user, loading } = useAuth();
   const [trips, setTrips] = useState([]);
-  const [currentPage, setCurrentPage] = useState(1);  // State for current page
-  const [pageSize] = useState(6);  // Set page size (e.g., 6 trips per page)
+  const [currentPage, setCurrentPage] = useState(1); 
+  const [pageSize] = useState(6); 
   const [newTrip, setNewTrip] = useState({
     name: '',
     description: '',
@@ -64,7 +63,7 @@ const HomePage = () => {
       setLoadingTrips(false);
     }
   };
-  // Handle page change
+
   const handlePageChange = (page) => {
     setCurrentPage(page);
   };
@@ -105,7 +104,7 @@ const HomePage = () => {
     setNewTrip({ name: '', description: '', startDate: null, endDate: null });
   };
 
-   // Paginate the trips
+   
    const paginatedTrips = trips.slice(
     (currentPage - 1) * pageSize,
     currentPage * pageSize
@@ -190,15 +189,13 @@ const HomePage = () => {
                 </Col>
               ))}
             </Row>
-
-            {/* Pagination component centered below the trips */}
             <div className="pagination-container ">
               <Pagination 
                 current={currentPage}
                 pageSize={pageSize}
                 total={trips.length}
                 onChange={handlePageChange}
-                showSizeChanger={false}  // Disable changing page size
+                showSizeChanger={false} 
               />
             </div>
           </>
@@ -209,10 +206,10 @@ const HomePage = () => {
         )}
       </div>
 
-      {/* Modal per creare un nuovo viaggio */}
+     
       <Modal
         title="Crea un Nuovo Viaggio"
-        visible={isModalVisible}
+        open={isModalVisible}
         onCancel={handleModalCancel}
         footer={null}
         className="create-trip-modal"

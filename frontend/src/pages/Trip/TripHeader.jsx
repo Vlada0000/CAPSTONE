@@ -1,4 +1,3 @@
-// src/components/Trip/TripHeader.jsx
 import React, { useState } from 'react';
 import {
   Typography,
@@ -154,7 +153,7 @@ const TripHeader = ({ trip, user, onTripUpdate, navigate }) => {
         </div>
       </div>
 
-      {/* Modale per Modifica Viaggio */}
+      
       <Modal
         title="Modifica Viaggio"
         open={isModalVisible}

@@ -1,4 +1,3 @@
-// src/components/Expenses/ExpenseTable.jsx
 import React from 'react';
 import { Table, Typography } from 'antd';
 import { UserOutlined } from '@ant-design/icons';

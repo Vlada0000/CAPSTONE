@@ -23,26 +23,26 @@ export const getMessages = async (tripId, token) => {
 };
 export const sendMessageApi = async (tripId, messageData, token) => {
     try {
-      console.log('Invio messaggio con token:', token); // Log del token
-      console.log('Dati del messaggio inviato:', messageData); // Log del messaggio
+      console.log('Invio messaggio con token:', token); 
+      console.log('Dati del messaggio inviato:', messageData); 
   
       const response = await fetch(`${API_URL}/${tripId}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          Authorization: `Bearer ${token}`, // Includi il token per l'autenticazione
+          Authorization: `Bearer ${token}`, 
         },
-        body: JSON.stringify(messageData), // Invia i dati del messaggio in formato JSON
+        body: JSON.stringify(messageData), 
       });
   
       if (!response.ok) {
         const errorData = await response.json();
-        console.error('Errore nell\'invio del messaggio, risposta non OK:', errorData); // Log dell'errore del server
+        console.error('Errore nell\'invio del messaggio, risposta non OK:', errorData); r
         throw new Error(errorData.message || 'Errore nell\'invio del messaggio');
       }
   
       const jsonResponse = await response.json();
-      console.log('Risposta del server dopo l\'invio del messaggio:', jsonResponse); // Log della risposta JSON
+      console.log('Risposta del server dopo l\'invio del messaggio:', jsonResponse); 
       return jsonResponse;
     } catch (error) {
       console.error('Errore nell\'invio del messaggio', error);
@@ -51,7 +51,7 @@ export const sendMessageApi = async (tripId, messageData, token) => {
   };
   
 
-// Funzione per inviare un messaggio
+
 export const sendMessage = async (tripId, messageData, token) => {
   try {
     const response = await fetch(`${API_URL}/${tripId}`, {
@@ -75,8 +75,7 @@ export const sendMessage = async (tripId, messageData, token) => {
   }
 };
 
-// Funzione per inviare un messaggio via WebSocket
-// Funzione per inviare un messaggio via WebSocket
+
 export const sendMessageSocket = (socket, tripId, messageData) => {
     if (!socket || typeof socket.emit !== 'function') {
       console.error('Socket non è definito o non è pronto per inviare messaggi');
@@ -99,11 +98,11 @@ export const sendMessageSocket = (socket, tripId, messageData) => {
   };
   
 
-// Funzione per rimuovere il listener dei messaggi via WebSocket
+
 export const removeMessageListener = (socket) => {
   if (socket) {
     try {
-      socket.off('receive_message'); // Rimuovi l'ascolto dei messaggi
+      socket.off('receive_message'); 
       console.log('Listener dei messaggi rimosso');
     } catch (error) {
       console.error('Errore durante la rimozione del listener dei messaggi:', error);

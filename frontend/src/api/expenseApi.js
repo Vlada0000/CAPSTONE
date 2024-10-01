@@ -1,4 +1,3 @@
-// src/api/expenseApi.js
 const API_URL = `${process.env.REACT_APP_BACKEND_URL}/api/expenses`;
 
 // Aggiungere una nuova spesa
@@ -9,7 +8,7 @@ export const addExpense = async (expenseData, token) => {
         'Authorization': `Bearer ${token}`,
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify(expenseData), // Assicurati di includere tutti i campi necessari
+      body: JSON.stringify(expenseData), 
     });
   
     if (!response.ok) {
@@ -26,7 +25,7 @@ export const getExpenses = async (tripId, token, page = 1, limit = 10) => {
     const response = await fetch(`${API_URL}?trip=${tripId}&page=${page}&limit=${limit}`, {
       method: 'GET',
       headers: {
-        'Authorization': `Bearer ${token}`, // Passa il token JWT
+        'Authorization': `Bearer ${token}`, 
         'Content-Type': 'application/json',
       },
     });
@@ -37,7 +36,7 @@ export const getExpenses = async (tripId, token, page = 1, limit = 10) => {
     }
   
     const data = await response.json();
-    return data.expenses || []; // Ritorna l'
+    return data.expenses || []; 
   };
 // Modificare una spesa
 export const updateExpense = async (id, expenseData, token) => {
@@ -75,7 +74,6 @@ export const deleteExpense = async (id, token) => {
 };
 
 
-// Get an expense by ID
 export const getExpenseById = async (id, token) => {
   const response = await fetch(`${API_URL}/${id}`, {
     method: 'GET',
@@ -106,7 +104,7 @@ export const getExpensesByUser = async (token) => {
   
     return await response.json();
   };
-// Update an expense
+
 // Funzione per ottenere la suddivisione delle spese per un viaggio specifico
 export const calculateSplit = async (tripId, token) => {
     const response = await fetch(`${API_URL}/${tripId}/split`, {

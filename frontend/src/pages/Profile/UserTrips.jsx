@@ -1,4 +1,3 @@
-// src/components/Profile/UserTrips.jsx
 import React from 'react';
 import { Card, Col, Row, Empty, Typography, Tag } from 'antd';
 import { useNavigate } from 'react-router-dom';

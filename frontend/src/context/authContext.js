@@ -38,7 +38,7 @@ export const AuthProvider = ({ children }) => {
     fetchUserData(token);
     setUser((prevState) => ({
         ...prevState,
-        token,  // Aggiorna il token
+        token,  
     }));
 };
 

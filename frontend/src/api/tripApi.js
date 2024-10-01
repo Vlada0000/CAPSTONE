@@ -1,6 +1,4 @@
-// frontend/src/api/tripApi.js
-
-const API_URL = `${process.env.REACT_APP_BACKEND_URL}/api/trips`;; // Porta corretta del backend
+const API_URL = `${process.env.REACT_APP_BACKEND_URL}/api/trips`;; 
 
 // Funzione per ottenere tutti i viaggi
 export const getTrips = async (token, page = 1, limit = 10) => {
@@ -18,7 +16,7 @@ export const getTrips = async (token, page = 1, limit = 10) => {
     }
   
     const data = await response.json();
-    return data.trips || []; // Ritorna l'array dei viaggi
+    return data.trips || [];
   };
   
 // Funzione per ottenere i partecipanti di un viaggio
@@ -102,7 +100,7 @@ export const addPhotoToTrip = async (tripId, photoFile, token) => {
     method: 'POST',
     headers: {
       'Authorization': `Bearer ${token}`,
-      // 'Content-Type' non è necessario con FormData
+     
     },
     body: formData,
   });
@@ -164,7 +162,7 @@ export const acceptTripInvitation = async (tripId, token) => {
         },
       });
   
-      // Se la risposta non è OK, lancia un errore
+     
       if (!response.ok) {
         const errorData = await response.json();
         throw new Error(errorData.message || 'Failed to accept trip invitation');
@@ -183,7 +181,7 @@ export const acceptTripInvitation = async (tripId, token) => {
 export const declineTripInvitation = async (tripId, token) => {
     try {
       const response = await fetch(`${API_URL}/${tripId}/decline`, {
-        method: 'PATCH', // Cambiato il metodo a PATCH, se appropriato
+        method: 'PATCH', 
         headers: {
           'Authorization': `Bearer ${token}`,
           'Content-Type': 'application/json',
@@ -195,7 +193,7 @@ export const declineTripInvitation = async (tripId, token) => {
         throw new Error(errorData.message || 'Failed to decline trip invitation');
       }
   
-      return await response.json(); // Restituisci la risposta JSON
+      return await response.json(); 
     } catch (error) {
       console.error('Errore nella chiamata API per rifiutare invito:', error);
       throw new Error('Errore nel processo di rifiuto dell\'invito');

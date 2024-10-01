@@ -1,4 +1,3 @@
-// src/components/Expenses/ExpenseDashboard.jsx
 import React, { useState, useEffect } from 'react';
 import { calculateSplit } from '../../api/expenseApi';
 import { useAuth } from '../../context/authContext';

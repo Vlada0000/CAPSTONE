@@ -1,4 +1,3 @@
-// components/MessageList.js
 import React, { useEffect, useRef } from 'react';
 import { List } from 'antd';
 import MessageItem from './MessageItem';

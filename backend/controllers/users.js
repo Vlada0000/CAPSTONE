@@ -3,7 +3,7 @@ import cloudinary from '../config/cloudinary.js';
 import upload from '../config/cloudinary.js'
 import Trip from '../models/Trip.js';
 import bcrypt from 'bcrypt';
-// Get logged-in user's profile
+
 export const getLoggedInUserProfile = (req, res) => {
   if (!req.user) {
     return res.status(401).json({ error: 'Non autenticato' });
@@ -25,7 +25,7 @@ export const getUserProfileById = async (req, res) => {
   }
 };
 
-// Get list of users with optional search
+
 export const getUsers = async (req, res) => {
   const { search } = req.query;
 
@@ -38,7 +38,7 @@ export const getUsers = async (req, res) => {
   }
 };
 
-// Update logged-in user's profile
+
 export const updateUserProfile = async (req, res) => {
   const { name, email } = req.body;
 
@@ -54,8 +54,7 @@ export const updateUserProfile = async (req, res) => {
   }
 };
 
-// Upload profile image
-// controllers/users.js
+
 export const uploadProfileImage = async (req, res) => {
   try {
     if (!req.file || !req.file.path) {
@@ -65,7 +64,7 @@ export const uploadProfileImage = async (req, res) => {
 
     const imageUrl = req.file.path;
 
-    // Aggiorna il profilo utente con la nuova URL dell'immagine
+  
     const updatedUser = await User.findByIdAndUpdate(
       req.user._id,
       { profileImage: imageUrl },
@@ -82,8 +81,6 @@ export const uploadProfileImage = async (req, res) => {
   }
 };
 
-
-// Delete logged-in user's profile
 export const deleteUserProfile = async (req, res) => {
   try {
     const user = await User.findByIdAndDelete(req.user._id);
@@ -108,18 +105,18 @@ export const deleteUserProfile = async (req, res) => {
 };
 
 export const getUserTrips = async (req, res) => {
-  const userId = req.user._id; // L'ID dell'utente autenticato, recuperato dal middleware di autenticazione
+  const userId = req.user._id; 
 
   try {
-    // Cerca i viaggi dove l'utente è l'organizzatore o partecipa come partecipante
+   
     const trips = await Trip.find({
       $or: [
-        { organizer: userId }, // Viaggi creati dall'utente
-        { 'participants.user': userId } // Viaggi a cui l'utente partecipa
+        { organizer: userId }, 
+        { 'participants.user': userId } 
       ]
-    }).populate('participants.user').populate('organizer'); // Popola i dati degli utenti
+    }).populate('participants.user').populate('organizer'); 
 
-    // Restituisci i viaggi
+   
     res.status(200).json(trips);
   } catch (error) {
     console.error('Errore nel recupero dei viaggi:', error);
@@ -131,23 +128,23 @@ export const updatePassword = async (req, res) => {
   const userId = req.user._id;
 
   try {
-    // Trova l'utente nel database
+    
     const user = await User.findById(userId);
     if (!user) {
       return res.status(404).json({ message: 'Utente non trovato' });
     }
 
-    // Verifica che la password attuale sia corretta
+   
     const isMatch = await bcrypt.compare(oldPassword, user.password);
     if (!isMatch) {
       return res.status(400).json({ message: 'La password attuale non è corretta' });
     }
 
-    // Hash della nuova password
+    
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(newPassword, salt);
 
-    // Aggiorna la password dell'utente
+   
     user.password = hashedPassword;
     await user.save();
 

@@ -1,4 +1,3 @@
-// components/Chat.js
 import React, { useState, useEffect } from 'react';
 import { notification } from 'antd';
 import { useSocket } from '../../context/socketContext';
@@ -33,7 +32,7 @@ const Chat = ({ tripId }) => {
       fetchMessages();
       joinRoom(tripId);
 
-      // Ascolta i nuovi messaggi tramite Socket.IO
+      
       onMessage((message) => {
         setMessages((prevMessages) => [...prevMessages, message]);
       });
@@ -45,7 +44,7 @@ const Chat = ({ tripId }) => {
       const messageData = {
         content: newMessage,
         senderId: user._id,
-        sender: { name: user.name }, // Assicurati che sia un oggetto
+        sender: { name: user.name }, 
         tripId,
       };
 

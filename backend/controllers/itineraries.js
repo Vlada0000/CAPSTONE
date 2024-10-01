@@ -61,10 +61,10 @@ export const addItinerary = async (req, res) => {
 export const getItineraries = async (req, res) => {
   const { tripId } = req.params;
 
-  // Aggiungi la logica per la paginazione
-  const page = parseInt(req.query.page, 10) || 1; // Pagina corrente, default è 1
-  const limit = parseInt(req.query.limit, 10) || 10; // Numero di risultati per pagina, default è 10
-  const skip = (page - 1) * limit; // Calcola da dove iniziare a saltare i risultati
+  
+  const page = parseInt(req.query.page, 10) || 1; 
+  const limit = parseInt(req.query.limit, 10) || 10; 
+  const skip = (page - 1) * limit;
 
   try {
     const tripDetails = await Trip.findById(tripId).populate('participants.user');
@@ -135,14 +135,14 @@ export const updateItinerary = async (req, res) => {
     if (updatedItinerary) {
       const tripDetails = await Trip.findById(updatedItinerary.trip).populate('participants.user');
 
-      // Ottieni l'ID dell'utente che ha eseguito l'azione
+      
       const userId = req.user._id.toString();
 
-      // Invia la notifica a tutti i partecipanti tranne l'utente che ha eseguito l'azione
+      
       const notifications = tripDetails.participants
         .filter(({ user }) => user._id.toString() !== userId)
         .map(async ({ user }) => {
-          // Crea un documento Notification
+         
           const notification = new Notification({
             recipient: user._id,
             sender: userId,
@@ -155,7 +155,7 @@ export const updateItinerary = async (req, res) => {
           });
           await notification.save();
 
-          // Emetti la notifica tramite Socket.IO
+         
           emitGlobalEvent('notification', {
             type: 'itinerary_updated',
             data: {
@@ -180,7 +180,7 @@ export const updateItinerary = async (req, res) => {
 
 
 
-// Eliminare un itinerario esistente
+
 export const deleteItinerary = async (req, res) => {
   const { id } = req.params;
 
@@ -192,14 +192,14 @@ export const deleteItinerary = async (req, res) => {
 
     const tripDetails = await Trip.findById(deletedItinerary.trip).populate('participants.user');
 
-    // Get the user ID of the user who performed the action
+    
     const userId = req.user._id.toString();
 
-    // Send notifications to all participants except the user who performed the action
+    
     const notifications = tripDetails.participants
       .filter(({ user }) => user._id.toString() !== userId)
       .map(async ({ user }) => {
-        // Create a Notification document
+        
         const notification = new Notification({
           recipient: user._id,
           sender: userId,
@@ -212,7 +212,7 @@ export const deleteItinerary = async (req, res) => {
         });
         await notification.save();
 
-        // Emit the notification via Socket.IO
+       
         emitGlobalEvent(
           'notification',
           {
@@ -227,7 +227,7 @@ export const deleteItinerary = async (req, res) => {
         );
       });
 
-    await Promise.all(notifications); // Wait for all notifications to be processed
+    await Promise.all(notifications); 
 
     res.status(200).json({ message: 'Itinerario eliminato con successo' });
   } catch (error) {

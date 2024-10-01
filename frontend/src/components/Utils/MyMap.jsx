@@ -7,7 +7,7 @@ import {
   useMapEvents,
   LayersControl,
   ZoomControl,
-  useMap, // Importa useMap per controllare la mappa
+  useMap, 
 } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
@@ -227,7 +227,7 @@ const InteractiveMap = () => {
 
         <MapClickHandler />
 
-        <RecenterMap position={position} /> {/* Aggiungi questo componente per centrare la mappa */}
+        <RecenterMap position={position} /> 
 
         {markers.map((marker, index) => (
           <Marker key={index} position={[marker.lat, marker.lng]}>

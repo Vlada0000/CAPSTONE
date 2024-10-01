@@ -2,8 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { Form, Input, Button, Row, Col, Divider, Typography, message, Card } from 'antd';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { FaGoogle } from 'react-icons/fa';
-import { login, register } from '../../api/authApi';  // Importa le API di autenticazione
-import { useAuth } from '../../context/authContext';  // Usa il contesto di autenticazione
+import { login, register } from '../../api/authApi';  
+import { useAuth } from '../../context/authContext';  
 import logo from '../../assets/images/logo.JPG';
 import './Login.css';
 
@@ -77,7 +77,7 @@ const LoginPage = () => {
 
   // Funzione per il login con Google
   const handleGoogleLogin = () => {
-    window.location.href = 'http://localhost:4000/api/auth/google'; // Backend deve gestire il redirect
+    window.location.href = 'http://localhost:4000/api/auth/google'; 
   };
 
   // Effetto per gestire il reindirizzamento di Google OAuth
@@ -92,7 +92,7 @@ const LoginPage = () => {
       login(tokenFromUrl);  // Funzione login che aggiorna lo stato utente nel contesto
       navigate('/', { replace: true });  // Reindirizza alla home
     } else {
-      console.log('No token found in URL');  // Debug
+      console.log('No token found in URL');  
     }
   }, [location, login, navigate]);
   

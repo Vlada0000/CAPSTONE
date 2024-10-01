@@ -1,4 +1,3 @@
-// src/components/Expenses/TotalExpensesCard.jsx
 import React from 'react';
 import { Card, Statistic } from 'antd';
 import { EuroCircleTwoTone } from '@ant-design/icons';

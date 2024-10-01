@@ -1,4 +1,3 @@
-// src/components/Trip/Sidebar.jsx
 import React, { useState } from 'react';
 import { Drawer, Menu, Button } from 'antd';
 import {
@@ -23,7 +22,7 @@ const Sidebar = ({ activeSection, setActiveSection }) => {
 
   return (
     <>
-      {/* Button to trigger the Drawer */}
+     
       <Button
         type="primary"
         icon={<MenuOutlined />}
@@ -33,21 +32,20 @@ const Sidebar = ({ activeSection, setActiveSection }) => {
         Menu
       </Button>
 
-      {/* Drawer component */}
       <Drawer
         title="Navigazione"
         placement="left"
         closable={true}
         onClose={closeDrawer}
         visible={visible}
-        bodyStyle={{ padding: 0 }} // Remove extra padding inside the drawer
+        bodyStyle={{ padding: 0 }} 
       >
         <Menu
           mode="inline"
           selectedKeys={[activeSection]}
           onClick={(e) => {
             setActiveSection(e.key);
-            closeDrawer(); // Close the drawer when a menu item is clicked
+            closeDrawer(); 
           }}
           style={{ height: '100%' }}
         >

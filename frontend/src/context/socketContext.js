@@ -1,5 +1,3 @@
-// src/context/socketContext.js
-
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import { io } from 'socket.io-client';
 import { useAuth } from './authContext';
@@ -74,7 +72,6 @@ export const SocketProvider = ({ children }) => {
     }
   };
 
-  // Remove useEffect from these functions
   const onMessage = (callback) => {
     if (socket && isSocketInitialized) {
       socket.on('message', callback);

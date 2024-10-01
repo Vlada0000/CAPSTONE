@@ -1,4 +1,3 @@
-// src/pages/TripDetailPage.jsx
 import React, { useState, useEffect } from 'react';
 import { Layout, Spin, message, Menu } from 'antd';
 import { useParams, useNavigate } from 'react-router-dom';

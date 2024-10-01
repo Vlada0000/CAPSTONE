@@ -1,8 +1,6 @@
-// src/api/notificationApi.js
-
 const API_URL = `${process.env.REACT_APP_BACKEND_URL}/api/notifications`;;
 
-// Mark a single notification as read
+
 export const markNotificationAsRead = async (notificationId, token) => {
   try {
     const response = await fetch(`${API_URL}/${notificationId}/read`, {
@@ -25,7 +23,7 @@ export const markNotificationAsRead = async (notificationId, token) => {
   }
 };
 
-// Mark all notifications as read
+
 export const markAllNotificationsAsRead = async (token) => {
   try {
     const response = await fetch(`${API_URL}/read/all`, {
@@ -48,7 +46,7 @@ export const markAllNotificationsAsRead = async (token) => {
   }
 };
 
-// Fetch all notifications for the authenticated user
+
 export const getNotifications = async (token) => {
   try {
     const response = await fetch(API_URL, {

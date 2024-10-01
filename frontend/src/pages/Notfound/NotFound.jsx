@@ -1,8 +1,7 @@
-// src/components/NotFoundPage.js
 import React from 'react';
-import { Link } from 'react-router-dom'; // Assicurati di avere react-router-dom installato
-import notFoundImage from '../../assets/images/notfound.jpg'; // Importa l'immagine
-import './NotFound.css'; // Importa il file CSS per lo stile
+import { Link } from 'react-router-dom';
+import notFoundImage from '../../assets/images/notfound.jpg'; 
+import './NotFound.css'; 
 
 const NotFound = () => {
   return (
@@ -11,7 +10,7 @@ const NotFound = () => {
       <div className="content">
         <h1 className="exo-title">404</h1>
         <p className="exo-content">Page Not Found</p>
-        <Link to="/" className="back-home-link exo-light">Go Back Home</Link>
+        <Link to="/" className="back-home-link exo-light">Torna alla Home</Link>
       </div>
     </div>
   );

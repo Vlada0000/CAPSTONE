@@ -1,4 +1,3 @@
-import React, { useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import HomePage from './pages/Homepage/HomePage';
 import NavBar from './components/Navbar/NavBar';
@@ -10,7 +9,6 @@ import PrivateRoute from './components/PrivateRoute';
 import { AuthProvider } from './context/authContext';
 import Profile from './pages/Profile/Profile';
 import TripDetailsPage from './pages/Trip/TripDetailsPage';
-import { io } from 'socket.io-client';
 import { SocketProvider } from './context/socketContext'
 import ExpenseDashboard from './components/Expense/ExpenseDashboard';
 import Chat from './components/Utils/Chat';
@@ -25,7 +23,7 @@ function App() {
       <AuthProvider>
         <SocketProvider>
           <div className="App">
-            <NavBar /> {/* Aggiungi la Navbar */}
+            <NavBar /> 
             <div className="main-content">
               <Routes>
                 <Route path="/login" element={<Login />} />
@@ -71,7 +69,7 @@ function App() {
                     </PrivateRoute>
                   }
                 />
-                {/* Altre rotte protette possono essere aggiunte qui */}
+                
                 <Route path="*" element={<NotFound />} />
               </Routes>
             </div>

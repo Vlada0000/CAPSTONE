@@ -11,7 +11,7 @@ const router = express.Router();
 // Recupera tutte le notifiche per l'utente autenticato
 router.get('/', authMiddleware, getNotifications);
 
-// Marca una singola notifica come letta (usa PATCH per aggiornamento parziale)
+// Marca una singola notifica come letta 
 router.patch('/:id/read', authMiddleware, markAsRead);
 
 // Marca tutte le notifiche come lette

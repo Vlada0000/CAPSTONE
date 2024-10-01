@@ -3,18 +3,18 @@ body{
 }
 .exo-title {
   font-family: "Exo", sans-serif;
-  font-weight: 700; /* Peso più spesso per titoli */
+  font-weight: 700; 
   font-style: normal;
 }
 
 .exo-content {
   font-family: "Exo", sans-serif;
-  font-weight: 400; /* Peso normale per il testo del contenuto */
+  font-weight: 400; 
   font-style: normal;
 }
 
 .exo-light {
   font-family: "Exo", sans-serif;
-  font-weight: 200; /* Peso leggero per testi delicati */
+  font-weight: 200; 
   font-style: normal;
 }

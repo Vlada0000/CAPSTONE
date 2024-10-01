@@ -73,7 +73,7 @@ const NavBar = () => {
   return (
     <Navbar expand="lg" className="navbar-custom">
       <Container>
-        {/* Logo */}
+      
         <Navbar.Brand onClick={() => navigate('/')} className="d-flex align-items-center logo">
           <img src={logo} alt="Travel Mate" className="navbar-logo" />
           <span className="logo-text">Travel Mate</span>
@@ -81,10 +81,12 @@ const NavBar = () => {
 
         <Navbar.Toggle aria-controls="navbarResponsive" />
 
-        {/* Collapsible content */}
+      
+        
+          
         <Navbar.Collapse id="navbarResponsive" className="justify-content-end" >
           <Nav className="ml-auto d-flex align-items-center">
-            {/* Notifications */}
+          
             <Dropdown align="end">
               <Dropdown.Toggle as="div">
                 <Badge count={unreadCount} size="small" offset={[-5, 5]}>
@@ -113,6 +115,7 @@ const NavBar = () => {
             </Dropdown>
           </Nav>
         </Navbar.Collapse>
+      
       </Container>
     </Navbar>
   );

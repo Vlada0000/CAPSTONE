@@ -1,7 +1,6 @@
-// api/userApi.js
 const API_URL = `${process.env.REACT_APP_BACKEND_URL}/api/users`;;
 
-// Get logged-in user's profile
+
 export const getLoggedInUserProfile = async (token) => {
     const response = await fetch(`${API_URL}/me`, {
       method: 'GET',
@@ -17,7 +16,7 @@ export const getLoggedInUserProfile = async (token) => {
   
     return response.json();
   };
-  // src/api/userApi.js
+
   export const updateUserPassword = async (passwordData, token) => {
     const response = await fetch(`${API_URL}/update-password`, {
       method: 'PUT',
@@ -51,7 +50,7 @@ export const getUserTrips = async (token) => {
     return data;
   };
   
-  // Get a specific user's profile by ID
+
   export const getUserProfileById = async (userId, token) => {
     const response = await fetch(`${API_URL}/${userId}`, {
       method: 'GET',
@@ -86,7 +85,7 @@ export const getUserTrips = async (token) => {
     return response.json();
   };
   
-  // Update logged-in user's profile
+  
   export const updateUserProfile = async (userData, token) => {
     const response = await fetch(`${API_URL}/me`, {
       method: 'PUT',
@@ -104,7 +103,7 @@ export const getUserTrips = async (token) => {
     return response.json();
   };
   
-// userApi.js
+
 export const uploadProfileImage = async (file, token) => {
     const formData = new FormData();
     formData.append('profileImage', file);
@@ -113,7 +112,7 @@ export const uploadProfileImage = async (file, token) => {
       method: 'POST',
       headers: {
         Authorization: `Bearer ${token}`,
-        // Non impostare 'Content-Type'; lascia che il browser lo gestisca automaticamente
+        
       },
       body: formData,
     });
@@ -125,7 +124,7 @@ export const uploadProfileImage = async (file, token) => {
     return response.json();
   };
   
-  // Delete logged-in user's profile
+  
   export const deleteUserProfile = async (token) => {
     const response = await fetch(`${API_URL}/me`, {
       method: 'DELETE',

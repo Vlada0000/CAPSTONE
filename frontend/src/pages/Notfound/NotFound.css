@@ -1,4 +1,3 @@
-/* src/components/NotFoundPage.css */
 .not-found-page {
     position: relative;
     height: 100vh;
@@ -13,9 +12,9 @@
     margin:0 auto;
     width: 100%;
     height: 100%;
-    object-fit: cover; /* Adatta l'immagine per coprire tutto lo schermo */
-    object-position: center; /* Centra l'immagine */
-    z-index: -1; /* Metti l'immagine dietro il testo */
+    object-fit: cover;
+    object-position: center; 
+    z-index: -1; 
   }
   
   .content {
@@ -25,16 +24,15 @@
     transform: translate(-50%, -50%);
     text-align: center;
     color: white;
-    z-index: 1; /* Assicurati che il contenuto sia sopra l'immagine */
   }
   
   .content h1 {
-    font-size: 10rem; /* Grandezza del testo 404 */
+    font-size: 10rem; 
     margin: 0;
   }
   
   .content p {
-    font-size: 2rem; /* Grandezza del testo per il messaggio */
+    font-size: 2rem; 
     margin: 1rem 0;
   }
   
@@ -50,6 +48,6 @@
   
   .back-home-link:hover {
     background-color: white;
-    color: #333; /* Colore del testo del link al passaggio del mouse */
+    color: #333; 
   }
   

@@ -1,4 +1,3 @@
-// src/pages/ProfilePage.jsx
 import React, { useState, useEffect } from 'react';
 import { Layout, Menu, Spin, message } from 'antd';
 import {

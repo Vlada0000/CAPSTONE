@@ -1,4 +1,3 @@
-// components/ItineraryItem.js
 import React from 'react';
 import { List, Button, Popconfirm } from 'antd';
 import { EditOutlined, DeleteOutlined } from '@ant-design/icons';

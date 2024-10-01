@@ -1,4 +1,3 @@
-// components/ItineraryForm.js
 import React, { useEffect } from 'react';
 import { Form, Input, DatePicker, Button } from 'antd';
 import moment from 'moment';
@@ -7,7 +6,7 @@ const ItineraryForm = ({ initialValues, onSubmit, onCancel }) => {
   const [form] = Form.useForm();
 
   useEffect(() => {
-    // Set initial values when editing
+   
     form.setFieldsValue({
       ...initialValues,
       date: initialValues.date ? moment(initialValues.date) : null,

@@ -1,4 +1,3 @@
-// app.js
 import express from 'express';
 import mongoose from 'mongoose';
 import cors from 'cors';
@@ -23,7 +22,7 @@ dotenv.config();
 const app = express();
 const server = http.createServer(app);
 
-// Middleware
+
 app.use(helmet());
 app.use(morgan('dev'));
 app.use(cors({
@@ -34,12 +33,12 @@ app.use(cors({
 }));
 app.use(express.json());
 
-// Connessione a MongoDB
+
 mongoose.connect(process.env.MONGO_URI)
   .then(() => console.log('MongoDB connesso'))
   .catch((err) => console.error('Errore di connessione a MongoDB:', err));
 
-// Routes
+
 app.use('/api/auth', authRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/notifications', notificationRoutes);
@@ -52,10 +51,10 @@ app.use((req, res) => {
   res.status(404).json({ error: 'Endpoint non trovato' });
 });
 
-// Error handling middleware
+
 app.use(errorHandler);
 
-// Inizializza Socket.IO
+
 initSocket(server);
 
 const PORT = process.env.PORT || 5000;

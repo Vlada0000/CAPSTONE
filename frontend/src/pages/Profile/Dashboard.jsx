@@ -1,4 +1,3 @@
-// src/components/Profile/Dashboard.jsx
 import React from 'react';
 import { Row, Col, Card, Typography, Progress, List, Avatar, Upload, Button } from 'antd';
 import {
@@ -16,7 +15,7 @@ const Dashboard = ({ profileData, trips, handleFileChange, handleUploadImage }) 
   // Calcolo delle statistiche
   const totalTrips = trips.length;
   const visitedCountries = [...new Set(trips.map((trip) => trip.country))].length;
-  const progress = (visitedCountries / 195) * 100; // Supponendo 195 paesi nel mondo
+  const progress = (visitedCountries / 195) * 100; 
 
   return (
     <div className="dashboard-container">

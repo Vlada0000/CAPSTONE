@@ -1,7 +1,7 @@
 import React from 'react';
 import './Footer.css';
 import { LinkedinOutlined, GithubOutlined } from '@ant-design/icons';
-import logo from '../../assets/images/logo.JPG'; // Assicurati di avere il logo corretto
+import logo from '../../assets/images/logo.JPG'; 
 
 const Footer = () => {
   return (

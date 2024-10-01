@@ -63,19 +63,19 @@ export const addExpense = async (req, res) => {
 
 // Ottenere tutte le spese di un viaggio
 export const getExpenses = async (req, res) => {
-  const { trip } = req.query; // Assicurati che "trip" venga passato come query string
+  const { trip } = req.query; 
 
   if (!trip) {
     return res.status(400).json({ error: 'tripId mancante' });
   }
 
-  // Aggiungi la logica per la paginazione
+
   const page = parseInt(req.query.page, 10) || 1; // Pagina corrente, default è 1
   const limit = parseInt(req.query.limit, 10) || 10; // Numero di risultati per pagina, default è 10
   const skip = (page - 1) * limit; // Calcola da dove iniziare a saltare i risultati
 
   try {
-    // Recupera le spese con paginazione
+   
     const expenses = await Expense.find({ trip })
       .populate('paidBy') // Popola il campo paidBy con i dati dell'utente
       .skip(skip)         // Salta i risultati per la paginazione
@@ -135,17 +135,17 @@ export const updateExpense = async (req, res) => {
       return res.status(404).json({ error: 'Spesa non trovata' });
     }
 
-    // Get the trip details
+    
     const tripDetails = await Trip.findById(updatedExpense.trip).populate('participants.user');
 
-    // Get the user ID of the user who performed the action
+    
     const userId = req.user._id.toString();
 
-    // Send notifications to all participants except the user who performed the action
+    
     const notifications = tripDetails.participants
       .filter(({ user }) => user._id.toString() !== userId)
       .map(async ({ user }) => {
-        // Create a Notification document
+       
         const notification = new Notification({
           recipient: user._id,
           sender: userId,
@@ -158,7 +158,7 @@ export const updateExpense = async (req, res) => {
         });
         await notification.save();
 
-        // Emit the notification via Socket.IO
+      
         emitGlobalEvent(
           'notification',
           {
@@ -173,7 +173,7 @@ export const updateExpense = async (req, res) => {
         );
       });
 
-    await Promise.all(notifications); // Wait for all notifications to be processed
+    await Promise.all(notifications); 
 
     res.status(200).json(updatedExpense);
   } catch (error) {
@@ -191,15 +191,15 @@ export const deleteExpense = async (req, res) => {
       return res.status(404).json({ error: 'Spesa non trovata' });
     }
 
-    // Get the trip details
+    
     const tripDetails = await Trip.findById(deletedExpense.trip).populate('participants.user');
     const userId = req.user._id.toString();
 
-    // Send notifications to all participants except the user who performed the action
+    
     const notifications = tripDetails.participants
       .filter(({ user }) => user._id.toString() !== userId)
       .map(async ({ user }) => {
-        // Create a Notification document
+        
         const notification = new Notification({
           recipient: user._id,
           sender: userId,
@@ -212,7 +212,7 @@ export const deleteExpense = async (req, res) => {
         });
         await notification.save();
 
-        // Emit the notification via Socket.IO
+        
         emitGlobalEvent(
           'notification',
           {
@@ -227,7 +227,7 @@ export const deleteExpense = async (req, res) => {
         );
       });
 
-    await Promise.all(notifications); // Wait for all notifications to be processed
+    await Promise.all(notifications); 
 
     res.status(200).json({ message: 'Spesa eliminata con successo' });
   } catch (error) {
@@ -300,12 +300,12 @@ export const calculateSplit = async (req, res) => {
       if (debtors[j].amount === 0) j++;
     }
 
-    // Aggiungi i partecipanti alla risposta
+    
     res.status(200).json({
       transactions,
       totalExpenses,
-      participants: trip.participants, // Aggiungi i partecipanti alla risposta
-      balances // Aggiungi i bilanci alla risposta
+      participants: trip.participants, 
+      balances 
     });
 
   } catch (error) {
