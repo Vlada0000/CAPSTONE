@@ -1,0 +1,20 @@
+body{
+  background-image: url('./assets/images/background.jpg');
+}
+.exo-title {
+  font-family: "Exo", sans-serif;
+  font-weight: 700; /* Peso più spesso per titoli */
+  font-style: normal;
+}
+
+.exo-content {
+  font-family: "Exo", sans-serif;
+  font-weight: 400; /* Peso normale per il testo del contenuto */
+  font-style: normal;
+}
+
+.exo-light {
+  font-family: "Exo", sans-serif;
+  font-weight: 200; /* Peso leggero per testi delicati */
+  font-style: normal;
+}

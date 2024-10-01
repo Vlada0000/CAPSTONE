@@ -1,0 +1,39 @@
+/* src/components/Expenses/ExpenseDashboard.css */
+
+.expense-dashboard-layout {
+    min-height: 100vh;
+    background: linear-gradient(135deg, #f0f2f5 0%, #dfe9f3 100%);
+  }
+  
+  .expense-dashboard-content {
+    padding: 40px;
+  }
+  
+  .dashboard-title {
+    text-align: center;
+    margin-bottom: 40px;
+    color: #1890ff;
+  }
+  
+  .expense-dashboard-card {
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  }
+  
+  .expense-dashboard-loading,
+  .expense-dashboard-error {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+  }
+  
+  .expense-dashboard-loading p,
+  .expense-dashboard-error p {
+    margin-top: 16px;
+    font-size: 18px;
+    color: #888;
+  }
+  

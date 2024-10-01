@@ -1,0 +1,41 @@
+/* src/pages/ProfilePage.css */
+
+.profile-layout {
+  min-height: 100vh;
+}
+
+.profile-sider {
+  background-color: #1f1f1f;
+}
+
+.profile-sider-header {
+  padding: 24px;
+  text-align: center;
+  background-color: #141414;
+}
+
+.profile-sider-avatar {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #fff;
+}
+
+.profile-sider-name {
+  color: #fff;
+  margin-top: 16px;
+}
+
+.profile-content {
+  padding: 40px;
+  background-color: #f0f2f5;
+  overflow-y: auto;
+}
+
+.spinner-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}

@@ -1,0 +1,13 @@
+/* src/components/Expenses/TotalExpensesCard.css */
+
+.total-expenses-card {
+    margin-top: 24px;
+    text-align: center;
+    border-radius: 16px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  }
+  
+  .total-expenses-card .ant-statistic-title {
+    color: #1890ff;
+  }
+  

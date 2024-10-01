@@ -1,0 +1,82 @@
+/* src/components/Footer/Footer.css */
+
+.footer {
+  background: linear-gradient(90deg, #1cb5e0 0%, #000851 100%);
+  color: #ffffff;
+  padding: 20px 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-top: 1px solid #ccc;
+}
+
+.footer-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  max-width: 1200px;
+  padding: 0 20px;
+}
+
+.footer-column {
+  flex: 1;
+  text-align: center;
+}
+
+.footer-logo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.footer-logo-img {
+  width: 60px;
+  height: auto;
+  margin-bottom: 10px;
+}
+
+.footer-brand-name {
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.social-icons {
+  display: flex;
+  justify-content: center;
+}
+
+.social-icon {
+  margin: 0 10px;
+  display: inline-block;
+}
+
+.social-icon-style {
+  font-size: 24px;
+  transition: color 0.3s;
+}
+
+.social-icon:hover .social-icon-style {
+  color: #1890ff;
+}
+
+.footer-bottom {
+  font-size: 14px;
+  color: #999;
+  text-align: center;
+}
+
+@media (max-width: 768px) {
+  .footer-container {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .footer-column {
+    margin-bottom: 15px;
+  }
+
+  .social-icons {
+    margin-bottom: 15px;
+  }
+}

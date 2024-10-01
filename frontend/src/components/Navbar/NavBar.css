@@ -1,0 +1,47 @@
+.navbar-custom {
+  background-color: #1cb5e0;
+  background: linear-gradient(90deg, #1cb5e0 0%, #000851 100%);
+  padding: 0 20px;
+  height: 64px;
+}
+
+.navbar-logo {
+  height: 40px;
+  margin-right: 10px;
+}
+
+.logo-text {
+  color: #fff;
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.notification-icon {
+  color: #fff;
+  font-size: 24px;
+  cursor: pointer;
+  margin-right: 20px;
+}
+
+.user-avatar {
+  cursor: pointer;
+}
+
+@media (max-width: 992px) {
+  .navbar-custom {
+    flex-direction: column;
+    height: auto;
+  }
+
+  .navbar-logo {
+    margin-bottom: 10px;
+  }
+  
+  .navbar-actions {
+    justify-content: center;
+  }
+
+  .notification-icon {
+    margin-right: 10px;
+  }
+}

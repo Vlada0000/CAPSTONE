@@ -1,0 +1,12 @@
+/* src/components/Expenses/ExpensePieChart.css */
+
+.expense-pie-chart {
+    padding: 24px;
+    text-align: center;
+  }
+  
+  .chart-title {
+    margin-bottom: 24px;
+    color: #1890ff;
+  }
+  

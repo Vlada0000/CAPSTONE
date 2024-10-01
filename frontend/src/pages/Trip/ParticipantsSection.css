@@ -1,0 +1,24 @@
+/* src/components/Trip/ParticipantsSection.css */
+
+.participants-section {
+    margin-top: 24px;
+  }
+  
+  .participants-card {
+    border-radius: 8px;
+  }
+  
+  .participant-card {
+    text-align: center;
+  }
+  
+  .organizer-icon {
+    color: gold;
+    margin-left: 8px;
+  }
+  
+  .invite-card {
+    margin-top: 24px;
+    border-radius: 8px;
+  }
+  

@@ -1,0 +1,22 @@
+body{
+  background-image: url('../../assets/images/background.jpg');
+}
+.login-card {
+  background: #ffffff;
+  border-radius: 15px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.toggle-button {
+  border-radius: 25px;
+}
+
+.google-login-btn {
+  border-radius: 25px;
+}
+
+.active-btn {
+  background-color: #1890ff !important;
+  color: #fff !important;
+  border-color: #1890ff !important;
+}

@@ -1,0 +1,16 @@
+/* src/components/Profile/EditProfileForm.css */
+
+.edit-profile-form-container {
+    max-width: 600px;
+    margin: 0 auto;
+  }
+  
+  .edit-profile-form {
+    margin-top: 24px;
+  }
+  
+  .save-changes-button {
+    width: 100%;
+    margin-top: 16px;
+  }
+  
