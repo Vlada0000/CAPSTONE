@@ -40,13 +40,13 @@ export const getUsers = async (req, res) => {
 
 
 export const updateUserProfile = async (req, res) => {
-  const { name, email } = req.body;
+  const { name, email, birthdate, surname } = req.body;
 
   try {
     const updatedUser = await User.findByIdAndUpdate(
       req.user._id,
-      { name, email },
-      { new: true, runValidators: true }
+      { name, email, birthdate, surname },
+      { new: true}
     );
     res.json(updatedUser);
   } catch (error) {

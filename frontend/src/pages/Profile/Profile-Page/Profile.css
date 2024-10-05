@@ -1,5 +1,6 @@
 .profile-layout {
   min-height: 100vh;
+  margin-top:5%;
 }
 
 .profile-sider {
@@ -27,7 +28,7 @@
 
 .profile-content {
   padding: 40px;
-  background-color: #f0f2f5;
+  background-image:url('../../../assets/images/background.jpg');
   overflow-y: auto;
 }
 

@@ -20,24 +20,24 @@ import {
 } from '@ant-design/icons';
 import './MyMap.css';
 
-// Icone personalizzate per Leaflet
+
 import iconRetinaUrl from 'leaflet/dist/images/marker-icon-2x.png';
 import iconUrl from 'leaflet/dist/images/marker-icon.png';
 import shadowUrl from 'leaflet/dist/images/marker-shadow.png';
 
-// Configura l'icona di default dei marker
+
 L.Icon.Default.mergeOptions({
   iconRetinaUrl,
   iconUrl,
   shadowUrl,
 });
 
-// Componente per centrare la mappa sulla nuova posizione
+
 const RecenterMap = ({ position }) => {
   const map = useMap();
   useEffect(() => {
     if (position) {
-      map.setView(position, 13); // Centra la mappa sulla nuova posizione
+      map.setView(position, 13); 
     }
   }, [position, map]);
   return null;
@@ -52,9 +52,9 @@ const InteractiveMap = () => {
   const [currentMarker, setCurrentMarker] = useState(null);
   const [descriptionInput, setDescriptionInput] = useState('');
   const [searchInput, setSearchInput] = useState('');
-  const [position, setPosition] = useState([51.505, -0.09]); // Posizione di default
+  const [position, setPosition] = useState([51.505, -0.09]); 
 
-  // Carica i marker da localStorage quando il componente viene montato
+ 
   useEffect(() => {
     const storedMarkers = JSON.parse(localStorage.getItem('markers'));
     if (storedMarkers) {
@@ -62,12 +62,12 @@ const InteractiveMap = () => {
     }
   }, []);
 
-  // Salva i marker su localStorage ogni volta che vengono aggiornati
+  
   useEffect(() => {
     localStorage.setItem('markers', JSON.stringify(markers));
   }, [markers]);
 
-  // Gestisce il click sulla mappa per aggiungere un nuovo marker
+  
   const MapClickHandler = () => {
     useMapEvents({
       click(e) {
@@ -83,7 +83,7 @@ const InteractiveMap = () => {
     return null;
   };
 
-  // Aggiunge un nuovo marker
+
   const handleAddMarker = () => {
     if (currentMarker) {
       const newMarker = { ...currentMarker, description: descriptionInput };
@@ -93,7 +93,7 @@ const InteractiveMap = () => {
     }
   };
 
-  // Aggiorna la descrizione di un marker
+ 
   const handleUpdateMarker = (index, description) => {
     const updatedMarkers = markers.map((marker, i) =>
       i === index ? { ...marker, description } : marker
@@ -102,7 +102,7 @@ const InteractiveMap = () => {
     message.success('Marker aggiornato con successo!');
   };
 
-  // Elimina un marker specifico
+
   const handleDeleteMarker = (index) => {
     Modal.confirm({
       title: 'Sei sicuro di voler eliminare questo marker?',
@@ -114,7 +114,7 @@ const InteractiveMap = () => {
     });
   };
 
-  // Elimina tutti i marker
+
   const handleClearAllMarkers = () => {
     Modal.confirm({
       title: 'Sei sicuro di voler eliminare tutti i marker?',
@@ -125,7 +125,6 @@ const InteractiveMap = () => {
     });
   };
 
-  // Ricerca di una località (utilizzando l'API Nominatim di OpenStreetMap)
   const handleSearchLocation = async () => {
     if (!searchInput) return;
     try {
@@ -146,7 +145,7 @@ const InteractiveMap = () => {
     }
   };
 
-  // Geolocalizzazione dell'utente
+ 
   const handleMyLocation = () => {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(

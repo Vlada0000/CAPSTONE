@@ -1,20 +1,26 @@
 import React, { useState, useEffect } from 'react';
 import { Layout, Spin, message, Menu } from 'antd';
 import { useParams, useNavigate } from 'react-router-dom';
-import { getTripById } from '../../api/tripApi';
-import { useAuth } from '../../context/authContext';
-import Itineraries from '../../components/Itineraries/Itineraries';
-import Expenses from '../../components/Expense/Expenses';
-import Chat from '../../components/Utils/Chat';
-import ParticipantsSection from '../Trip/ParticipantsSection';
-import TripHeader from '../Trip/TripHeader';
+import { getTripById } from '../../../api/tripApi';
+import { useAuth } from '../../../context/authContext';
+import Itineraries from '../../../components/Itineraries/Itineraries';
+import Expenses from '../../../components/Expense/ExpensePage/Expenses';
+import Chat from '../../../components/Utils/Chat/Chat';
+import ParticipantsSection from '../Participants-section/ParticipantsSection';
+import TripHeader from '../Trip-Header/TripHeader';
 import {
   UserOutlined,
   FileOutlined,
   DollarOutlined,
   MessageOutlined,
+  CheckOutlined,
+  CameraOutlined
 } from '@ant-design/icons';
 import './TripDetailsPage.css';
+import TravelCheckList from '../../../components/Utils/Check-List/TravelCheckList';
+import PhotoAlbum from '../PhotoAlbum';
+
+
 
 const { Header, Content } = Layout;
 
@@ -81,11 +87,17 @@ const TripDetailPage = () => {
           <Menu.Item key="itineraries" icon={<FileOutlined />}>
             Itinerari
           </Menu.Item>
+          <Menu.Item key="photoAlbum" icon={<CameraOutlined />}>
+            Album ricordi
+          </Menu.Item>
           <Menu.Item key="expenses" icon={<DollarOutlined />}>
             Spese
           </Menu.Item>
           <Menu.Item key="chat" icon={<MessageOutlined />}>
             Chat
+          </Menu.Item>
+          <Menu.Item key="travelCheckList" icon={<CheckOutlined />}>
+            Travel Check List
           </Menu.Item>
         </Menu>
       </Header>
@@ -98,8 +110,10 @@ const TripDetailPage = () => {
           />
         )}
         {activeSection === 'itineraries' && <Itineraries tripId={tripId} />}
+        {activeSection === 'photoAlbum' && <PhotoAlbum tripId={tripId} />}
         {activeSection === 'expenses' && <Expenses tripId={tripId} />}
         {activeSection === 'chat' && <Chat tripId={tripId} />}
+        {activeSection === 'travelCheckList' && <TravelCheckList  />}
       </Content>
     </Layout>
   );

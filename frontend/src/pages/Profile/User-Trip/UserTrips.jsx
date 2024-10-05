@@ -2,7 +2,7 @@ import React from 'react';
 import { Card, Col, Row, Empty, Typography, Tag } from 'antd';
 import { useNavigate } from 'react-router-dom';
 import { EnvironmentOutlined } from '@ant-design/icons';
-import defaultImage from '../../assets/images/defaultImage.jpeg';
+import defaultImage from '../../../assets/images/defaultImage.jpeg';
 import './UserTrips.css';
 
 const { Meta } = Card;

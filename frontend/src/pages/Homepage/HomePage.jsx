@@ -4,31 +4,25 @@ import {
   Col,
   Card,
   Button,
-  Form,
-  Input,
-  DatePicker,
   Spin,
-  Modal,
   Typography,
   Pagination,
-  Tooltip,
 } from 'antd';
 import {
   PlusOutlined,
   RightOutlined,
-  LeftOutlined,
   CalendarOutlined,
 } from '@ant-design/icons';
 import './HomePage.css';
-import ThreeDGlobe from '../../components/Utils/ThreeDGlobe';
+import ThreeDGlobe from '../../components/Utils/Globe/ThreeDGlobe';
 import { useAuth } from '../../context/authContext';
 import { useNavigate } from 'react-router-dom';
 import { getTrips, createTrip } from '../../api/tripApi';
 import moment from 'moment';
 import defaultImage from '../../assets/images/defaultImage.jpeg';
+import CreateTripDrawer from './CreateTripDrawer';
 
 const { Meta } = Card;
-const { TextArea } = Input;
 const { Title, Text } = Typography;
 
 const HomePage = () => {
@@ -43,7 +37,7 @@ const HomePage = () => {
     endDate: null,
   });
   const [loadingTrips, setLoadingTrips] = useState(true);
-  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [isDrawerVisible, setIsDrawerVisible] = useState(false); // State for drawer visibility
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -88,19 +82,19 @@ const HomePage = () => {
         startDate: null,
         endDate: null,
       });
-      setIsModalVisible(false);
+      setIsDrawerVisible(false); 
       fetchTrips();
     } catch (error) {
       console.error('Errore nella creazione del viaggio:', error);
     }
   };
 
-  const showCreateModal = () => {
-    setIsModalVisible(true);
+  const showCreateDrawer = () => {
+    setIsDrawerVisible(true); 
   };
 
-  const handleModalCancel = () => {
-    setIsModalVisible(false);
+  const handleDrawerCancel = () => {
+    setIsDrawerVisible(false); 
     setNewTrip({ name: '', description: '', startDate: null, endDate: null });
   };
 
@@ -134,7 +128,7 @@ const HomePage = () => {
             type="primary"
             size="large"
             icon={<PlusOutlined />}
-            onClick={showCreateModal}
+            onClick={showCreateDrawer}
             className="create-trip-button animate__animated animate__fadeInUp"
           >
             Crea Nuovo Viaggio
@@ -206,71 +200,13 @@ const HomePage = () => {
         )}
       </div>
 
-     
-      <Modal
-        title="Crea un Nuovo Viaggio"
-        open={isModalVisible}
-        onCancel={handleModalCancel}
-        footer={null}
-        className="create-trip-modal"
-      >
-        <Form layout="vertical">
-          <Form.Item
-            label="Nome Viaggio"
-            required
-            rules={[{ required: true, message: 'Inserisci il nome del viaggio' }]}
-          >
-            <Input
-              value={newTrip.name}
-              onChange={(e) => setNewTrip({ ...newTrip, name: e.target.value })}
-              placeholder="Inserisci il nome del viaggio"
-            />
-          </Form.Item>
-          <Form.Item
-            label="Descrizione"
-            required
-            rules={[{ required: true, message: 'Inserisci una descrizione' }]}
-          >
-            <TextArea
-              rows={3}
-              value={newTrip.description}
-              onChange={(e) =>
-                setNewTrip({ ...newTrip, description: e.target.value })
-              }
-              placeholder="Inserisci una descrizione"
-            />
-          </Form.Item>
-          <Form.Item
-            label="Data di Inizio"
-            required
-            rules={[{ required: true, message: 'Seleziona la data di inizio' }]}
-          >
-            <DatePicker
-              value={newTrip.startDate}
-              onChange={(date) =>
-                setNewTrip({ ...newTrip, startDate: date })
-              }
-              style={{ width: '100%' }}
-              format="DD/MM/YYYY"
-            />
-          </Form.Item>
-          <Form.Item
-            label="Data di Fine"
-            required
-            rules={[{ required: true, message: 'Seleziona la data di fine' }]}
-          >
-            <DatePicker
-              value={newTrip.endDate}
-              onChange={(date) => setNewTrip({ ...newTrip, endDate: date })}
-              style={{ width: '100%' }}
-              format="DD/MM/YYYY"
-            />
-          </Form.Item>
-          <Button type="primary" onClick={handleCreateTrip} block>
-            Crea Viaggio
-          </Button>
-        </Form>
-      </Modal>
+      <CreateTripDrawer
+        isDrawerVisible={isDrawerVisible}
+        handleDrawerCancel={handleDrawerCancel}
+        newTrip={newTrip}
+        setNewTrip={setNewTrip}
+        handleCreateTrip={handleCreateTrip}
+      />
     </div>
   );
 };

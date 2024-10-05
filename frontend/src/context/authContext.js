@@ -24,42 +24,41 @@ export const AuthProvider = ({ children }) => {
 
       const userData = await response.json();
       setUser({ ...userData, token });
-      console.log('User data updated:', userData);
-      setLoading(false);
+      
     } catch (error) {
       console.error('Errore durante il fetch dei dati utente:', error.message);
       logout();
+    } finally {
+      setLoading(false); 
     }
   };
 
   const login = (token) => {
-    console.log('Login chiamato con token:', token);
+   
     localStorage.setItem('token', token);
+    setLoading(true); 
     fetchUserData(token);
-    setUser((prevState) => ({
-        ...prevState,
-        token,  
-    }));
-};
+  };
 
   const logout = () => {
     localStorage.removeItem('token');
     setUser(null);
+    setLoading(false); 
     navigate('/login');
   };
 
   useEffect(() => {
     const tokenFromStorage = localStorage.getItem('token');
     if (tokenFromStorage) {
-      console.log('Token trovato in localStorage:', tokenFromStorage);
+      
       fetchUserData(tokenFromStorage);
     } else {
-      setLoading(false);
+      setLoading(false); 
     }
   }, []);
 
   return (
-    <AuthContext.Provider value={{ user, login, logout }}>
+    <AuthContext.Provider value={{ user, setUser, login, logout }}>
       {!loading ? children : <div>Loading...</div>}
     </AuthContext.Provider>
   );

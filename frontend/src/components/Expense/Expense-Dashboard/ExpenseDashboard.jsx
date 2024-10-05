@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { calculateSplit } from '../../api/expenseApi';
-import { useAuth } from '../../context/authContext';
+import { calculateSplit } from '../../../api/expenseApi';
+import { useAuth } from '../../../context/authContext';
 import { Layout, Spin, Alert, Row, Col, Card, Typography } from 'antd';
 import { useParams } from 'react-router-dom';
 
-import ExpensePieChart from './ExpensePieChart';
-import ExpenseTable from './ExpenseTable';
-import TotalExpensesCard from './TotalExpensesCard';
+import ExpensePieChart from '../Expense-PieChart/ExpensePieChart';
+import ExpenseTable from '../Expense-Table/ExpenseTable';
+import TotalExpensesCard from '../Total-Expense-Card/TotalExpensesCard';
 import './ExpenseDashboard.css';
 
 const { Content } = Layout;

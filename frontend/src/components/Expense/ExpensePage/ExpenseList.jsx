@@ -3,7 +3,7 @@ import { List } from 'antd';
 import ExpenseItem from './ExpenseItem';
 
 const ExpenseList = ({ expenses, participants, onEdit, onDelete }) => (
-  <List
+  <List className='mt-3'
     bordered
     dataSource={expenses}
     renderItem={(expense) => (

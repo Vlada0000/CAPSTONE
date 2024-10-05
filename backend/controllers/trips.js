@@ -13,19 +13,18 @@ export const getTrips = async (req, res) => {
   const skip = (page - 1) * limit; 
 
   try {
-    
     const trips = await Trip.find({
       $or: [
         { organizer: userId },
         { 'participants.user': userId }
       ]
     })
-    .populate('participants.user')
-    .populate('organizer')
-    .skip(skip) 
-    .limit(limit);
+      
+      .populate('organizer', 'name email')  // Popola i dettagli dell'organizzatore
+      .populate('participants.user', 'name email')  // Popola i partecipanti
+      .skip(skip)
+      .limit(limit);
 
-   
     const totalTrips = await Trip.countDocuments({
       $or: [
         { organizer: userId },
@@ -69,7 +68,7 @@ export const getParticipants = async (req, res) => {
 
 // Creare un nuovo viaggio
 export const createTrip = async (req, res) => {
-  const { name, description, startDate, endDate } = req.body;
+  const { name, description, startDate, endDate, country } = req.body;
   const organizer = req.user._id;
 
   try {
@@ -78,6 +77,7 @@ export const createTrip = async (req, res) => {
       description,
       startDate,
       endDate,
+      country,
       organizer,
       participants: [{ user: organizer, status: 'accepted' }]
     });
@@ -430,3 +430,57 @@ export const addPhotoToTrip = async (req, res) => {
     res.status(500).json({ message: 'Errore del server nel caricamento della foto' });
   }
 };
+// Aggiungere più foto a un album di viaggio
+export const addPhotosToAlbum = async (req, res) => {
+  const { tripId } = req.params;  // ID del viaggio
+  const photos = req.files;  // Array di immagini caricate tramite Multer
+
+  if (!photos || photos.length === 0) {
+    return res.status(400).json({ message: 'Nessuna foto fornita' });
+  }
+
+  try {
+    // Trova il viaggio corrispondente
+    const trip = await Trip.findById(tripId);
+    if (!trip) {
+      return res.status(404).json({ message: 'Viaggio non trovato' });
+    }
+
+    // Aggiungi gli URL delle foto all'album del viaggio
+    const photoUrls = photos.map((photo) => photo.path);  // Gli URL delle foto caricate su Cloudinary
+    trip.album = [...trip.album, ...photoUrls];  // Aggiungi nuove foto all'album esistente
+
+    // Salva le modifiche al database
+    await trip.save();
+
+    // Restituisci le nuove foto aggiunte
+    res.status(200).json({ 
+      message: 'Foto aggiunte con successo all\'album', 
+      photos: photoUrls // Restituisci solo le nuove foto aggiunte
+    });
+  } catch (error) {
+    console.error('Errore nel caricamento delle foto:', error);
+    res.status(500).json({ message: 'Errore del server nel caricamento delle foto' });
+  }
+};
+export const getAlbumPhotos = async (req, res) => {
+  const { tripId } = req.params;  // ID del viaggio
+
+  try {
+    // Trova il viaggio corrispondente
+    const trip = await Trip.findById(tripId);
+    if (!trip) {
+      return res.status(404).json({ message: 'Viaggio non trovato' });
+    }
+
+    // Restituisci l'album del viaggio (l'array di URL delle foto)
+    res.status(200).json({ 
+      message: 'Album recuperato con successo', 
+      album: trip.album 
+    });
+  } catch (error) {
+    console.error('Errore nel recupero dell\'album:', error);
+    res.status(500).json({ message: 'Errore del server nel recupero dell\'album' });
+  }
+};
+

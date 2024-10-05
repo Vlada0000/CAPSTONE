@@ -8,9 +8,9 @@ import {
 } from '@react-three/drei';
 import { Color } from 'three';
 import { EffectComposer, Bloom } from '@react-three/postprocessing';
-import earthTexture from '../../assets/images/earth_day_map.jpg';
-import earthNormalMap from '../../assets/images/earth_normal_map.jpg';
-import earthSpecularMap from '../../assets/images/earth_specular_map.jpg';
+import earthTexture from '../../../assets/images/earth_day_map.jpg'
+import earthNormalMap from '../../../assets/images/earth_normal_map.jpg';
+import earthSpecularMap from '../../../assets/images/earth_specular_map.jpg';
 import './ThreeDGlobe.css';
 
 function Globe() {

@@ -1,0 +1,27 @@
+.travel-checklist {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+  
+  .progress-section {
+    margin-top: 20px;
+  }
+  
+  .list-group-item {
+    display: flex;
+    align-items: center;
+  }
+  
+  .list-group-item .btn {
+    margin-left: 10px;
+  }
+  
+  .mt-3 {
+    margin-top: 1rem !important;
+  }
+  
+  .d-flex {
+    display: flex !important;
+  }
+  

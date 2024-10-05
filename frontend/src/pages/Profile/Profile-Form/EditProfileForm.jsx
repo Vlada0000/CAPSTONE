@@ -1,10 +1,16 @@
 import React from 'react';
 import { Form, Input, Button, Typography } from 'antd';
+import moment from 'moment'; 
 import './EditProfileForm.css';
 
 const { Title } = Typography;
 
 const EditProfileForm = ({ profileData, handleInputChange, handleSaveChanges }) => {
+  
+  const formattedBirthdate = profileData.birthdate
+    ? moment(profileData.birthdate).format('YYYY-MM-DD')
+    : '';
+
   return (
     <div className="edit-profile-form-container">
       <Title level={2}>Modifica Profilo</Title>
@@ -37,7 +43,7 @@ const EditProfileForm = ({ profileData, handleInputChange, handleSaveChanges }) 
           <Input
             type="date"
             name="birthdate"
-            value={profileData.birthdate}
+            value={formattedBirthdate} 
             onChange={handleInputChange}
           />
         </Form.Item>

@@ -3,7 +3,7 @@
 .homepage-container {
   width: 100%;
   min-height: 100vh;
-  background-color: #f0f2f5;
+  background-image: url('../../assets/images/background.jpg');
   font-family: 'Poppins', sans-serif;
 }
 

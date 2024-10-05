@@ -7,17 +7,18 @@ import {
   LogoutOutlined,
   LineChartOutlined,
 } from '@ant-design/icons';
-import { useAuth } from '../../context/authContext';
+import { useAuth } from '../../../context/authContext';
 import {
   getLoggedInUserProfile,
   updateUserProfile,
   uploadProfileImage,
   updateUserPassword,
   getUserTrips,
-} from '../../api/userApi';
-import Dashboard from '../Profile/Dashboard';
-import EditProfileForm from '../Profile/EditProfileForm';
-import PasswordChangeForm from '../Profile/PasswordChangeForm';
+} from '../../../api/userApi';
+import Dashboard from '../Dashboard/Dashboard';
+import EditProfileForm from '../Profile-Form/EditProfileForm';
+import PasswordChangeForm from '../Profile-Form/PasswordChangeForm';
+import moment from 'moment'
 import './Profile.css';
 
 const { Sider, Content } = Layout;
@@ -42,17 +43,22 @@ const ProfilePage = () => {
   const token = localStorage.getItem('token');
 
   useEffect(() => {
+   
     const fetchProfile = async () => {
       try {
         const data = await getLoggedInUserProfile(token);
+       
         setProfileData({
           name: data.name,
           surname: data.surname,
           email: data.email,
-          birthdate: data.birthdate || '',
+          birthdate: data.birthdate ? moment(data.birthdate).format('YYYY-MM-DD') : '',
           profileImage: data.profileImage || '/default-profile.png',
         });
         const tripsData = await getUserTrips(token);
+        
+       
+
         setTrips(tripsData);
       } catch (error) {
         message.error('Errore nel recupero del profilo');
@@ -60,39 +66,52 @@ const ProfilePage = () => {
         setLoading(false);
       }
     };
-
+  
     fetchProfile();
   }, [token]);
+  
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
     setProfileData((prevState) => ({
       ...prevState,
-      [name]: value,
+      [name]: value, 
     }));
   };
+  
 
   const handleFileChange = ({ file }) => {
     setFile(file);
   };
 
   const handleSaveChanges = async () => {
+    
     try {
-      await updateUserProfile(
-        {
-          name: profileData.name,
-          surname: profileData.surname,
-          email: profileData.email,
-          birthdate: profileData.birthdate,
-        },
-        token
-      );
-      setUser((prevUser) => ({ ...prevUser, ...profileData }));
+      const formattedBirthdate = profileData.birthdate
+        ? moment(profileData.birthdate).format('YYYY-MM-DD') 
+        : '';
+      
+      const updatedProfile = {
+        name: profileData.name,
+        surname: profileData.surname,
+        email: profileData.email,
+        birthdate: formattedBirthdate, 
+      };
+  
+      const response = await updateUserProfile(updatedProfile, token);
+      
+    
+
+      setUser((prevUser) => ({ ...prevUser, ...updatedProfile }));
       message.success('Profilo aggiornato con successo!');
     } catch (error) {
+      console.error('Errore durante l\'aggiornamento del profilo:', error);
       message.error('Aggiornamento del profilo non riuscito');
     }
   };
+  
+  
+  
 
   const handleUploadImage = async () => {
     if (!file) {

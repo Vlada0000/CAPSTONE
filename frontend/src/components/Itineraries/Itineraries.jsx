@@ -6,7 +6,7 @@ import { useAuth } from '../../context/authContext';
 import { useParams } from 'react-router-dom';
 import ItineraryForm from '../Itineraries/ItineraryForm';
 import ItineraryList from '../Itineraries/ItineraryList';
-import MyMap from '../../components/Utils/MyMap';
+import MyMap from '../Utils/Map/MyMap';
 
 const Itineraries = () => {
   const { user } = useAuth();

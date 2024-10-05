@@ -13,8 +13,7 @@ export const SocketProvider = ({ children }) => {
 
   useEffect(() => {
     if (user && user.token) {
-      console.log("Initializing socket for user:", user?._id);
-      console.log('Socket inizia con token:', user.token);
+     
 
       const socketIo = io(process.env.REACT_APP_BACKEND_URL, {
         query: { token: user.token },
@@ -23,12 +22,12 @@ export const SocketProvider = ({ children }) => {
       });
 
       socketIo.on('connect', () => {
-        console.log(`Socket connected with ID: ${socketIo.id}`);
+        
         setIsSocketInitialized(true);
       });
 
       socketIo.on('disconnect', () => {
-        console.log('Socket disconnected');
+        
         setIsSocketInitialized(false);
       });
 
@@ -39,7 +38,7 @@ export const SocketProvider = ({ children }) => {
       setSocket(socketIo);
 
       return () => {
-        console.log("Disconnecting socket for user:", user._id);
+        
         socketIo.disconnect();
         setIsSocketInitialized(false);
       };

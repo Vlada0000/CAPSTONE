@@ -1,0 +1,85 @@
+.map-container {
+    position: relative;
+    width: 100%;
+    height: 100vh; 
+    max-height: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .map-toolbar {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    background-color: rgba(255, 255, 255, 0.9);
+    z-index: 1000;
+    width: 100%;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  .map-toolbar .ant-input-search {
+    flex: 1;
+  }
+  
+  .map-toolbar button {
+    margin-left: 10px;
+  }
+  
+  
+  .map-container .leaflet-container {
+    flex: 1;
+    width: 100%;
+    height: calc(100vh - 60px); 
+  }
+  
+  .marker-popup {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+  }
+  
+  .popup-actions {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+  }
+  
+  @media screen and (max-width: 768px) {
+    .map-toolbar {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+  
+    .map-toolbar .ant-input-search {
+      width: 100%;
+    }
+  
+    .map-toolbar button {
+      width: 100%;
+      margin: 5px 0;
+    }
+  
+    .map-container .leaflet-container {
+      height: calc(100vh - 120px); 
+    }
+  }
+  
+  @media screen and (max-width: 480px) {
+    .map-toolbar {
+      padding: 5px;
+    }
+  
+    .map-toolbar .ant-input-search {
+      width: 100%;
+    }
+  
+    .map-toolbar button {
+      width: 100%;
+      margin: 5px 0;
+    }
+  
+    .map-container .leaflet-container {
+      height: calc(100vh - 140px);
+    }
+  }
+  

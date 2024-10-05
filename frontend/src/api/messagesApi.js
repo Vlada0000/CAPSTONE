@@ -37,7 +37,7 @@ export const sendMessageApi = async (tripId, messageData, token) => {
   
       if (!response.ok) {
         const errorData = await response.json();
-        console.error('Errore nell\'invio del messaggio, risposta non OK:', errorData); r
+        console.error('Errore nell\'invio del messaggio, risposta non OK:', errorData); 
         throw new Error(errorData.message || 'Errore nell\'invio del messaggio');
       }
   
@@ -111,3 +111,48 @@ export const removeMessageListener = (socket) => {
     console.error('Socket non disponibile per rimuovere il listener dei messaggi');
   }
 };
+export const deleteMessage = async (tripId, messageId, token) => {
+    try {
+      const response = await fetch(`${API_URL}/${tripId}/messages/${messageId}`, {
+        method: 'DELETE',
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json',
+        },
+      });
+  
+      if (!response.ok) {
+        throw new Error('Errore durante l\'eliminazione del messaggio');
+      }
+  
+      const data = await response.json();
+      return data;
+    } catch (error) {
+      console.error('Errore durante l\'eliminazione del messaggio:', error);
+      throw error;
+    }
+  };
+  
+  // API per modificare un messaggio
+  export const editMessage = async (tripId, messageId, content, token) => {
+    try {
+      const response = await fetch(`${API_URL}/${tripId}/messages/${messageId}`, {
+        method: 'PUT',
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ content }),
+      });
+  
+      if (!response.ok) {
+        throw new Error('Errore durante la modifica del messaggio');
+      }
+  
+      const data = await response.json();
+      return data;
+    } catch (error) {
+      console.error('Errore durante la modifica del messaggio:', error);
+      throw error;
+    }
+  };

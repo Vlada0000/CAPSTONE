@@ -1,14 +1,16 @@
 import React, { useState, useEffect } from 'react';
-import { Card, Spin, Alert, Button } from 'antd';
-import { useAuth } from '../../context/authContext';
+import { Card, Spin, Alert, Button, Collapse } from 'antd';
+import { useAuth } from '../../../context/authContext';
 import { useNavigate, useParams } from 'react-router-dom';
 import moment from 'moment';
 
-import { getExpenses, addExpense, updateExpense, deleteExpense } from '../../api/expenseApi';
-import { getParticipants } from '../../api/tripApi';
+import { getExpenses, addExpense, updateExpense, deleteExpense } from '../../../api/expenseApi';
+import { getParticipants } from '../../../api/tripApi';
 
 import ExpenseForm from './ExpenseForm';
 import ExpenseList from './ExpenseList';
+
+const { Panel } = Collapse;
 
 const Expenses = () => {
   const { user } = useAuth();
@@ -123,20 +125,28 @@ const Expenses = () => {
 
   return (
     <Card title="Gestisci Spese" style={{ marginBottom: '20px' }}>
-      <ExpenseForm
-        participants={participants}
-        expenseData={expenseData}
-        setExpenseData={setExpenseData}
-        onSubmit={isEditing ? handleUpdateExpense : handleAddExpense}
-        onCancel={resetForm}
-        isEditing={isEditing}
-      />
+      {/* Avvolgi il form in un Collapse */}
+      <Collapse>
+        <Panel header={isEditing ? 'Modifica Spesa' : 'Aggiungi Nuova Spesa'} key="1">
+          <ExpenseForm
+            participants={participants}
+            expenseData={expenseData}
+            setExpenseData={setExpenseData}
+            onSubmit={isEditing ? handleUpdateExpense : handleAddExpense}
+            onCancel={resetForm}
+            isEditing={isEditing}
+          />
+        </Panel>
+      </Collapse>
+
+      {/* Lista delle spese */}
       <ExpenseList
         expenses={expenses}
         participants={participants}
         onEdit={startEditingExpense}
         onDelete={handleDeleteExpense}
       />
+
       <Button type="default" size="large" onClick={goToExpenseDashboard} style={{ marginTop: '20px' }}>
         Vai alla Dashboard delle Spese
       </Button>
@@ -145,3 +155,4 @@ const Expenses = () => {
 };
 
 export default Expenses;
+

@@ -23,8 +23,8 @@ import {
   deleteTrip,
   updateTrip,
   getTripById,
-} from '../../api/tripApi';
-import defaultImage from '../../assets/images/defaultImage.jpeg';
+} from '../../../api/tripApi';
+import defaultImage from '../../../assets/images/defaultImage.jpeg';
 import './TripHeader.css';
 
 const { Title, Text } = Typography;

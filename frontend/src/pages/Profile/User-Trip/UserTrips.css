@@ -1,0 +1,74 @@
+.user-trips-title {
+  text-align: center;
+  color: #001529;
+  margin-bottom: 40px;
+}
+
+.trip-card {
+  border-radius: 12px;
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.trip-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 20px rgba(0, 0, 0, 0.15);
+}
+
+.trip-card-image {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  cursor: pointer;
+}
+
+.trip-card-content {
+  padding: 20px;
+}
+
+.trip-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.trip-card-title {
+  margin-bottom: 0;
+  cursor: pointer;
+  color: #001529;
+  transition: color 0.3s;
+}
+
+.trip-card-title:hover {
+  color: #1890ff;
+}
+
+.trip-card-country {
+  margin-left: 8px;
+}
+
+.trip-card-dates,
+.trip-card-itinerary,
+.trip-card-expenses {
+  margin-top: 12px;
+  font-size: 14px;
+  color: #595959;
+}
+
+.trip-card-actions {
+  margin-top: 20px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.trip-card-actions .ant-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.trip-card-progress {
+  flex-grow: 1;
+}

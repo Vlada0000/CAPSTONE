@@ -11,7 +11,7 @@ const ItineraryList = ({
   onDelete,
 }) => (
   <>
-    <List
+    <List className='mt-3'
       bordered
       dataSource={itineraries}
       renderItem={(itinerary) => (
@@ -22,12 +22,12 @@ const ItineraryList = ({
         />
       )}
     />
-    <Pagination
+    <Pagination className='mb-3'
       current={currentPage}
       pageSize={pageSize}
       total={itineraries.length}
       onChange={onPageChange}
-      style={{ textAlign: 'center', marginTop: '20px' }}
+      style={{  marginTop: '20px', display: 'flex', justifyContent:'center' }}
     />
   </>
 );

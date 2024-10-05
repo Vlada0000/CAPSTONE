@@ -6,6 +6,7 @@ const tripSchema = new mongoose.Schema(
     description: { type: String, required: true },
     startDate: { type: Date, required: true },
     endDate: { type: Date, required: true },
+    country: {type: String},
     organizer: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
     participants: [
       {
@@ -13,11 +14,12 @@ const tripSchema = new mongoose.Schema(
         status: { type: String, enum: ['pending', 'accepted', 'declined'], default: 'pending' },
       },
     ],
-    photoUrl: { type: String },
+    photoUrl: { type: String }, 
+    album: [{ type: String }],  
   },
   {
-    timestamps: true,
-    collection: 'viaggi',
+    timestamps: true,  
+    collection: 'viaggi',  
   }
 );
 

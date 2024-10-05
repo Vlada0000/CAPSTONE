@@ -6,7 +6,7 @@ import {
   EnvironmentOutlined,
   CameraOutlined
 } from '@ant-design/icons';
-import UserTrips from './UserTrips';
+import UserTrips from '../User-Trip/UserTrips';
 import './Dashboard.css';
 
 const { Title, Text } = Typography;

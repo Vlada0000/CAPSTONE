@@ -7,11 +7,11 @@ import Footer from './components/Footer/Footer';
 import Login from './pages/Login/Login';
 import PrivateRoute from './components/PrivateRoute';
 import { AuthProvider } from './context/authContext';
-import Profile from './pages/Profile/Profile';
-import TripDetailsPage from './pages/Trip/TripDetailsPage';
+import Profile from './pages/Profile/Profile-Page/Profile';
+import TripDetailsPage from './pages/Trip/Trip-Page/TripDetailsPage';
 import { SocketProvider } from './context/socketContext'
-import ExpenseDashboard from './components/Expense/ExpenseDashboard';
-import Chat from './components/Utils/Chat';
+import ExpenseDashboard from './components/Expense/Expense-Dashboard/ExpenseDashboard';
+import Chat from './components/Utils/Chat/Chat';
 
 
 
