@@ -1,60 +1,20 @@
-import React, { useState, useEffect } from 'react';
-import {
-  MapContainer,
-  TileLayer,
-  Marker,
-  Popup,
-  useMapEvents,
-  LayersControl,
-  ZoomControl,
-  useMap, 
-} from 'react-leaflet';
+import { useState, useEffect } from 'react';
+import { MapContainer, TileLayer, LayersControl, ZoomControl } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
-import L from 'leaflet';
-import { Modal, Input, Button, Tooltip, message } from 'antd';
-import {
-  EditOutlined,
-  DeleteOutlined,
-  PlusOutlined,
-  EnvironmentOutlined,
-} from '@ant-design/icons';
+import { Button, Input, message } from 'antd';
+import { EnvironmentOutlined, DeleteOutlined } from '@ant-design/icons';
+import RecenterMap from './RecenterMap';
+import MapClickHandler from './MapClickHandler';
+import MarkersList from './MarkersList';
 import './MyMap.css';
-
-
-import iconRetinaUrl from 'leaflet/dist/images/marker-icon-2x.png';
-import iconUrl from 'leaflet/dist/images/marker-icon.png';
-import shadowUrl from 'leaflet/dist/images/marker-shadow.png';
-
-
-L.Icon.Default.mergeOptions({
-  iconRetinaUrl,
-  iconUrl,
-  shadowUrl,
-});
-
-
-const RecenterMap = ({ position }) => {
-  const map = useMap();
-  useEffect(() => {
-    if (position) {
-      map.setView(position, 13); 
-    }
-  }, [position, map]);
-  return null;
-};
 
 const { BaseLayer } = LayersControl;
 
 const InteractiveMap = () => {
   const [markers, setMarkers] = useState([]);
-  const [selectedMarkerIndex, setSelectedMarkerIndex] = useState(null);
-  const [isModalVisible, setIsModalVisible] = useState(false);
-  const [currentMarker, setCurrentMarker] = useState(null);
-  const [descriptionInput, setDescriptionInput] = useState('');
   const [searchInput, setSearchInput] = useState('');
-  const [position, setPosition] = useState([51.505, -0.09]); 
+  const [position, setPosition] = useState([51.505, -0.09]);
 
- 
   useEffect(() => {
     const storedMarkers = JSON.parse(localStorage.getItem('markers'));
     if (storedMarkers) {
@@ -62,68 +22,9 @@ const InteractiveMap = () => {
     }
   }, []);
 
-  
   useEffect(() => {
     localStorage.setItem('markers', JSON.stringify(markers));
   }, [markers]);
-
-  
-  const MapClickHandler = () => {
-    useMapEvents({
-      click(e) {
-        setCurrentMarker({
-          lat: e.latlng.lat,
-          lng: e.latlng.lng,
-          description: '',
-        });
-        setDescriptionInput('');
-        setIsModalVisible(true);
-      },
-    });
-    return null;
-  };
-
-
-  const handleAddMarker = () => {
-    if (currentMarker) {
-      const newMarker = { ...currentMarker, description: descriptionInput };
-      setMarkers((prevMarkers) => [...prevMarkers, newMarker]);
-      setIsModalVisible(false);
-      message.success('Marker aggiunto con successo!');
-    }
-  };
-
- 
-  const handleUpdateMarker = (index, description) => {
-    const updatedMarkers = markers.map((marker, i) =>
-      i === index ? { ...marker, description } : marker
-    );
-    setMarkers(updatedMarkers);
-    message.success('Marker aggiornato con successo!');
-  };
-
-
-  const handleDeleteMarker = (index) => {
-    Modal.confirm({
-      title: 'Sei sicuro di voler eliminare questo marker?',
-      onOk: () => {
-        const updatedMarkers = markers.filter((_, i) => i !== index);
-        setMarkers(updatedMarkers);
-        message.success('Marker eliminato con successo!');
-      },
-    });
-  };
-
-
-  const handleClearAllMarkers = () => {
-    Modal.confirm({
-      title: 'Sei sicuro di voler eliminare tutti i marker?',
-      onOk: () => {
-        setMarkers([]);
-        message.success('Tutti i marker sono stati eliminati!');
-      },
-    });
-  };
 
   const handleSearchLocation = async () => {
     if (!searchInput) return;
@@ -145,7 +46,6 @@ const InteractiveMap = () => {
     }
   };
 
- 
   const handleMyLocation = () => {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
@@ -153,23 +53,29 @@ const InteractiveMap = () => {
           setPosition([pos.coords.latitude, pos.coords.longitude]);
           message.success('Posizione trovata!');
         },
-        (err) => {
-          console.error('Errore nella geolocalizzazione:', err.message);
-          if (err.code === 1) {
-            message.error('Permesso di geolocalizzazione negato.');
-          } else if (err.code === 2) {
-            message.error('Posizione non disponibile.');
-          } else if (err.code === 3) {
-            message.error('Timeout durante la ricerca della posizione.');
-          } else {
-            message.error('Errore sconosciuto nella geolocalizzazione.');
-          }
-        },
+        (err) => handleGeolocationError(err),
         { enableHighAccuracy: true, timeout: 10000, maximumAge: 0 }
       );
     } else {
       message.error('Geolocalizzazione non supportata dal browser');
     }
+  };
+
+  const handleGeolocationError = (err) => {
+    if (err.code === 1) {
+      message.error('Permesso di geolocalizzazione negato.');
+    } else if (err.code === 2) {
+      message.error('Posizione non disponibile.');
+    } else if (err.code === 3) {
+      message.error('Timeout durante la ricerca della posizione.');
+    } else {
+      message.error('Errore sconosciuto nella geolocalizzazione.');
+    }
+  };
+
+  const handleClearAllMarkers = () => {
+    setMarkers([]);
+    message.success('Tutti i marker sono stati eliminati!');
   };
 
   return (
@@ -215,7 +121,6 @@ const InteractiveMap = () => {
               attribution="&copy; OpenStreetMap contributors"
             />
           </BaseLayer>
-
           <BaseLayer name="Satellite">
             <TileLayer
               url="https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png"
@@ -224,58 +129,10 @@ const InteractiveMap = () => {
           </BaseLayer>
         </LayersControl>
 
-        <MapClickHandler />
-
-        <RecenterMap position={position} /> 
-
-        {markers.map((marker, index) => (
-          <Marker key={index} position={[marker.lat, marker.lng]}>
-            <Popup minWidth={200}>
-              <div className="marker-popup">
-                <h3>Informazioni sulla Posizione</h3>
-                <Input.TextArea
-                  rows={2}
-                  value={marker.description}
-                  onChange={(e) => handleUpdateMarker(index, e.target.value)}
-                  placeholder="Inserisci una descrizione"
-                />
-                <div className="popup-actions">
-                  <Button
-                    type="primary"
-                    icon={<EditOutlined />}
-                    onClick={() => handleUpdateMarker(index, marker.description)}
-                  >
-                    Aggiorna
-                  </Button>
-                  <Button
-                    danger
-                    icon={<DeleteOutlined />}
-                    onClick={() => handleDeleteMarker(index)}
-                  >
-                    Elimina
-                  </Button>
-                </div>
-              </div>
-            </Popup>
-          </Marker>
-        ))}
+        <MapClickHandler setMarkers={setMarkers} />
+        <RecenterMap position={position} />
+        <MarkersList markers={markers} setMarkers={setMarkers} />
       </MapContainer>
-
-      {/* Modale per aggiungere marker */}
-      <Modal
-        title="Aggiungi Descrizione al Marker"
-        open={isModalVisible}
-        onOk={handleAddMarker}
-        onCancel={() => setIsModalVisible(false)}
-        okText="Aggiungi Marker"
-      >
-        <Input.TextArea
-          rows={4}
-          value={descriptionInput}
-          onChange={(e) => setDescriptionInput(e.target.value)}
-          placeholder="Inserisci una descrizione per questo marker"
-        />
-      </Modal>
     </div>
   );
 };

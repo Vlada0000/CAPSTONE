@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useEffect, useState } from 'react';
+import { createContext, useContext, useEffect, useState } from 'react';
 import { io } from 'socket.io-client';
 import { useAuth } from './authContext';
 
@@ -32,7 +32,7 @@ export const SocketProvider = ({ children }) => {
       });
 
       socketIo.on('connect_error', (err) => {
-        console.error('Connection error:', err);
+        console.error('Errore durante la connessione:', err);
       });
 
       setSocket(socketIo);
@@ -43,7 +43,7 @@ export const SocketProvider = ({ children }) => {
         setIsSocketInitialized(false);
       };
     } else {
-      console.log("User not found or token not available, socket not initialized.");
+      console.log("Utente non trovato o token non disponibile, socket non inizializzato.");
     }
   }, [user]);
 
@@ -51,7 +51,7 @@ export const SocketProvider = ({ children }) => {
     if (socket && isSocketInitialized) {
       socket.emit('sendMessage', messageData);
     } else {
-      console.warn('Socket not initialized or connected');
+      console.warn('Socket non inizializzato o connesso');
     }
   };
 
@@ -59,7 +59,7 @@ export const SocketProvider = ({ children }) => {
     if (socket && isSocketInitialized) {
       socket.emit('sendNotification', notificationData);
     } else {
-      console.warn('Socket not initialized or connected');
+      console.warn('Socket non inizializzato o connesso');
     }
   };
 
@@ -67,7 +67,7 @@ export const SocketProvider = ({ children }) => {
     if (socket && isSocketInitialized) {
       socket.emit('joinRoom', tripId);
     } else {
-      console.warn('Socket not initialized or connected');
+      console.warn('Socket non inizializzato o connesso');
     }
   };
 
@@ -75,7 +75,7 @@ export const SocketProvider = ({ children }) => {
     if (socket && isSocketInitialized) {
       socket.on('message', callback);
     } else {
-      console.warn('Socket not initialized or connected');
+      console.warn('Socket non inizializzato o connesso');
     }
   };
 
@@ -89,7 +89,7 @@ export const SocketProvider = ({ children }) => {
     if (socket && isSocketInitialized) {
       socket.on('notification', callback);
     } else {
-      console.warn('Socket not initialized or connected');
+      console.warn('Socket non inizializzato o connesso');
     }
   };
 

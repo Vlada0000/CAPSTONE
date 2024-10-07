@@ -67,7 +67,7 @@ export const getUserTrips = async (token) => {
     return response.json();
   };
   
-  // Get list of users with optional search
+ 
   export const getUsers = async (search = '', token) => {
     const query = search ? `?search=${encodeURIComponent(search)}` : '';
     const response = await fetch(`${API_URL}${query}`, {
@@ -134,9 +134,14 @@ export const uploadProfileImage = async (file, token) => {
       },
     });
   
+    if (response.status === 204) {
+      return;
+    }
+  
     if (!response.ok) {
       throw new Error('Failed to delete user profile');
     }
   
     return response.json();
   };
+  

@@ -1,4 +1,3 @@
-import React from 'react';
 import { List, Pagination } from 'antd';
 import ItineraryItem from './ItineraryItem';
 

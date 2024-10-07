@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { Card, Spin, Alert, Button, Collapse } from 'antd';
 import { useAuth } from '../../../context/authContext';
 import { useNavigate, useParams } from 'react-router-dom';
@@ -40,9 +40,9 @@ const Expenses = () => {
 
         setParticipants(participantsData);
         setExpenses(expensesData);
-        setLoading(false);
       } catch (error) {
         setError('Errore nel recupero dei dati');
+      } finally {
         setLoading(false);
       }
     };
@@ -61,7 +61,7 @@ const Expenses = () => {
       setExpenses([...expenses, addedExpense]);
       resetForm();
     } catch (error) {
-      setError('Errore durante l\'aggiunta della spesa');
+      setError("Errore durante l'aggiunta della spesa");
     }
   };
 
@@ -75,7 +75,7 @@ const Expenses = () => {
       setExpenses(expenses.map((exp) => (exp._id === expenseData._id ? updatedExpense : exp)));
       resetForm();
     } catch (error) {
-      setError('Errore durante l\'aggiornamento della spesa');
+      setError("Errore durante l'aggiornamento della spesa");
     }
   };
 
@@ -84,7 +84,7 @@ const Expenses = () => {
       await deleteExpense(id, user.token);
       setExpenses(expenses.filter((exp) => exp._id !== id));
     } catch (error) {
-      setError('Errore durante l\'eliminazione della spesa');
+      setError("Errore durante l'eliminazione della spesa");
     }
   };
 
@@ -125,7 +125,7 @@ const Expenses = () => {
 
   return (
     <Card title="Gestisci Spese" style={{ marginBottom: '20px' }}>
-      {/* Avvolgi il form in un Collapse */}
+      {/* Form in Collapse */}
       <Collapse>
         <Panel header={isEditing ? 'Modifica Spesa' : 'Aggiungi Nuova Spesa'} key="1">
           <ExpenseForm
@@ -155,4 +155,3 @@ const Expenses = () => {
 };
 
 export default Expenses;
-

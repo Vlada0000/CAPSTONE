@@ -1,4 +1,3 @@
-import React from 'react';
 import { Table, Typography } from 'antd';
 import { UserOutlined } from '@ant-design/icons';
 import './ExpenseTable.css';
@@ -6,6 +5,7 @@ import './ExpenseTable.css';
 const { Title } = Typography;
 
 const ExpenseTable = ({ data }) => {
+ 
   const columns = [
     {
       title: 'Da',
@@ -31,7 +31,7 @@ const ExpenseTable = ({ data }) => {
       title: 'Importo',
       dataIndex: 'amount',
       key: 'amount',
-      render: (amount) => `€ ${amount.toFixed(2)}`,
+      render: (amount) => `€ ${amount.toFixed(2)}`, 
     },
   ];
 
@@ -44,7 +44,7 @@ const ExpenseTable = ({ data }) => {
         columns={columns}
         dataSource={data}
         pagination={false}
-        rowKey={(record) => `${record.from._id}-${record.to._id}`}
+        rowKey={(record) => `${record.from._id}-${record.to._id}`} 
       />
     </div>
   );

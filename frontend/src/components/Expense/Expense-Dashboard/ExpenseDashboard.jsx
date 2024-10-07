@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { calculateSplit } from '../../../api/expenseApi';
 import { useAuth } from '../../../context/authContext';
 import { Layout, Spin, Alert, Row, Col, Card, Typography } from 'antd';
@@ -26,25 +26,25 @@ const ExpenseDashboard = () => {
     const fetchSplit = async () => {
       try {
         const splitData = await calculateSplit(tripId, user.token);
+        
         setSplitResults(splitData.transactions || []);
         setTotalExpenses(splitData.totalExpenses || 0);
         setBalances(splitData.balances || []);
-
-        if (splitData.participants && Array.isArray(splitData.participants)) {
-          const chartData = splitData.participants.map((p) => ({
-            name: p.user.name,
-            value: Math.abs(splitData.balances[p.user._id] || 0),
+        
+        if (Array.isArray(splitData.participants)) {
+          const chartData = splitData.participants.map(({ user }) => ({
+            name: user.name,
+            value: Math.abs(splitData.balances[user._id] || 0),
           }));
           setPieChartData(chartData);
         } else {
           console.error('Partecipanti mancanti o non in formato array');
           setPieChartData([]);
         }
-
-        setLoading(false);
-      } catch (error) {
-        console.error('Errore nel calcolo della suddivisione:', error);
+      } catch (err) {
+        console.error('Errore nel calcolo della suddivisione:', err);
         setError('Errore nel calcolo della suddivisione');
+      } finally {
         setLoading(false);
       }
     };
@@ -72,9 +72,7 @@ const ExpenseDashboard = () => {
   return (
     <Layout className="expense-dashboard-layout">
       <Content className="expense-dashboard-content">
-        <Title level={2} className="dashboard-title">
-          Dashboard Spese
-        </Title>
+        <Title level={2} className="dashboard-title">Dashboard Spese</Title>
         <Row gutter={[24, 24]}>
           <Col xs={24} lg={16}>
             <Card className="expense-dashboard-card">

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import { Form, Input, DatePicker, Button } from 'antd';
 import moment from 'moment';
 
@@ -6,7 +6,6 @@ const ItineraryForm = ({ initialValues, onSubmit, onCancel }) => {
   const [form] = Form.useForm();
 
   useEffect(() => {
-   
     form.setFieldsValue({
       ...initialValues,
       date: initialValues.date ? moment(initialValues.date) : null,
@@ -25,11 +24,7 @@ const ItineraryForm = ({ initialValues, onSubmit, onCancel }) => {
   };
 
   return (
-    <Form
-      form={form}
-      layout="vertical"
-      onFinish={handleFinish}
-    >
+    <Form form={form} layout="vertical" onFinish={handleFinish}>
       <Form.Item
         label="Luogo"
         name="location"

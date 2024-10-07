@@ -1,4 +1,3 @@
-import React from 'react';
 import { Form, Input, Button, Typography } from 'antd';
 import './PasswordChangeForm.css';
 

@@ -1,4 +1,3 @@
-import React from 'react';
 import { Card, Col, Row, Empty, Typography, Tag } from 'antd';
 import { useNavigate } from 'react-router-dom';
 import { EnvironmentOutlined } from '@ant-design/icons';

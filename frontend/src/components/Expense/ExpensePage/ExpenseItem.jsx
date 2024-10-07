@@ -1,11 +1,12 @@
-import React from 'react';
 import { List, Button, Popconfirm } from 'antd';
 import { EditOutlined, DeleteOutlined } from '@ant-design/icons';
 import moment from 'moment';
 
 const ExpenseItem = ({ expense, participants, onEdit, onDelete }) => {
+  // Ottiene l'ID della persona che ha pagato
   const paidById = typeof expense.paidBy === 'object' ? expense.paidBy._id : expense.paidBy;
 
+  // Trova il partecipante che ha pagato
   const payer = participants.find((p) => p._id === paidById);
 
   return (

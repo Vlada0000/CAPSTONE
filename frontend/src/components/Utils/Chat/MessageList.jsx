@@ -1,4 +1,3 @@
-import React from 'react';
 import { List, Avatar, Button, Popconfirm } from 'antd';
 import { DeleteOutlined, EditOutlined } from '@ant-design/icons';
 
@@ -8,14 +7,13 @@ const MessageList = ({ messages, onDeleteMessage, onEditMessage, userId }) => {
       itemLayout="horizontal"
       dataSource={messages}
       renderItem={(message) => {
-        const senderName = message.sender?.name || 'Anonimo'; 
-        const avatarLetter = senderName.charAt(0).toUpperCase(); 
-
-        const isSender = message.sender?._id === userId; 
+        const senderName = message.sender?.name || 'Anonimo';
+        const avatarLetter = senderName.charAt(0).toUpperCase();
+        const isSender = message.sender?._id === userId;
 
         return (
           <List.Item
-            key={message._id} 
+            key={message._id}
             actions={
               isSender
                 ? [
@@ -27,7 +25,11 @@ const MessageList = ({ messages, onDeleteMessage, onEditMessage, userId }) => {
                     >
                       <Button type="link" icon={<DeleteOutlined />} />
                     </Popconfirm>,
-                    <Button type="link" icon={<EditOutlined />} onClick={() => onEditMessage(message._id, message.content)} />,
+                    <Button
+                      type="link"
+                      icon={<EditOutlined />}
+                      onClick={() => onEditMessage(message._id, message.content)}
+                    />,
                   ]
                 : []
             }
@@ -46,4 +48,3 @@ const MessageList = ({ messages, onDeleteMessage, onEditMessage, userId }) => {
 };
 
 export default MessageList;
-

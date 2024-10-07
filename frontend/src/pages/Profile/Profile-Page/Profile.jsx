@@ -1,11 +1,13 @@
-import React, { useState, useEffect } from 'react';
-import { Layout, Menu, Spin, message } from 'antd';
+import  { useState, useEffect } from 'react';
+import { Layout, Menu, Spin, message, Drawer, Button, Modal } from 'antd';
 import {
   UserOutlined,
   SettingOutlined,
   LockOutlined,
   LogoutOutlined,
   LineChartOutlined,
+  MenuOutlined,
+  ExclamationCircleOutlined,
 } from '@ant-design/icons';
 import { useAuth } from '../../../context/authContext';
 import {
@@ -14,14 +16,16 @@ import {
   uploadProfileImage,
   updateUserPassword,
   getUserTrips,
+  deleteUserProfile 
 } from '../../../api/userApi';
 import Dashboard from '../Dashboard/Dashboard';
 import EditProfileForm from '../Profile-Form/EditProfileForm';
 import PasswordChangeForm from '../Profile-Form/PasswordChangeForm';
-import moment from 'moment'
+import moment from 'moment';
 import './Profile.css';
 
 const { Sider, Content } = Layout;
+const { confirm } = Modal;
 
 const ProfilePage = () => {
   const { user, setUser, logout } = useAuth();
@@ -40,14 +44,13 @@ const ProfilePage = () => {
   const [file, setFile] = useState(null);
   const [loading, setLoading] = useState(true);
   const [selectedMenuKey, setSelectedMenuKey] = useState('dashboard');
+  const [drawerVisible, setDrawerVisible] = useState(false); 
   const token = localStorage.getItem('token');
 
   useEffect(() => {
-   
     const fetchProfile = async () => {
       try {
         const data = await getLoggedInUserProfile(token);
-       
         setProfileData({
           name: data.name,
           surname: data.surname,
@@ -56,9 +59,6 @@ const ProfilePage = () => {
           profileImage: data.profileImage || '/default-profile.png',
         });
         const tripsData = await getUserTrips(token);
-        
-       
-
         setTrips(tripsData);
       } catch (error) {
         message.error('Errore nel recupero del profilo');
@@ -66,42 +66,33 @@ const ProfilePage = () => {
         setLoading(false);
       }
     };
-  
     fetchProfile();
   }, [token]);
-  
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
     setProfileData((prevState) => ({
       ...prevState,
-      [name]: value, 
+      [name]: value,
     }));
   };
-  
 
   const handleFileChange = ({ file }) => {
     setFile(file);
   };
 
   const handleSaveChanges = async () => {
-    
     try {
       const formattedBirthdate = profileData.birthdate
-        ? moment(profileData.birthdate).format('YYYY-MM-DD') 
+        ? moment(profileData.birthdate).format('YYYY-MM-DD')
         : '';
-      
       const updatedProfile = {
         name: profileData.name,
         surname: profileData.surname,
         email: profileData.email,
-        birthdate: formattedBirthdate, 
+        birthdate: formattedBirthdate,
       };
-  
       const response = await updateUserProfile(updatedProfile, token);
-      
-    
-
       setUser((prevUser) => ({ ...prevUser, ...updatedProfile }));
       message.success('Profilo aggiornato con successo!');
     } catch (error) {
@@ -109,9 +100,6 @@ const ProfilePage = () => {
       message.error('Aggiornamento del profilo non riuscito');
     }
   };
-  
-  
-  
 
   const handleUploadImage = async () => {
     if (!file) {
@@ -138,6 +126,30 @@ const ProfilePage = () => {
     } catch (error) {
       message.error('Errore durante la modifica della password');
     }
+  };
+
+ 
+  const handleDeleteProfile = async () => {
+    try {
+      await deleteUserProfile(token); 
+      message.success('Profilo cancellato con successo!');
+      logout(); 
+    } catch (error) {
+      message.error('Errore durante la cancellazione del profilo');
+    }
+  };
+
+  
+  const showDeleteConfirm = () => {
+    confirm({
+      title: 'Sei sicuro di voler cancellare il tuo profilo?',
+      icon: <ExclamationCircleOutlined />,
+      content: 'Questa azione è irreversibile. Il tuo profilo sarà cancellato definitivamente.',
+      okText: 'Sì, cancella',
+      okType: 'danger',
+      cancelText: 'Annulla',
+      onOk: handleDeleteProfile,
+    });
   };
 
   const renderContent = () => {
@@ -187,6 +199,7 @@ const ProfilePage = () => {
         collapsedWidth="0"
         className="profile-sider"
         width={260}
+        trigger={null} 
       >
         <div className="profile-sider-header">
           <img
@@ -205,6 +218,8 @@ const ProfilePage = () => {
           onClick={({ key }) => {
             if (key === 'logout') {
               logout();
+            } else if (key === 'delete-profile') {
+              showDeleteConfirm(); 
             } else {
               setSelectedMenuKey(key);
             }
@@ -219,13 +234,67 @@ const ProfilePage = () => {
           <Menu.Item key="change-password" icon={<LockOutlined />}>
             Cambia Password
           </Menu.Item>
+          <Menu.Item key="delete-profile" icon={<SettingOutlined />}>
+            Cancella Profilo
+          </Menu.Item>
           <Menu.Item key="logout" icon={<LogoutOutlined />}>
             Logout
           </Menu.Item>
         </Menu>
       </Sider>
+
+      {/* Drawer per schermi piccoli */}
+      <Drawer
+        title="Menu"
+        placement="left"
+        onClose={() => setDrawerVisible(false)}
+        open={drawerVisible}
+        width={260}
+      >
+        <Menu
+          theme="dark"
+          mode="inline"
+          selectedKeys={[selectedMenuKey]}
+          onClick={({ key }) => {
+            if (key === 'logout') {
+              logout();
+            } else if (key === 'delete-profile') {
+              showDeleteConfirm();
+            } else {
+              setSelectedMenuKey(key);
+              setDrawerVisible(false); 
+            }
+          }}
+        >
+          <Menu.Item key="dashboard" icon={<LineChartOutlined />}>
+            Dashboard
+          </Menu.Item>
+          <Menu.Item key="edit-profile" icon={<UserOutlined />}>
+            Modifica Profilo
+          </Menu.Item>
+          <Menu.Item key="change-password" icon={<LockOutlined />}>
+            Cambia Password
+          </Menu.Item>
+          <Menu.Item key="delete-profile" icon={<SettingOutlined />}>
+            Cancella Profilo
+          </Menu.Item>
+          <Menu.Item key="logout" icon={<LogoutOutlined />}>
+            Logout
+          </Menu.Item>
+        </Menu>
+      </Drawer>
+
       <Layout>
-        <Content className="profile-content">{renderContent()}</Content>
+        <Content className="profile-content">
+          {/* Icona per aprire il Drawer su schermi piccoli */}
+          <Button
+            className="menu-toggle"
+            icon={<MenuOutlined />}
+            type="text"
+            onClick={() => setDrawerVisible(true)}
+          />
+          {renderContent()}
+        </Content>
       </Layout>
     </Layout>
   );

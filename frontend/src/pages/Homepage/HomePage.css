@@ -1,10 +1,7 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
-
 .homepage-container {
   width: 100%;
   min-height: 100vh;
   background-image: url('../../assets/images/background.jpg');
-  font-family: 'Poppins', sans-serif;
 }
 
 .hero-section {
@@ -31,7 +28,7 @@
 }
 
 .hero-title {
-  color: #fff;
+  color: #fff!important;
   font-size: 64px;
   font-weight: bold;
   text-align: center;

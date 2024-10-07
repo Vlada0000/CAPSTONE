@@ -1,4 +1,3 @@
-import React from 'react';
 import { Form, Input, Button, Typography } from 'antd';
 import moment from 'moment'; 
 import './EditProfileForm.css';

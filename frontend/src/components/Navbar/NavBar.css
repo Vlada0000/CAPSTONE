@@ -1,7 +1,10 @@
 .navbar-custom {
-  background-color: #ffffff;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  padding: 0.5rem 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 16px;
+  background-color: #f8f9fa;
+  box-shadow: 3px 3px 5px rgba(0,0,0,0.5);
 }
 
 .navbar-logo {
@@ -12,133 +15,26 @@
 
 .navbar-logo-img {
   height: 40px;
-  width: auto;
-  margin-right: 10px;
+  margin-right: 8px;
 }
 
-.navbar-logo-text {
-  font-size: 1.5rem;
-  font-weight: 600;
-  color: #333;
+.navbar-toggler {
+  display: none;
 }
 
 @media (max-width: 768px) {
-  .navbar-logo-text {
-    font-size: 1.2rem;
+  .navbar-menu {
+    display: none;
   }
-
-  .navbar-custom {
-    padding: 0.5rem;
+  .navbar-toggler {
+    display: block;
   }
 }
-#navbar-nav{
-  display:flex;
-  justify-content: end;
-}
 
-.notification-icon {
-  font-size: 1.5rem;
-  color: #333;
-  position: relative;
-}
-
-.notification-badge {
-  position: absolute;
-  top: -8px; 
-  right: -8px; 
-  background-color: #dc3545;
-  color: white;
-  font-size: 0.75rem;
-  width: 20px;
-  height: 20px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 50%;
-  border: 2px solid white;
-  z-index: 1;
-}
-
-
-.notification-dropdown-menu {
-  width: 300px;
-  max-height: 400px;
-  overflow-y: auto;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
-}
-
-.notification-list {
-  max-height: 300px;
-  overflow-y: auto;
-}
-
-.notification-item {
-  padding: 10px 15px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  cursor: pointer;
-}
-
-.notification-item.read {
-  background-color: #f8f9fa;
-}
-
-.notification-item.unread {
-  background-color: #e9ecef;
-  font-weight: bold;
-}
-
-.notification-message {
-  flex-grow: 1;
-  margin-right: 10px;
-}
-
-.notification-actions button {
-  padding: 5px;
-  font-size: 0.875rem;
-}
-
-
-.dropdown-toggle::before {
-  display: none !important;
-}
-
-
-.user-toggle {
-  display: inline-flex;
-  align-items: center;
-  cursor: pointer;
-}
-
-.user-avatar {
-  width: 40px;
-  height: 40px;
-  object-fit: cover;
-  border: 2px solid #ddd;
-}
-
-
-#user-dropdown .dropdown-menu {
-  right: 0;
-  left: auto;
-  min-width: 180px;
-}
-
-#notification-dropdown .dropdown-menu {
-  right: 0;
-  left: auto;
-  width: 300px;
-  max-height: 400px;
-  overflow-y: auto;
-}
-
-
-.navbar-actions .btn-link {
-  color: #333;
-  text-decoration: none;
-}
-
-.navbar-actions .btn-link:hover {
-  color: #007bff;
+@media (min-width: 769px) {
+  .navbar-menu {
+    display: flex;
+    flex: 1;
+    justify-content: flex-end;
+  }
 }

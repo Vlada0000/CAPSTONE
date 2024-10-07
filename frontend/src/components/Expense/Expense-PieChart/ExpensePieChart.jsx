@@ -1,4 +1,3 @@
-import React from 'react';
 import { Pie } from '@ant-design/plots';
 import { Typography } from 'antd';
 import './ExpensePieChart.css';
@@ -13,8 +12,6 @@ const ExpensePieChart = ({ data }) => {
     colorField: 'name',
     radius: 1,
     innerRadius: 0.6,
- 
-    label: null,
     interactions: [{ type: 'element-active' }],
     legend: {
       position: 'bottom',
@@ -23,9 +20,7 @@ const ExpensePieChart = ({ data }) => {
 
   return (
     <div className="expense-pie-chart">
-      <Title level={3} className="chart-title">
-        Suddivisione Spese
-      </Title>
+      <Title level={3} className="chart-title">Suddivisione Spese</Title>
       <Pie {...config} />
     </div>
   );

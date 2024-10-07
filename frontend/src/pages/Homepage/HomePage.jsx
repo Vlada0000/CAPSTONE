@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import {
   Row,
   Col,
@@ -37,7 +37,7 @@ const HomePage = () => {
     endDate: null,
   });
   const [loadingTrips, setLoadingTrips] = useState(true);
-  const [isDrawerVisible, setIsDrawerVisible] = useState(false); // State for drawer visibility
+  const [isDrawerVisible, setIsDrawerVisible] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {

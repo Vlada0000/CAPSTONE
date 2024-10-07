@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { Form, Input, Button, Row, Col, Divider, Typography, message, Card } from 'antd';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { FaGoogle } from 'react-icons/fa';
-import { login, register } from '../../api/authApi';  
+import { login as loginApi, register as registerApi } from '../../api/authApi';
 import { useAuth } from '../../context/authContext';  
 import logo from '../../assets/images/logo.JPG';
 import './Login.css';
@@ -20,7 +20,7 @@ const LoginPage = () => {
     birthdate: '',
   });
 
-  const { login } = useAuth(); // Accedi alla funzione di login dal contesto
+  const { login } = useAuth(); 
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -29,83 +29,52 @@ const LoginPage = () => {
   };
 
   const handleSubmit = async () => {
-    const endpoint = isLogin
-      ? 'http://localhost:4000/api/auth/login'
-      : 'http://localhost:4000/api/auth/register';
-  
-    const dataToSend = isLogin
-      ? {
-          email: formData.email,
-          password: formData.password,
-        }
-      : {
-          name: formData.name,
-          surname: formData.surname,
-          email: formData.email,
-          password: formData.password,
-          birthdate: formData.birthdate,
-        };
-  
     try {
-      const response = await fetch(endpoint, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(dataToSend),
-      });
-  
-      const data = await response.json();
-  
-      if (!response.ok) {
-        throw new Error(data.error || 'Authentication failed');
-      }
-  
-      if (data.token) {
-        localStorage.setItem('token', data.token);
-        login(data.token); // Chiama la funzione di login dal contesto
-        navigate('/');
+      if (isLogin) {
+        const response = await loginApi({ email: formData.email, password: formData.password });
+        if (response.token) {
+          localStorage.setItem('token', response.token);
+          login(response.token);
+          navigate('/');
+        } else {
+          throw new Error('Token non trovato');
+        }
       } else {
-        throw new Error('Token not found in response');
+        await registerApi(formData); 
+        message.success('Registrazione completata! Effettua il login.');
+        setIsLogin(true); 
+        navigate('/login');
       }
     } catch (error) {
-      console.error('Authentication error:', error);
-      setErrorMessage(error.message);
-      message.error(error.message);
+      console.error('Errore di autenticazione:', error);
+      setErrorMessage(error.message || 'Autenticazione fallita');
+      message.error(error.message || 'Autenticazione fallita');
     }
   };
 
-  // Funzione per il login con Google
   const handleGoogleLogin = () => {
-    window.location.href = 'http://localhost:4000/api/auth/google'; 
+    window.location.href = `${process.env.REACT_APP_BACKEND_URL}/api/auth/google`; 
   };
 
-  // Effetto per gestire il reindirizzamento di Google OAuth
   useEffect(() => {
     const urlParams = new URLSearchParams(location.search);
     const tokenFromUrl = urlParams.get('token');
-  
-    console.log('Token from URL:', tokenFromUrl);  // Debug
-  
+
     if (tokenFromUrl) {
       localStorage.setItem('token', tokenFromUrl);
-      login(tokenFromUrl);  // Funzione login che aggiorna lo stato utente nel contesto
-      navigate('/', { replace: true });  // Reindirizza alla home
-    } else {
-      console.log('No token found in URL');  
+      login(tokenFromUrl);  
+      navigate('/', { replace: true });
     }
   }, [location, login, navigate]);
-  
-  
-  
 
   return (
     <Row justify="center" align="middle" style={{ height: '100vh' }}>
       <Col xs={22} sm={16} md={12} lg={8}>
         <Card className="login-card" style={{ padding: '40px', borderRadius: '15px', boxShadow: '0 8px 16px rgba(0, 0, 0, 0.1)' }}>
           <div className="text-center mb-4">
-            <img src={logo} alt="Travel Mate Logo" className="login-logo img-fluid" style={{ width: '120px' }} />
+            <img src={logo} alt="Travel Mate Logo" className="login-logo" style={{ width: '120px' }} />
           </div>
+
           <div className="auth-toggle mb-3 text-center">
             <Button
               type={isLogin ? 'primary' : 'default'}
@@ -124,7 +93,9 @@ const LoginPage = () => {
               Register
             </Button>
           </div>
-          <Title level={3} className="text-center">{isLogin ? 'Welcome back!' : 'Create your account!'}</Title>
+
+          <Title level={3} className="text-center">{isLogin ? 'Bentornato!' : 'Crea il tuo Account!'}</Title>
+          
           <Button
             type="danger"
             block
@@ -133,32 +104,35 @@ const LoginPage = () => {
             onClick={handleGoogleLogin}
             style={{ marginBottom: '20px' }}
           >
-            {isLogin ? 'Login with Google' : 'Sign up with Google'}
+            {isLogin ? 'Login con Google' : 'Registrati con Google'}
           </Button>
+          
           <Divider>or</Divider>
+
           {errorMessage && <Text type="danger">{errorMessage}</Text>}
+
           <Form onFinish={handleSubmit} layout="vertical">
             {!isLogin && (
               <>
-                <Form.Item name="name" rules={[{ required: true, message: 'Please input your name!' }]}>
+                <Form.Item name="name" rules={[{ required: true, message: 'Inserisci il tuo nome!' }]}>
                   <Input
                     type="text"
                     name="name"
-                    placeholder="Name"
+                    placeholder="Nome"
                     value={formData.name}
                     onChange={handleChange}
                   />
                 </Form.Item>
-                <Form.Item name="surname" rules={[{ required: true, message: 'Please input your surname!' }]}>
+                <Form.Item name="surname" rules={[{ required: true, message: 'Inserisci il tuo cognome!' }]}>
                   <Input
                     type="text"
                     name="surname"
-                    placeholder="Surname"
+                    placeholder="Cognome"
                     value={formData.surname}
                     onChange={handleChange}
                   />
                 </Form.Item>
-                <Form.Item name="birthdate" rules={[{ required: true, message: 'Please input your birthdate!' }]}>
+                <Form.Item name="birthdate" rules={[{ required: true, message: 'Inserisci la tua data di nascita!' }]}>
                   <Input
                     type="date"
                     name="birthdate"
@@ -169,7 +143,8 @@ const LoginPage = () => {
                 </Form.Item>
               </>
             )}
-            <Form.Item name="email" rules={[{ required: true, type: 'email', message: 'Please input a valid email!' }]}>
+
+            <Form.Item name="email" rules={[{ required: true, type: 'email', message: 'Per favore, inserisci una e-mail valida!' }]}>
               <Input
                 type="email"
                 name="email"
@@ -178,7 +153,8 @@ const LoginPage = () => {
                 onChange={handleChange}
               />
             </Form.Item>
-            <Form.Item name="password" rules={[{ required: true, message: 'Please input your password!' }]}>
+
+            <Form.Item name="password" rules={[{ required: true, message: 'Inserisci una password!' }]}>
               <Input.Password
                 name="password"
                 placeholder="Password"
@@ -186,15 +162,17 @@ const LoginPage = () => {
                 onChange={handleChange}
               />
             </Form.Item>
+
             <Form.Item>
               <Button type="primary" htmlType="submit" block style={{ borderRadius: '8px' }}>
                 {isLogin ? 'Login' : 'Register'}
               </Button>
             </Form.Item>
           </Form>
+
           <div className="text-center">
             <Button type="link" onClick={() => setIsLogin(!isLogin)}>
-              {isLogin ? 'Create an account' : 'Already have an account? Login'}
+              {isLogin ? 'Crea un nuovo account' : 'Hai già un account? Login'}
             </Button>
           </div>
         </Card>

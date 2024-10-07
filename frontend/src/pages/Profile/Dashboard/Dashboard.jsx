@@ -1,4 +1,3 @@
-import React from 'react';
 import { Row, Col, Card, Typography, Progress, List, Avatar, Upload, Button } from 'antd';
 import {
   TrophyOutlined,

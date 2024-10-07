@@ -1,6 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { Card, Button, Collapse, Spin, Alert, message } from 'antd';
-import { PlusOutlined } from '@ant-design/icons';
+import { useState, useEffect } from 'react';
+import { Card, Collapse, Spin, Alert, message } from 'antd';
 import { getItineraries, addItinerary, updateItinerary, deleteItinerary } from '../../api/itineraryApi';
 import { useAuth } from '../../context/authContext';
 import { useParams } from 'react-router-dom';
@@ -17,7 +16,7 @@ const Itineraries = () => {
   const [error, setError] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
   const pageSize = 5;
-  const [isPanelOpen, setIsPanelOpen] = useState(false); 
+  const [isPanelOpen, setIsPanelOpen] = useState(false);
 
   useEffect(() => {
     const fetchItineraries = async () => {
@@ -26,7 +25,7 @@ const Itineraries = () => {
         setItineraries(fetchedItineraries);
         setLoading(false);
       } catch (error) {
-        console.error('Error fetching itineraries:', error);
+        console.error('Errore nel recupero degli itinerari:', error);
         setError('Errore nel recupero degli itinerari');
         setLoading(false);
       }
@@ -39,37 +38,28 @@ const Itineraries = () => {
 
   const handleAddItinerary = async (values) => {
     try {
-      const itineraryData = {
-        trip: tripId,
-        ...values,
-      };
+      const itineraryData = { trip: tripId, ...values };
       const addedItinerary = await addItinerary(itineraryData, user.token);
-      setItineraries((prevItineraries) => [...prevItineraries, addedItinerary]);
+      setItineraries((prev) => [...prev, addedItinerary]);
       message.success('Itinerario aggiunto con successo!');
-      setIsPanelOpen(false); 
+      setIsPanelOpen(false);
     } catch (error) {
-      console.error('Error adding itinerary:', error);
+      console.error('Errore durante l\'aggiunta dell\'itinerario:', error);
       message.error("Errore durante l'aggiunta dell'itinerario");
     }
   };
 
   const handleUpdateItinerary = async (values) => {
     try {
-      const updatedItinerary = await updateItinerary(
-        editingItinerary._id,
-        values,
-        user.token
-      );
-      setItineraries((prevItineraries) =>
-        prevItineraries.map((itinerary) =>
-          itinerary._id === editingItinerary._id ? updatedItinerary : itinerary
-        )
-      );
+      const updatedItinerary = await updateItinerary(editingItinerary._id, values, user.token);
+      setItineraries((prev) => prev.map((itinerary) => 
+        itinerary._id === editingItinerary._id ? updatedItinerary : itinerary
+      ));
       message.success('Itinerario aggiornato con successo!');
       setEditingItinerary(null);
-      setIsPanelOpen(false); 
+      setIsPanelOpen(false);
     } catch (error) {
-      console.error('Error updating itinerary:', error);
+      console.error('Errore durante l\'aggiornamento dell\'itinerario:', error);
       message.error("Errore durante l'aggiornamento dell'itinerario");
     }
   };
@@ -77,29 +67,27 @@ const Itineraries = () => {
   const handleDeleteItinerary = async (id) => {
     try {
       await deleteItinerary(id, user.token);
-      setItineraries((prevItineraries) =>
-        prevItineraries.filter((itinerary) => itinerary._id !== id)
-      );
+      setItineraries((prev) => prev.filter((itinerary) => itinerary._id !== id));
       message.success('Itinerario eliminato con successo');
     } catch (error) {
-      console.error('Error deleting itinerary:', error);
+      console.error('Errore durante l\'eliminazione dell\'itinerario:', error);
       message.error("Errore durante l'eliminazione dell'itinerario");
     }
   };
 
   const handleEditItinerary = (itinerary) => {
     setEditingItinerary(itinerary);
-    setIsPanelOpen(true); 
+    setIsPanelOpen(true);
   };
 
   const handleAddButton = () => {
     setEditingItinerary(null);
-    setIsPanelOpen(true); 
+    setIsPanelOpen(true);
   };
 
   const handleCancel = () => {
     setEditingItinerary(null);
-    setIsPanelOpen(false); 
+    setIsPanelOpen(false);
   };
 
   const handlePageChange = (page) => {
@@ -123,7 +111,6 @@ const Itineraries = () => {
     currentPage * pageSize
   );
 
-  
   const collapseItems = [
     {
       key: '1',
@@ -139,10 +126,12 @@ const Itineraries = () => {
   ];
 
   return (
-    <Card
-      title="Gestisci Itinerari"  
-    > 
-      <Collapse activeKey={isPanelOpen ? ['1'] : []} onChange={() => setIsPanelOpen(!isPanelOpen)} items={collapseItems} /> 
+    <Card title="Gestisci Itinerari">
+      <Collapse
+        activeKey={isPanelOpen ? ['1'] : []}
+        onChange={() => setIsPanelOpen(!isPanelOpen)}
+        items={collapseItems}
+      />
       <ItineraryList
         itineraries={paginatedItineraries}
         currentPage={currentPage}

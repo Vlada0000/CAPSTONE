@@ -1,6 +1,6 @@
 import User from '../models/User.js';
 import cloudinary from '../config/cloudinary.js';
-import upload from '../config/cloudinary.js'
+import { validatePassword } from '../utils/validatePassword.js';
 import Trip from '../models/Trip.js';
 import bcrypt from 'bcrypt';
 
@@ -83,9 +83,12 @@ export const uploadProfileImage = async (req, res) => {
 
 export const deleteUserProfile = async (req, res) => {
   try {
+    console.log('Richiesta ricevuta per cancellare utente con ID:', req.user._id);
+
     const user = await User.findByIdAndDelete(req.user._id);
 
     if (!user) {
+      console.error('Utente non trovato');
       return res.status(404).json({ error: 'User not found' });
     }
 
@@ -93,16 +96,19 @@ export const deleteUserProfile = async (req, res) => {
       const publicId = `profile_images/${req.user._id}`;
       await cloudinary.uploader.destroy(publicId, (error, result) => {
         if (error) {
-          console.error('Failed to delete image from Cloudinary:', error);
+          console.error('Errore nella cancellazione dell\'immagine da Cloudinary:', error);
         }
       });
     }
 
+    console.log('Utente cancellato con successo');
     res.status(204).end();
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    console.error('Errore nel server:', error);
+    res.status(500).json({ error: 'Errore nel server' });
   }
 };
+
 
 export const getUserTrips = async (req, res) => {
   const userId = req.user._id; 
@@ -128,19 +134,24 @@ export const updatePassword = async (req, res) => {
   const userId = req.user._id;
 
   try {
-    
+   
     const user = await User.findById(userId);
     if (!user) {
       return res.status(404).json({ message: 'Utente non trovato' });
     }
 
-   
+    
     const isMatch = await bcrypt.compare(oldPassword, user.password);
     if (!isMatch) {
       return res.status(400).json({ message: 'La password attuale non è corretta' });
     }
 
     
+    const passwordValidation = validatePassword(newPassword);
+    if (!passwordValidation.valid) {
+      return res.status(400).json({ message: passwordValidation.message });
+    }
+
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(newPassword, salt);
 

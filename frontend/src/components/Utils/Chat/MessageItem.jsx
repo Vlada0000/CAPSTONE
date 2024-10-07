@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { List, Typography, Button, Popconfirm, Input } from 'antd';
 import { EditOutlined, DeleteOutlined, CheckOutlined, CloseOutlined } from '@ant-design/icons';
 import { deleteMessage, editMessage } from '../../../api/messagesApi'; 
@@ -8,7 +8,7 @@ const { Text } = Typography;
 
 const MessageItem = ({ message, tripId, onMessageUpdated }) => {
   const { user } = useAuth();
-  const isSender = user && message.sender._id === user._id; // Controllo se l'utente è il mittente del messaggio
+  const isSender = user && message.sender._id === user._id; 
 
   const [isEditing, setIsEditing] = useState(false); 
   const [editContent, setEditContent] = useState(message.content); 
@@ -18,7 +18,7 @@ const MessageItem = ({ message, tripId, onMessageUpdated }) => {
       await deleteMessage(tripId, message._id, user.token); 
       onMessageUpdated();  
     } catch (error) {
-      console.error('Errore durante l\'eliminazione del messaggio:', error);
+      console.error("Errore durante l'eliminazione del messaggio:", error);
     }
   };
 
@@ -28,15 +28,15 @@ const MessageItem = ({ message, tripId, onMessageUpdated }) => {
       setIsEditing(false); 
       onMessageUpdated(); 
     } catch (error) {
-      console.error('Errore durante la modifica del messaggio:', error);
+      console.error("Errore durante la modifica del messaggio:", error);
     }
   };
 
   return (
     <List.Item
       actions={
-        isSender
-          ? isEditing
+        isSender && (
+          isEditing
             ? [
                 <Button type="link" icon={<CheckOutlined />} onClick={handleEdit}>
                   Salva
@@ -47,18 +47,18 @@ const MessageItem = ({ message, tripId, onMessageUpdated }) => {
               ]
             : [
                 <Button type="link" onClick={() => setIsEditing(true)}>
-                  <EditOutlined /> 
+                  <EditOutlined />
                 </Button>,
                 <Popconfirm
                   title="Sei sicuro di voler eliminare questo messaggio?"
                   onConfirm={handleDelete}
                 >
                   <Button type="link" danger>
-                    <DeleteOutlined /> 
+                    <DeleteOutlined />
                   </Button>
                 </Popconfirm>,
               ]
-          : null
+        )
       }
     >
       <List.Item.Meta

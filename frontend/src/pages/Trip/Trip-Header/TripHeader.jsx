@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import {
   Typography,
   Button,
@@ -58,7 +58,7 @@ const TripHeader = ({ trip, user, onTripUpdate, navigate }) => {
       onTripUpdate(updatedTrip);
       setPhotoFile(null);
     } catch (error) {
-      console.error('Error uploading photo:', error);
+      console.error('Error uploading della foto:', error);
       message.error('Errore durante il caricamento della foto');
     }
   };
@@ -89,7 +89,7 @@ const TripHeader = ({ trip, user, onTripUpdate, navigate }) => {
       const updatedTrip = await getTripById(trip._id, user.token);
       onTripUpdate(updatedTrip);
     } catch (error) {
-      console.error('Error updating trip:', error);
+      console.error('Error durante l\'aggiornamento del viaggio:', error);
       message.error('Errore durante l\'aggiornamento del viaggio');
     }
   };
@@ -100,7 +100,7 @@ const TripHeader = ({ trip, user, onTripUpdate, navigate }) => {
       message.success('Viaggio eliminato con successo!');
       navigate('/');
     } catch (error) {
-      console.error('Error deleting trip:', error);
+      console.error('Errore durante l\'eliminazione del viaggio:', error);
       message.error('Errore durante l\'eliminazione del viaggio');
     }
   };

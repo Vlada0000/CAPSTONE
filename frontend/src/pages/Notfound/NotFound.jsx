@@ -1,4 +1,3 @@
-import React from 'react';
 import { Link } from 'react-router-dom';
 import notFoundImage from '../../assets/images/notfound.jpg'; 
 import './NotFound.css'; 

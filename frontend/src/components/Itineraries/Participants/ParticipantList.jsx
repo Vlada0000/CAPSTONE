@@ -1,13 +1,11 @@
-import React from 'react';
 import { List, Badge } from 'antd';
-
 
 const ParticipantsList = ({ participants }) => {
   return (
     <List
       itemLayout="horizontal"
       dataSource={participants}
-      renderItem={participant => (
+      renderItem={(participant) => (
         <List.Item>
           <div className="container">
             <div className="row align-items-center">
@@ -22,10 +20,10 @@ const ParticipantsList = ({ participants }) => {
                 <Badge
                   status={participant.status === 'accepted' ? 'success' : 'warning'}
                   text={
-                    participant.status === 'accepted' 
-                      ? 'Accettato' 
-                      : participant.status === 'pending' 
-                      ? 'In attesa' 
+                    participant.status === 'accepted'
+                      ? 'Accettato'
+                      : participant.status === 'pending'
+                      ? 'In attesa'
                       : 'Rifiutato'
                   }
                 />
@@ -37,6 +35,5 @@ const ParticipantsList = ({ participants }) => {
     />
   );
 };
-
 
 export default ParticipantsList;

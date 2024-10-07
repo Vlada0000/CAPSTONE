@@ -2,21 +2,40 @@ body{
   background-image: url('../../assets/images/background.jpg');
 }
 .login-card {
-  background: #ffffff;
+  padding: 40px;
   border-radius: 15px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
 }
 
-.toggle-button {
-  border-radius: 25px;
+.login-card:hover {
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+.login-logo {
+  width: 120px;
+  margin-bottom: 20px;
 }
 
 .google-login-btn {
-  border-radius: 25px;
+  background-color: #db4437;
+  border: none;
+  color: white;
+  height: 45px;
 }
 
-.active-btn {
-  background-color: #1890ff !important;
-  color: #fff !important;
-  border-color: #1890ff !important;
+.toggle-button.active-btn {
+  background-color: #1890ff;
+  color: white;
+  border-color: #1890ff;
+}
+
+.toggle-button {
+  height: 40px;
+}
+
+@media (max-width: 768px) {
+  .login-card {
+    padding: 20px;
+  }
 }

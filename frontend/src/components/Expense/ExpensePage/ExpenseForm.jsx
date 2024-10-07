@@ -1,4 +1,3 @@
-import React from 'react';
 import { Form, Input, Button, Select, Checkbox, List, DatePicker } from 'antd';
 import moment from 'moment';
 
@@ -12,6 +11,7 @@ const ExpenseForm = ({
 }) => {
   const [form] = Form.useForm();
 
+  // Gestisce il cambiamento della data
   const handleDateChange = (date) => {
     setExpenseData({ ...expenseData, date });
   };
@@ -26,7 +26,12 @@ const ExpenseForm = ({
         date: expenseData.date ? moment(expenseData.date) : null,
       }}
     >
-      <Form.Item label="Importo" name="amount" rules={[{ required: true, message: 'Inserisci l\'importo' }]}>
+      {/* Campo per l'importo */}
+      <Form.Item
+        label="Importo"
+        name="amount"
+        rules={[{ required: true, message: 'Inserisci l\'importo' }]}
+      >
         <Input
           type="number"
           placeholder="Inserisci l'importo"
@@ -34,7 +39,13 @@ const ExpenseForm = ({
           onChange={(e) => setExpenseData({ ...expenseData, amount: e.target.value })}
         />
       </Form.Item>
-      <Form.Item label="Descrizione" name="description" rules={[{ required: true, message: 'Inserisci una descrizione' }]}>
+
+      {/* Campo per la descrizione */}
+      <Form.Item
+        label="Descrizione"
+        name="description"
+        rules={[{ required: true, message: 'Inserisci una descrizione' }]}
+      >
         <Input
           type="text"
           placeholder="Descrivi la spesa"
@@ -42,7 +53,13 @@ const ExpenseForm = ({
           onChange={(e) => setExpenseData({ ...expenseData, description: e.target.value })}
         />
       </Form.Item>
-      <Form.Item label="Data" name="date" rules={[{ required: true, message: 'Seleziona una data' }]}>
+
+      {/* Campo per la data */}
+      <Form.Item
+        label="Data"
+        name="date"
+        rules={[{ required: true, message: 'Seleziona una data' }]}
+      >
         <DatePicker
           value={expenseData.date ? moment(expenseData.date) : null}
           onChange={handleDateChange}
@@ -51,7 +68,13 @@ const ExpenseForm = ({
           placeholder="Seleziona una data"
         />
       </Form.Item>
-      <Form.Item label="Pagato da" name="paidBy" rules={[{ required: true, message: 'Seleziona chi ha pagato' }]}>
+
+      {/* Campo per chi ha pagato */}
+      <Form.Item
+        label="Pagato da"
+        name="paidBy"
+        rules={[{ required: true, message: 'Seleziona chi ha pagato' }]}
+      >
         <Select
           placeholder="Seleziona chi ha pagato"
           value={expenseData.paidBy}
@@ -64,7 +87,13 @@ const ExpenseForm = ({
           ))}
         </Select>
       </Form.Item>
-      <Form.Item label="Chi partecipa alla spesa?" name="participants" rules={[{ required: true, message: 'Seleziona almeno un partecipante' }]}>
+
+      {/* Campo per i partecipanti alla spesa */}
+      <Form.Item
+        label="Chi partecipa alla spesa?"
+        name="participants"
+        rules={[{ required: true, message: 'Seleziona almeno un partecipante' }]}
+      >
         <Checkbox.Group
           value={expenseData.participants}
           onChange={(selectedParticipants) => setExpenseData({ ...expenseData, participants: selectedParticipants })}
@@ -80,6 +109,8 @@ const ExpenseForm = ({
           />
         </Checkbox.Group>
       </Form.Item>
+
+      {/* Pulsanti di azione */}
       <Form.Item>
         <Button type="primary" htmlType="submit">
           {isEditing ? 'Salva Modifiche' : 'Aggiungi Spesa'}
