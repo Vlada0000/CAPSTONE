@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { Form, Input, DatePicker, Button } from 'antd';
-import moment from 'moment';
+
 
 const ItineraryForm = ({ initialValues, onSubmit, onCancel }) => {
   const [form] = Form.useForm();
@@ -8,7 +8,7 @@ const ItineraryForm = ({ initialValues, onSubmit, onCancel }) => {
   useEffect(() => {
     form.setFieldsValue({
       ...initialValues,
-      date: initialValues.date ? moment(initialValues.date) : null,
+      date:  null,
       activities: initialValues.activities ? initialValues.activities.join(', ') : '',
     });
   }, [initialValues, form]);

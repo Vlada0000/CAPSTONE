@@ -8,7 +8,6 @@ import {
   Popconfirm,
   message,
   Tooltip,
-  List,
 } from 'antd';
 import {
   UserOutlined,
@@ -24,7 +23,7 @@ const ParticipantsSection = ({ trip, user, onTripUpdate }) => {
 
   const handleInviteUser = async () => {
     if (!emailToInvite) {
-      message.error('Inserisci un\'email valida.');
+      message.error("Inserisci un'email valida.");
       return;
     }
 
@@ -40,8 +39,8 @@ const ParticipantsSection = ({ trip, user, onTripUpdate }) => {
       });
       setEmailToInvite('');
     } catch (error) {
-      console.error('Error inviting user:', error);
-      message.error('Errore durante l\'invito dell\'utente');
+      console.error('Errore durante l\'invito utente:', error);
+      message.error("Errore durante l'invito dell'utente");
     }
   };
 
@@ -56,92 +55,87 @@ const ParticipantsSection = ({ trip, user, onTripUpdate }) => {
         ),
       });
     } catch (error) {
-      console.error('Error removing participant:', error);
+      console.error('Errore nella rimozione del partecipante:', error);
       message.error('Errore durante la rimozione del partecipante');
     }
   };
 
-        return (
-            <div className="participants-section container">
-              <div className="row">
-                {/* Partecipanti */}
-                <div className="col-12">
-                  <Card title="Partecipanti" className="participants-card">
-                    <div className="row">
-                      {trip.participants.map((participant) => (
-                        <div key={participant.user._id} className="col-12 col-sm-6 col-md-4 col-lg-3 mb-3">
-                          <Card
-                            className="participant-card"
-                            actions={
-                              user._id === trip.organizer._id &&
-                              participant.status === 'accepted' &&
-                              participant.user._id !== user._id
-                                ? [
-                                    <Tooltip title="Rimuovi">
-                                      <Popconfirm
-                                        title="Sei sicuro di voler rimuovere questo partecipante?"
-                                        onConfirm={() => handleRemoveParticipant(participant.user._id)}
-                                        okText="Sì"
-                                        cancelText="No"
-                                      >
-                                        <DeleteOutlined key="delete" />
-                                      </Popconfirm>
-                                    </Tooltip>,
-                                  ]
-                                : []
-                            }
+  return (
+    <div className="participants-section">
+      <Card title="Partecipanti" className="participants-card">
+        <div className="row">
+          {trip.participants.map((participant) => (
+            <div key={participant.user._id} className="col-12 col-sm-6 col-md-4 col-lg-3 mb-3">
+              <Card
+                className="participant-card"
+                actions={
+                  user._id === trip.organizer._id &&
+                  participant.status === 'accepted' &&
+                  participant.user._id !== user._id
+                    ? [
+                        <Tooltip title="Rimuovi">
+                          <Popconfirm
+                            title="Sei sicuro di voler rimuovere questo partecipante?"
+                            onConfirm={() => handleRemoveParticipant(participant.user._id)}
+                            okText="Sì"
+                            cancelText="No"
                           >
-                            <Card.Meta
-                              avatar={
-                                <Avatar
-                                  src={participant.user.profileImage}
-                                  icon={<UserOutlined />}
-                                  size={64}
-                                />
-                              }
-                              title={
-                                <>
-                                  {participant.user.name || participant.user.email}{' '}
-                                  {participant.user._id === trip.organizer._id && (
-                                    <CrownOutlined className="organizer-icon" />
-                                  )}
-                                </>
-                              }
-                              description={`Status: ${participant.status}`}
-                            />
-                          </Card>
-                        </div>
-                      ))}
-                    </div>
-                  </Card>
-                </div>
-        
-                {/* Invita un partecipante */}
-                {user._id === trip.organizer._id && (
-                  <div className="col-12 col-md-4">
-                    <Card className="invite-card">
-                      <Form layout="inline" onFinish={handleInviteUser}>
-                        <Form.Item>
-                          <Input
-                            prefix={<MailOutlined />}
-                            value={emailToInvite}
-                            onChange={(e) => setEmailToInvite(e.target.value)}
-                            placeholder="Email partecipante"
-                            required
-                          />
-                        </Form.Item>
-                        <Form.Item>
-                          <Button type="primary" htmlType="submit">
-                            Invita
-                          </Button>
-                        </Form.Item>
-                      </Form>
-                    </Card>
-                  </div>
-                )}
-              </div>
+                            <DeleteOutlined className="popconfirm-delete" />
+                          </Popconfirm>
+                        </Tooltip>,
+                      ]
+                    : []
+                }
+              >
+                <Card.Meta
+                  avatar={
+                    <Avatar
+                      src={participant.user.profileImage}
+                      icon={<UserOutlined />}
+                      size={64}
+                      className="participant-card-avatar"
+                    />
+                  }
+                  title={
+                    <>
+                      {participant.user.name || participant.user.email}{' '}
+                      {participant.user._id === trip.organizer._id && (
+                        <CrownOutlined className="organizer-icon" />
+                      )}
+                    </>
+                  }
+                  description={`Status: ${participant.status}`}
+                />
+              </Card>
             </div>
-          );
-        };
+          ))}
+        </div>
+      </Card>
+
+      {user._id === trip.organizer._id && (
+        <div className="col-12 col-md-4 mt-3">
+          <Card className="invite-card">
+            <Form layout="inline" onFinish={handleInviteUser}>
+              <Form.Item>
+                <Input
+                  prefix={<MailOutlined />}
+                  value={emailToInvite}
+                  onChange={(e) => setEmailToInvite(e.target.value)}
+                  placeholder="Email partecipante"
+                  required
+                />
+              </Form.Item>
+              <Form.Item>
+                <Button type="primary" htmlType="submit">
+                  Invita
+                </Button>
+              </Form.Item>
+            </Form>
+          </Card>
+        </div>
+      )}
+    </div>
+  );
+};
 
 export default ParticipantsSection;

@@ -1,134 +1,169 @@
-.homepage-container {
-  width: 100%;
-  min-height: 100vh;
-  background-image: url('../../assets/images/background.jpg');
-}
-
 .hero-section {
-  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
   height: 100vh;
+  background: linear-gradient(135deg, #e3f2fd, #bbdefb);
+  padding: 0;
+  position: relative;
   overflow: hidden;
 }
 
 .hero-overlay {
   position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(
-    180deg,
-    rgba(0, 0, 0, 0.6) 0%,
-    rgba(0, 0, 0, 0.8) 100%
-  );
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
+  left: 5%;
+  z-index: 2;
+  max-width: 40%;
 }
 
 .hero-title {
-  color: #fff!important;
-  font-size: 64px;
-  font-weight: bold;
-  text-align: center;
-  margin-bottom: 16px;
-  text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.7);
+  font-size: 4rem;
+  color: #0d47a1!important;
+  font-weight: 800;
+  animation: fadeInLeft 1s ease;
 }
 
 .hero-subtitle {
-  color: #fff;
-  font-size: 24px;
-  margin-bottom: 32px;
-  text-align: center;
-  max-width: 600px;
+  font-size: 2rem;
+  color: white;
+  margin: 20px 0;
+  animation: fadeInLeft 1.5s ease;
 }
 
 .create-trip-button {
-  font-size: 18px;
-  padding: 12px 24px;
-  border-radius: 30px;
-  background: linear-gradient(90deg, #ff7e5f, #feb47b);
-  border: none;
+  animation: fadeInLeft 2s ease;
 }
 
-.create-trip-button:hover {
-  background: linear-gradient(90deg, #feb47b, #ff7e5f);
+@keyframes fadeInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-50px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.three-d-globe {
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 60%;
+  height: 100vh;
+  z-index: 1;
+  background: #000;
 }
 
 .trips-section {
-  padding: 60px 80px;
-  background-color: #fff;
+  margin-top: 40px;
+  padding: 40px;
+  background: #ffffff;
+  border-radius: 20px;
+  box-shadow: 0 5px 25px rgba(0, 0, 0, 0.1);
 }
 
 .section-title {
-  font-size: 36px;
-  font-weight: bold;
-  margin-bottom: 40px;
   text-align: center;
+  color: #0d47a1;
+  margin-bottom: 30px;
+  font-size: 2.5rem;
 }
 
 .trip-card {
-  border-radius: 12px;
+  border-radius: 20px;
   overflow: hidden;
-  transition: transform 0.3s, box-shadow 0.3s;
-  border: none;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .trip-card:hover {
   transform: translateY(-10px);
-  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
 }
 
 .trip-card-image-wrapper {
   position: relative;
+  overflow: hidden;
+  border-radius: 20px 20px 0 0;
 }
 
 .trip-card-image {
+  width: 100%;
   height: 200px;
   object-fit: cover;
-  width: 100%;
+  transition: transform 0.5s ease;
+}
+
+.trip-card-image:hover {
+  transform: scale(1.05);
 }
 
 .trip-card-overlay {
   position: absolute;
-  top: 0;
-  right: 0;
-  margin: 10px;
-  opacity: 0;
-  transition: opacity 0.3s;
-}
-
-.trip-card:hover .trip-card-overlay {
-  opacity: 1;
+  bottom: 10px;
+  right: 10px;
 }
 
 .trip-dates {
-  margin-top: 16px;
-  color: #888;
+  margin-top: 15px;
+  color: #616161!important;
   display: flex;
   align-items: center;
 }
 
-.no-trips-message {
-  text-align: center;
-  font-size: 18px;
-  color: #888;
-  margin-top: 24px;
+.pagination-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 30px;
 }
 
 .spinner-container {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
+  height: 80vh;
 }
 
-.create-trip-modal .ant-modal-content {
-  border-radius: 12px;
-}
-.pagination-container {
-  display: flex;
-  justify-content: center;
-  margin-top: 20px; /* Adjust this margin as needed */
+@media (max-width: 768px) {
+  body {
+    padding: 10px;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-size: 1.5rem;
+  }
+
+  .container {
+    padding: 15px;
+  }
+
+  .hero-section {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 20px;
+  }
+
+  .hero-title {
+    font-size: 2.5rem;
+  }
+
+  .hero-subtitle {
+    font-size: 1.5rem;
+  }
+
+  .three-d-globe {
+    position: relative;
+    width: 100%;
+    height: 300px;
+    margin-top: 20px;
+  }
+
+  .trips-section {
+    padding: 20px;
+  }
+
+  .section-title {
+    font-size: 2rem;
+  }
 }

@@ -10,8 +10,6 @@ import { getParticipants } from '../../../api/tripApi';
 import ExpenseForm from './ExpenseForm';
 import ExpenseList from './ExpenseList';
 
-const { Panel } = Collapse;
-
 const Expenses = () => {
   const { user } = useAuth();
   const navigate = useNavigate();
@@ -123,21 +121,27 @@ const Expenses = () => {
     return <Alert message="Errore" description={error} type="error" showIcon />;
   }
 
+  const collapseItems = [
+    {
+      key: '1',
+      label: isEditing ? 'Modifica Spesa' : 'Aggiungi Nuova Spesa',
+      children: (
+        <ExpenseForm
+          participants={participants}
+          expenseData={expenseData}
+          setExpenseData={setExpenseData}
+          onSubmit={isEditing ? handleUpdateExpense : handleAddExpense}
+          onCancel={resetForm}
+          isEditing={isEditing}
+        />
+      ),
+    },
+  ];
+
   return (
     <Card title="Gestisci Spese" style={{ marginBottom: '20px' }}>
       {/* Form in Collapse */}
-      <Collapse>
-        <Panel header={isEditing ? 'Modifica Spesa' : 'Aggiungi Nuova Spesa'} key="1">
-          <ExpenseForm
-            participants={participants}
-            expenseData={expenseData}
-            setExpenseData={setExpenseData}
-            onSubmit={isEditing ? handleUpdateExpense : handleAddExpense}
-            onCancel={resetForm}
-            isEditing={isEditing}
-          />
-        </Panel>
-      </Collapse>
+      <Collapse items={collapseItems} />
 
       {/* Lista delle spese */}
       <ExpenseList

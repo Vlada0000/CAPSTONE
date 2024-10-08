@@ -1,53 +1,136 @@
 .trip-header {
-    position: relative;
-    height: 400px;
-    overflow: hidden;
+  position: relative;
+  background: linear-gradient(135deg, #ffecb3, #ffcc80);
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 5px 25px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease-in-out;
+}
+
+.trip-header:hover {
+  box-shadow: 0 10px 35px rgba(0, 0, 0, 0.15);
+}
+
+.trip-header-background {
+  height: 400px;
+  background-size: cover;
+  background-position: center;
+  filter: brightness(0.75);
+  position: relative;
+}
+
+.trip-header-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: #ffffff;
+  padding: 20px;
+  background: rgba(0, 0, 0, 0.4);
+}
+
+.trip-header-content {
+  text-align: center;
+  max-width: 700px;
+}
+
+.trip-title {
+  font-size: 2.5rem;
+  font-weight: bold;
+  color: #fffde7;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.trip-description {
+  font-size: 1.2rem;
+  color: #fff;
+  margin: 10px 0;
+}
+
+.trip-dates {
+  margin-top: 15px;
+  color: #fff9c4;
+  font-weight: bold;
+}
+
+.trip-actions {
+  margin-top: 20px;
+  display: flex;
+  gap: 15px;
+}
+
+.trip-edit-modal {
+  .ant-modal-content {
+    border-radius: 15px;
   }
-  
-  .trip-header-background {
-    width: 100%;
-    height: 100%;
-    background-size: cover;
-    background-position: center;
-  }
-  
-  .trip-header-overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(
-      rgba(0, 0, 0, 0.4),
-      rgba(0, 0, 0, 0.7)
-    );
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  
-  .trip-header-content {
-    text-align: center;
-    color: #fff;
-  }
-  
+}
+
+.trip-edit-form .ant-form-item-label > label {
+  font-weight: bold;
+  color: #ff8f00;
+}
+
+.ant-input,
+.ant-picker,
+.ant-input-textarea,
+.ant-upload {
+  border-radius: 12px;
+  border: 1px solid #ffcc80;
+  transition: border-color 0.3s ease-in-out;
+}
+
+.ant-input:focus,
+.ant-picker-focused .ant-picker-input > input,
+.ant-input-textarea:focus,
+.ant-upload:hover {
+  border-color: #ff6f00;
+  box-shadow: 0 0 8px rgba(255, 111, 0, 0.3);
+}
+
+.ant-btn-primary {
+  background-color: #ff8f00;
+  border: none;
+  border-radius: 12px;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+}
+
+.ant-btn-primary:hover {
+  background-color: #ff6f00;
+}
+
+.ant-btn-danger {
+  background-color: #e53935;
+  border: none;
+  border-radius: 12px;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+}
+
+.ant-btn-danger:hover {
+  background-color: #d32f2f;
+}
+
+@media (max-width: 600px) {
   .trip-title {
-    font-size: 48px !important;
-    font-weight: bold;
-    margin-bottom: 16px;
+    font-size: 1.8rem;
   }
-  
+
   .trip-description {
-    font-size: 18px;
-    margin-bottom: 24px;
+    font-size: 1rem;
   }
-  
+
   .trip-dates {
-    font-size: 16px;
-    margin-bottom: 24px;
+    font-size: 0.9rem;
   }
-  
-  .trip-actions .ant-btn {
-    margin: 0 8px;
+
+  .trip-actions {
+    flex-direction: column;
+    gap: 10px;
   }
-  
+}

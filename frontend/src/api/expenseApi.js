@@ -84,7 +84,7 @@ export const getExpenseById = async (id, token) => {
   });
 
   if (!response.ok) {
-    throw new Error('Failed to fetch expense');
+    throw new Error('Errore nel recupero della spesa');
   }
 
   return response.json();

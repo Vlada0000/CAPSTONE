@@ -12,7 +12,7 @@ export const register = async (userData) => {
 
   if (!response.ok) {
     const error = await response.json();
-    throw new Error(error.error || 'Failed to register');
+    throw new Error(error.error || 'Errore nella registrazione');
   }
 
   return response.json();
@@ -29,7 +29,7 @@ export const login = async (loginData) => {
   
     if (!response.ok) {
       const error = await response.json();
-      throw new Error(error.error || 'Failed to login');
+      throw new Error(error.error || 'Errore nel login');
     }
   
     const data = await response.json();
@@ -49,7 +49,7 @@ export const googleCallback = async () => {
 
   const response = await fetch(googleCallbackUrl);
   if (!response.ok) {
-    throw new Error('Failed to authenticate with Google');
+    throw new Error('Errore nell\'autenticazione con google');
   }
 
   const data = await response.json();

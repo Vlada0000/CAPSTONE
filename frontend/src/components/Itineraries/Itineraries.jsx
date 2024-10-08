@@ -52,9 +52,11 @@ const Itineraries = () => {
   const handleUpdateItinerary = async (values) => {
     try {
       const updatedItinerary = await updateItinerary(editingItinerary._id, values, user.token);
-      setItineraries((prev) => prev.map((itinerary) => 
-        itinerary._id === editingItinerary._id ? updatedItinerary : itinerary
-      ));
+      setItineraries((prev) =>
+        prev.map((itinerary) => 
+          itinerary._id === editingItinerary._id ? updatedItinerary : itinerary
+        )
+      );
       message.success('Itinerario aggiornato con successo!');
       setEditingItinerary(null);
       setIsPanelOpen(false);
@@ -77,11 +79,6 @@ const Itineraries = () => {
 
   const handleEditItinerary = (itinerary) => {
     setEditingItinerary(itinerary);
-    setIsPanelOpen(true);
-  };
-
-  const handleAddButton = () => {
-    setEditingItinerary(null);
     setIsPanelOpen(true);
   };
 
@@ -130,7 +127,7 @@ const Itineraries = () => {
       <Collapse
         activeKey={isPanelOpen ? ['1'] : []}
         onChange={() => setIsPanelOpen(!isPanelOpen)}
-        items={collapseItems}
+        items={collapseItems} 
       />
       <ItineraryList
         itineraries={paginatedItineraries}

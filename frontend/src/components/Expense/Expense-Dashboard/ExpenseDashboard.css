@@ -1,37 +1,80 @@
 .expense-dashboard-layout {
-    min-height: 100vh;
-    background: linear-gradient(135deg, #f0f2f5 0%, #dfe9f3 100%);
-  }
-  
-  .expense-dashboard-content {
-    padding: 40px;
-  }
-  
-  .dashboard-title {
-    text-align: center;
-    margin-bottom: 40px;
-    color: #1890ff;
-  }
-  
-  .expense-dashboard-card {
-    border-radius: 16px;
-    overflow: hidden;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-  }
-  
-  .expense-dashboard-loading,
-  .expense-dashboard-error {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 100vh;
-  }
-  
-  .expense-dashboard-loading p,
-  .expense-dashboard-error p {
-    margin-top: 16px;
-    font-size: 18px;
-    color: #888;
-  }
-  
+  min-height: 100vh;
+  background: linear-gradient(135deg, #ffffff, #f7f7f7);
+  padding: 20px;
+}
+
+.expense-dashboard-content {
+  padding: 30px;
+  background: #ffffff;
+  border-radius: 15px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  transition: box-shadow 0.3s ease, transform 0.3s ease;
+}
+
+.expense-dashboard-content:hover {
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  transform: translateY(-5px);
+}
+
+.dashboard-title {
+  font-size: 28px;
+  font-weight: bold;
+  color: #333;
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.expense-dashboard-card {
+  border-radius: 15px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  transition: box-shadow 0.3s ease, transform 0.3s ease;
+  margin-bottom: 20px;
+}
+
+.expense-dashboard-card:hover {
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  transform: translateY(-5px);
+}
+
+.expense-dashboard-loading {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background: linear-gradient(135deg, #ffffff, #f7f7f7);
+}
+
+.expense-dashboard-loading p {
+  font-size: 16px;
+  color: #555;
+  margin-top: 20px;
+}
+
+.expense-dashboard-error {
+  padding: 40px;
+  text-align: center;
+  background: #ffeded;
+  border-radius: 15px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.expense-dashboard-error .ant-alert {
+  font-size: 16px;
+}
+
+.total-expenses-card {
+  margin-top: 20px;
+  padding: 20px;
+  background: #ffffff;
+  border-radius: 15px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  transition: box-shadow 0.3s ease, transform 0.3s ease;
+}
+
+.total-expenses-card:hover {
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  transform: translateY(-5px);
+}

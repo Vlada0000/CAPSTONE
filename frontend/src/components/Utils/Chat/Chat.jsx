@@ -5,16 +5,19 @@ import MessageList from './MessageList';
 import ChatInput from './ChatInput';
 import { Card, Modal, message } from 'antd';
 
+
 const Chat = ({ tripId }) => {
   const [messages, setMessages] = useState([]);
-  const [isSending, setIsSending] = useState(false);
+  const [isSending, setIsSending] = useState(false); 
   const [editMode, setEditMode] = useState({ isEditing: false, messageId: null, newContent: '' });
   const { user } = useAuth();
   const token = user?.token;
 
+
   useEffect(() => {
+    if (!tripId || !token) return;
+
     const fetchMessages = async () => {
-      if (!tripId || !token) return;
       try {
         const fetchedMessages = await getMessages(tripId, token);
         setMessages(fetchedMessages);
@@ -22,49 +25,65 @@ const Chat = ({ tripId }) => {
         console.error('Errore durante il recupero dei messaggi:', error);
       }
     };
+
     fetchMessages();
   }, [tripId, token]);
 
+  
   const handleSendMessage = useCallback(async (content) => {
-    if (!content.trim() || !token || isSending) return;
+    if (!content.trim() || !token || isSending) {
+      return;
+    }
 
-    setIsSending(true);
+    setIsSending(true); 
 
     try {
+     
       const messageData = {
         content,
         senderId: user._id,
-        sender: { name: user.name },
+        sender: { name: user.name }, 
         tripId,
       };
 
+      
       const savedMessage = await sendMessageApi(tripId, messageData, token);
-      const updatedMessage = { ...messageData, ...savedMessage };
 
+      
+      const updatedMessage = {
+        ...messageData,
+        ...savedMessage, 
+        sender: { name: user.name },
+      };
+
+     
       setMessages((prevMessages) => [...prevMessages, updatedMessage]);
     } catch (error) {
-      console.error("Errore durante l'invio del messaggio:", error);
-      message.error("Errore durante l'invio del messaggio");
+      console.error('Errore durante l\'invio del messaggio:', error);
+      message.error('Errore durante l\'invio del messaggio');
     } finally {
       setIsSending(false);
     }
   }, [tripId, token, user, isSending]);
 
+  
   const handleDeleteMessage = async (messageId) => {
     try {
       await deleteMessage(tripId, messageId, token);
       setMessages((prevMessages) => prevMessages.filter((msg) => msg._id !== messageId));
       message.success('Messaggio eliminato con successo');
     } catch (error) {
-      console.error("Errore durante l'eliminazione del messaggio:", error);
-      message.error("Errore durante l'eliminazione del messaggio");
+      message.error('Errore durante l\'eliminazione del messaggio');
+      console.error(error);
     }
   };
+
 
   const handleEditMessage = (messageId, currentContent) => {
     setEditMode({ isEditing: true, messageId, newContent: currentContent });
   };
 
+  
   const handleSaveEdit = async () => {
     try {
       await editMessage(tripId, editMode.messageId, editMode.newContent, token);
@@ -76,8 +95,8 @@ const Chat = ({ tripId }) => {
       setEditMode({ isEditing: false, messageId: null, newContent: '' });
       message.success('Messaggio modificato con successo');
     } catch (error) {
-      console.error("Errore durante la modifica del messaggio:", error);
-      message.error("Errore durante la modifica del messaggio");
+      message.error('Errore durante la modifica del messaggio');
+      console.error(error);
     }
   };
 
@@ -90,6 +109,7 @@ const Chat = ({ tripId }) => {
         overflow: 'hidden',
         boxShadow: '0 4px 10px rgba(0,0,0,0.1)',
       }}
+      
     >
       <MessageList
         messages={messages}
@@ -99,6 +119,7 @@ const Chat = ({ tripId }) => {
       />
       <ChatInput onSendMessage={handleSendMessage} />
 
+      {/* Modale per la modifica dei messaggi */}
       <Modal
         title="Modifica Messaggio"
         open={editMode.isEditing}

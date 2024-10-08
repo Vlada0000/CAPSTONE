@@ -13,12 +13,12 @@ export const markNotificationAsRead = async (notificationId, token) => {
 
     if (!response.ok) {
       const errorData = await response.json();
-      throw new Error(errorData.message || 'Failed to mark notification as read');
+      throw new Error(errorData.message || 'Errore nel marcare la notifica come letta');
     }
 
     return await response.json();
   } catch (error) {
-    console.error('Error marking notification as read:', error);
+    console.error('Errore nel marcare la notifica come letta:', error);
     throw error;
   }
 };
@@ -36,12 +36,12 @@ export const markAllNotificationsAsRead = async (token) => {
 
     if (!response.ok) {
       const errorData = await response.json();
-      throw new Error(errorData.message || 'Failed to mark all notifications as read');
+      throw new Error(errorData.message || 'Errore nel marcare tutte le notifiche come lette');
     }
 
     return await response.json();
   } catch (error) {
-    console.error('Error marking all notifications as read:', error);
+    console.error('Errore nel marcare tutte le notifiche come lette:', error);
     throw error;
   }
 };
@@ -56,12 +56,12 @@ export const getNotifications = async (token) => {
     });
 
     if (!response.ok) {
-      throw new Error('Failed to fetch notifications');
+      throw new Error('Errore nel recupero delle notifiche');
     }
 
     return await response.json();
   } catch (error) {
-    console.error('Error fetching notifications:', error);
+    console.error('Errore nel recupero delle notifiche:', error);
     throw error;
   }
 };

@@ -4,7 +4,6 @@ import {
   Button,
   Form,
   Input,
-  DatePicker,
   Upload,
   message,
   Popconfirm,
@@ -24,6 +23,7 @@ import {
   updateTrip,
   getTripById,
 } from '../../../api/tripApi';
+import DateValidator from '../../../components/DateValidator'; 
 import defaultImage from '../../../assets/images/defaultImage.jpeg';
 import './TripHeader.css';
 
@@ -89,7 +89,7 @@ const TripHeader = ({ trip, user, onTripUpdate, navigate }) => {
       const updatedTrip = await getTripById(trip._id, user.token);
       onTripUpdate(updatedTrip);
     } catch (error) {
-      console.error('Error durante l\'aggiornamento del viaggio:', error);
+      console.error("Error durante l'aggiornamento del viaggio:", error);
       message.error('Errore durante l\'aggiornamento del viaggio');
     }
   };
@@ -153,7 +153,6 @@ const TripHeader = ({ trip, user, onTripUpdate, navigate }) => {
         </div>
       </div>
 
-      
       <Modal
         title="Modifica Viaggio"
         open={isModalVisible}
@@ -182,23 +181,18 @@ const TripHeader = ({ trip, user, onTripUpdate, navigate }) => {
             />
           </Form.Item>
           <Form.Item label="Data inizio" required>
-            <DatePicker
-              value={tripData.startDate}
-              onChange={(date) =>
-                setTripData({ ...tripData, startDate: date })
-              }
-              format="DD/MM/YYYY"
-              style={{ width: '100%' }}
+            <DateValidator
+              initialValue={tripData.startDate}
+              onDateValid={(date) => setTripData({ ...tripData, startDate: date })}
+              placeholder="Seleziona la data di inizio"
             />
           </Form.Item>
           <Form.Item label="Data fine" required>
-            <DatePicker
-              value={tripData.endDate}
-              onChange={(date) =>
-                setTripData({ ...tripData, endDate: date })
-              }
-              format="DD/MM/YYYY"
-              style={{ width: '100%' }}
+            <DateValidator
+              initialValue={tripData.endDate}
+              minDate={tripData.startDate} 
+              onDateValid={(date) => setTripData({ ...tripData, endDate: date })}
+              placeholder="Seleziona la data di fine"
             />
           </Form.Item>
           <Form.Item label="Cambia Immagine">

@@ -12,7 +12,7 @@ export const getTrips = async (token, page = 1, limit = 10) => {
   
     if (!response.ok) {
       const errorData = await response.json();
-      throw new Error(errorData.message || 'Failed to fetch trips');
+      throw new Error(errorData.message || 'Errore nel recupero dei viaggi');
     }
   
     const data = await response.json();
@@ -48,7 +48,7 @@ export const createTrip = async (tripData, token) => {
 
   if (!response.ok) {
     const errorData = await response.json();
-    throw new Error(errorData.message || 'Failed to create trip');
+    throw new Error(errorData.message || 'Errore nella creazione del viaggio');
   }
 
   return await response.json();
@@ -67,7 +67,7 @@ export const updateTrip = async (tripId, tripData, token) => {
 
   if (!response.ok) {
     const errorData = await response.json();
-    throw new Error(errorData.message || 'Failed to update trip');
+    throw new Error(errorData.message || 'Errore nell\'aggiornamento del viaggio');
   }
 
   return await response.json();
@@ -85,7 +85,7 @@ export const deleteTrip = async (tripId, token) => {
 
   if (!response.ok) {
     const errorData = await response.json();
-    throw new Error(errorData.message || 'Failed to delete trip');
+    throw new Error(errorData.message || 'Errore nell\'eliminazione del viaggio');
   }
 
   return await response.json();
@@ -107,7 +107,7 @@ export const addPhotoToTrip = async (tripId, photoFile, token) => {
 
   if (!response.ok) {
     const errorData = await response.json();
-    throw new Error(errorData.message || 'Failed to upload photo');
+    throw new Error(errorData.message || 'Errore nel caricamento della foto');
   }
 
   return await response.json();
@@ -126,7 +126,7 @@ export const inviteUserToTrip = async (tripId, email, token) => {
 
   if (!response.ok) {
     const errorData = await response.json();
-    throw new Error(errorData.message || 'Failed to invite user');
+    throw new Error(errorData.message || 'Errore nell\'invito al viaggio');
   }
 
   return await response.json();
@@ -165,7 +165,7 @@ export const acceptTripInvitation = async (tripId, token) => {
      
       if (!response.ok) {
         const errorData = await response.json();
-        throw new Error(errorData.message || 'Failed to accept trip invitation');
+        throw new Error(errorData.message || 'Errore nell\'accettazione dell\'invito');
       }
   
       return await response.json();
@@ -190,7 +190,7 @@ export const declineTripInvitation = async (tripId, token) => {
   
       if (!response.ok) {
         const errorData = await response.json();
-        throw new Error(errorData.message || 'Failed to decline trip invitation');
+        throw new Error(errorData.message || 'Errore nel rifuto dell\'invito');
       }
   
       return await response.json(); 
@@ -212,7 +212,7 @@ export const getTripById = async (tripId, token) => {
 
   if (!response.ok) {
     const errorData = await response.json();
-    throw new Error(errorData.message || 'Failed to fetch trip details');
+    throw new Error(errorData.message || 'Errore nel recupero dei dettagli del viaggio');
   }
 
   return await response.json();

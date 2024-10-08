@@ -1,35 +1,84 @@
 .profile-layout {
   min-height: 100vh;
-  margin-top:5%;
+  background: linear-gradient(135deg, #ffffff, #f7f7f7);
 }
 
 .profile-sider {
-  background-color: #1f1f1f;
+  background: #001529;
+  color: #fff;
+  box-shadow: 2px 0 8px rgba(0, 0, 0, 0.1);
 }
 
 .profile-sider-header {
-  padding: 24px;
+  padding: 30px 20px;
   text-align: center;
-  background-color: #141414;
+  background: linear-gradient(135deg, #2575fc, #6a11cb);
+  border-bottom: 1px solid #e0e0e0;
 }
 
 .profile-sider-avatar {
   width: 100px;
   height: 100px;
   border-radius: 50%;
-  object-fit: cover;
-  border: 2px solid #fff;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  margin-bottom: 15px;
+  transition: transform 0.3s ease;
+}
+
+.profile-sider-avatar:hover {
+  transform: scale(1.1);
 }
 
 .profile-sider-name {
-  color: #fff;
-  margin-top: 16px;
+  font-size: 22px;
+  font-weight: bold;
+  color: #ffffff;
+  letter-spacing: 1px;
 }
 
 .profile-content {
-  padding: 40px;
-  background-image:url('../../../assets/images/background.jpg');
-  overflow-y: auto;
+  padding: 30px;
+  transition: all 0.3s ease-in-out;
+}
+
+.profile-sider .ant-menu-item {
+  color: #ffffff;
+  transition: all 0.3s;
+}
+
+.profile-sider .ant-menu-item:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.profile-sider .ant-menu-item-selected {
+  background: linear-gradient(135deg, #6a11cb, #2575fc);
+}
+
+.menu-toggle {
+  display: none;
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  z-index: 10;
+  background: #ffffff;
+  border: none;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.menu-toggle:hover {
+  background-color: #f0f0f0;
+  transform: scale(1.1);
+}
+
+@media (max-width: 768px) {
+  .menu-toggle {
+    display: block;
+  }
+
+  .profile-sider {
+    display: none;
+  }
 }
 
 .spinner-container {
@@ -37,4 +86,46 @@
   justify-content: center;
   align-items: center;
   height: 100vh;
+  background: linear-gradient(135deg, #ffffff, #f7f7f7);
+}
+
+/* Stile per i form di modifica profilo e password */
+.edit-profile-form,
+.password-change-form {
+  background: #ffffff;
+  padding: 20px;
+  border-radius: 15px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  transition: box-shadow 0.3s ease, transform 0.3s ease;
+}
+
+.edit-profile-form:hover,
+.password-change-form:hover {
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  transform: translateY(-8px);
+}
+
+.edit-profile-form h2,
+.password-change-form h2 {
+  font-size: 24px;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+.profile-sider .ant-menu-item .anticon {
+  font-size: 18px;
+  margin-right: 10px;
+}
+
+/* Modal per confermare la cancellazione del profilo */
+.ant-modal-confirm-title {
+  font-size: 20px;
+  font-weight: bold;
+  color: #d9534f;
+}
+
+.ant-modal-confirm-content {
+  font-size: 16px;
+  color: #555;
 }

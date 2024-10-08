@@ -1,10 +1,5 @@
 import { Row, Col, Card, Typography, Progress, List, Avatar, Upload, Button } from 'antd';
-import {
-  TrophyOutlined,
-  RocketOutlined,
-  EnvironmentOutlined,
-  CameraOutlined
-} from '@ant-design/icons';
+import { TrophyOutlined, RocketOutlined, EnvironmentOutlined, CameraOutlined } from '@ant-design/icons';
 import UserTrips from '../User-Trip/UserTrips';
 import './Dashboard.css';
 
@@ -20,7 +15,9 @@ const Dashboard = ({ profileData, trips, handleFileChange, handleUploadImage }) 
     <div className="dashboard-container">
       <Row gutter={[24, 24]}>
         <Col xs={24} lg={16}>
-          <Title level={2}>Benvenuto, {profileData.name}!</Title>
+          <Title level={2} className="dashboard-title">
+            Benvenuto, {profileData.name}!
+          </Title>
           <Row gutter={[24, 24]}>
             <Col xs={24} md={8}>
               <Card className="stats-card">

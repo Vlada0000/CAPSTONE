@@ -72,42 +72,6 @@ export const sendMessage = async (tripId, messageData, token) => {
   }
 };
 
-
-export const sendMessageSocket = (socket, tripId, messageData) => {
-    if (!socket || typeof socket.emit !== 'function') {
-      console.error('Socket non è definito o non è pronto per inviare messaggi');
-      return;
-    }
-  
-   
-    socket.emit('send_message', { tripId, ...messageData });
-  };
-  
-  export const listenForMessages = (socket, tripId, userId, callback) => {
-    if (socket) {
-      const event = `message_${tripId}_${userId}`;
-     
-      socket.on(event, (message) => {
-       
-        callback(message);
-      });
-    }
-  };
-  
-
-
-export const removeMessageListener = (socket) => {
-  if (socket) {
-    try {
-      socket.off('receive_message'); 
-     
-    } catch (error) {
-      console.error('Errore durante la rimozione del listener dei messaggi:', error);
-    }
-  } else {
-    console.error('Socket non disponibile per rimuovere il listener dei messaggi');
-  }
-};
 export const deleteMessage = async (tripId, messageId, token) => {
     try {
       const response = await fetch(`${API_URL}/${tripId}/messages/${messageId}`, {

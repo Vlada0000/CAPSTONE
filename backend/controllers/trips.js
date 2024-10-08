@@ -110,20 +110,22 @@ export const deleteTrip = async (req, res) => {
     // Elimina il viaggio
     await Trip.findByIdAndDelete(tripId);
 
-    // Notifica tutti i partecipanti riguardo l'eliminazione del viaggio
-    const notifications = trip.participants.map(async (participant) => {
-      const notification = new Notification({
-        recipient: participant.user,
-        sender: userId,
-        type: 'trip_deleted',
-        message: `Il viaggio "${trip.name}" è stato eliminato.`,
-        data: { tripId: trip._id },
-      });
-      await notification.save();
+    // Notifica tutti i partecipanti riguardo l'eliminazione del viaggio tranne l'organizzatore
+    const notifications = trip.participants
+      .filter(participant => participant.user.toString() !== userId.toString()) // Filtra l'organizzatore
+      .map(async (participant) => {
+        const notification = new Notification({
+          recipient: participant.user,
+          sender: userId,
+          type: 'trip_deleted',
+          message: `Il viaggio "${trip.name}" è stato eliminato.`,
+          data: { tripId: trip._id },
+        });
+        await notification.save();
 
-      
-      emitGlobalEvent(`notification_${participant.user.toString()}`, notification);
-    });
+        
+        emitGlobalEvent(`notification_${participant.user.toString()}`, notification);
+      });
 
     await Promise.all(notifications); 
 
@@ -133,6 +135,7 @@ export const deleteTrip = async (req, res) => {
     res.status(500).json({ message: 'Errore del server nell\'eliminazione del viaggio' });
   }
 };
+
 // Ottenere un viaggio per ID
 
 

@@ -11,7 +11,7 @@ export const getLoggedInUserProfile = async (token) => {
     });
   
     if (!response.ok) {
-      throw new Error('Failed to fetch user profile');
+      throw new Error('Errore nel recupero del profilo');
     }
   
     return response.json();
@@ -61,7 +61,7 @@ export const getUserTrips = async (token) => {
     });
   
     if (!response.ok) {
-      throw new Error('Failed to fetch user profile by ID');
+      throw new Error('Errore nel recupero del profilo');
     }
   
     return response.json();
@@ -79,7 +79,7 @@ export const getUserTrips = async (token) => {
     });
   
     if (!response.ok) {
-      throw new Error('Failed to fetch users');
+      throw new Error('Errore nel recupero degli utenti');
     }
   
     return response.json();
@@ -97,7 +97,7 @@ export const getUserTrips = async (token) => {
     });
   
     if (!response.ok) {
-      throw new Error('Failed to update user profile');
+      throw new Error('Errore durante la modifica del profilo');
     }
   
     return response.json();
@@ -118,7 +118,7 @@ export const uploadProfileImage = async (file, token) => {
     });
   
     if (!response.ok) {
-      throw new Error('Failed to upload profile image');
+      throw new Error('Errore nel caricamento della foto profilo');
     }
   
     return response.json();
@@ -139,7 +139,7 @@ export const uploadProfileImage = async (file, token) => {
     }
   
     if (!response.ok) {
-      throw new Error('Failed to delete user profile');
+      throw new Error('Errore nell\'eliminazione del profilo');
     }
   
     return response.json();

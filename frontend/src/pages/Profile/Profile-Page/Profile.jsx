@@ -1,4 +1,4 @@
-import  { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { Layout, Menu, Spin, message, Drawer, Button, Modal } from 'antd';
 import {
   UserOutlined,
@@ -16,7 +16,7 @@ import {
   uploadProfileImage,
   updateUserPassword,
   getUserTrips,
-  deleteUserProfile 
+  deleteUserProfile,
 } from '../../../api/userApi';
 import Dashboard from '../Dashboard/Dashboard';
 import EditProfileForm from '../Profile-Form/EditProfileForm';
@@ -27,7 +27,7 @@ import './Profile.css';
 const { Sider, Content } = Layout;
 const { confirm } = Modal;
 
-const ProfilePage = () => {
+const Profile = () => {
   const { user, setUser, logout } = useAuth();
   const [profileData, setProfileData] = useState({
     name: '',
@@ -44,7 +44,7 @@ const ProfilePage = () => {
   const [file, setFile] = useState(null);
   const [loading, setLoading] = useState(true);
   const [selectedMenuKey, setSelectedMenuKey] = useState('dashboard');
-  const [drawerVisible, setDrawerVisible] = useState(false); 
+  const [drawerVisible, setDrawerVisible] = useState(false);
   const token = localStorage.getItem('token');
 
   useEffect(() => {
@@ -96,7 +96,7 @@ const ProfilePage = () => {
       setUser((prevUser) => ({ ...prevUser, ...updatedProfile }));
       message.success('Profilo aggiornato con successo!');
     } catch (error) {
-      console.error('Errore durante l\'aggiornamento del profilo:', error);
+      console.error("Errore durante l'aggiornamento del profilo:", error);
       message.error('Aggiornamento del profilo non riuscito');
     }
   };
@@ -128,18 +128,16 @@ const ProfilePage = () => {
     }
   };
 
- 
   const handleDeleteProfile = async () => {
     try {
-      await deleteUserProfile(token); 
+      await deleteUserProfile(token);
       message.success('Profilo cancellato con successo!');
-      logout(); 
+      logout();
     } catch (error) {
       message.error('Errore durante la cancellazione del profilo');
     }
   };
 
-  
   const showDeleteConfirm = () => {
     confirm({
       title: 'Sei sicuro di voler cancellare il tuo profilo?',
@@ -199,7 +197,7 @@ const ProfilePage = () => {
         collapsedWidth="0"
         className="profile-sider"
         width={260}
-        trigger={null} 
+        trigger={null}
       >
         <div className="profile-sider-header">
           <img
@@ -219,7 +217,7 @@ const ProfilePage = () => {
             if (key === 'logout') {
               logout();
             } else if (key === 'delete-profile') {
-              showDeleteConfirm(); 
+              showDeleteConfirm();
             } else {
               setSelectedMenuKey(key);
             }
@@ -262,7 +260,7 @@ const ProfilePage = () => {
               showDeleteConfirm();
             } else {
               setSelectedMenuKey(key);
-              setDrawerVisible(false); 
+              setDrawerVisible(false);
             }
           }}
         >
@@ -300,4 +298,4 @@ const ProfilePage = () => {
   );
 };
 
-export default ProfilePage;
+export default Profile;

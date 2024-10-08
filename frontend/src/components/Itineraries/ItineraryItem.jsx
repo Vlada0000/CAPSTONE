@@ -1,23 +1,41 @@
-import { List, Button, Popconfirm } from 'antd';
+import { List, Button, Popconfirm, Avatar } from 'antd';
 import { EditOutlined, DeleteOutlined } from '@ant-design/icons';
 import moment from 'moment';
+import defaultImage from '../../assets/images/itinerary.jpg'; 
 
 const ItineraryItem = ({ itinerary, onEdit, onDelete }) => (
   <List.Item
     key={itinerary._id}
     style={{
-      padding: '25px',
+      display: 'flex',
+      alignItems: 'center',
+      padding: '20px',
       background: '#fff',
-      borderRadius: '10px',
-      border: '1px solid #e0e0e0',
-      boxShadow: '0 2px 10px rgba(0, 0, 0, 0.05)',
+      borderRadius: '15px',
+      border: '1px solid #eaeaea',
+      boxShadow: '0 4px 12px rgba(0, 0, 0, 0.1)',
       transition: 'box-shadow 0.3s ease, transform 0.3s ease',
+      marginBottom: '20px',
     }}
     actions={[
       <Button
         type="link"
         onClick={() => onEdit(itinerary)}
-        style={{ color: '#4A4A4A', fontSize: '16px' }}
+        style={{
+          color: '#1890ff',
+          fontSize: '18px',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          borderRadius: '50%',
+          width: '40px',
+          height: '40px',
+          background: '#f0f2f5',
+          boxShadow: '0 2px 6px rgba(0, 0, 0, 0.1)',
+          transition: 'all 0.3s ease',
+        }}
+        onMouseEnter={(e) => (e.currentTarget.style.background = '#e6f7ff')}
+        onMouseLeave={(e) => (e.currentTarget.style.background = '#f0f2f5')}
       >
         <EditOutlined />
       </Button>,
@@ -28,29 +46,52 @@ const ItineraryItem = ({ itinerary, onEdit, onDelete }) => (
         <Button
           type="link"
           danger
-          style={{ color: '#d9534f', fontSize: '16px' }}
+          style={{
+            color: '#ff4d4f',
+            fontSize: '18px',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            borderRadius: '50%',
+            width: '40px',
+            height: '40px',
+            background: '#f0f2f5',
+            boxShadow: '0 2px 6px rgba(0, 0, 0, 0.1)',
+            transition: 'all 0.3s ease',
+          }}
+          onMouseEnter={(e) => (e.currentTarget.style.background = '#ffccc7')}
+          onMouseLeave={(e) => (e.currentTarget.style.background = '#f0f2f5')}
         >
           <DeleteOutlined />
         </Button>
       </Popconfirm>,
     ]}
     onMouseEnter={(e) => {
-      e.currentTarget.style.boxShadow = '0 8px 20px rgba(0, 0, 0, 0.1)';
+      e.currentTarget.style.boxShadow = '0 8px 16px rgba(0, 0, 0, 0.2)';
       e.currentTarget.style.transform = 'translateY(-5px)';
     }}
     onMouseLeave={(e) => {
-      e.currentTarget.style.boxShadow = '0 2px 10px rgba(0, 0, 0, 0.05)';
+      e.currentTarget.style.boxShadow = '0 4px 12px rgba(0, 0, 0, 0.1)';
       e.currentTarget.style.transform = 'translateY(0)';
     }}
   >
+    <Avatar
+      src={defaultImage}
+      size={80}
+      style={{
+        borderRadius: '10px',
+        marginRight: '20px',
+        boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
+      }}
+    />
     <List.Item.Meta
       title={
         <div
           style={{
-            fontSize: '22px',
+            fontSize: '24px',
             fontWeight: 'bold',
             color: '#333',
-            marginBottom: '10px',
+            marginBottom: '8px',
           }}
         >
           {itinerary.location || 'Località non disponibile'}

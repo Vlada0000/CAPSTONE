@@ -37,8 +37,8 @@ const Sidebar = ({ activeSection, setActiveSection }) => {
         placement="left"
         closable={true}
         onClose={closeDrawer}
-        visible={visible}
-        bodyStyle={{ padding: 0 }} 
+        open={visible}
+        
       >
         <Menu
           mode="inline"

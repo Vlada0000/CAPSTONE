@@ -3,7 +3,6 @@ import { Menu, Badge, Image, Button, Drawer } from 'antd';
 import {
   BellFilled,
   UserOutlined,
-  SettingOutlined,
   LogoutOutlined,
   MenuOutlined,
   CheckOutlined,
@@ -72,7 +71,7 @@ const NavBar = () => {
       setUnreadCount((prevCount) => Math.max(prevCount - 1, 0));
 
       if (tripId) {
-        navigate(`/trip/${tripId}`);
+        navigate(`/trips/${tripId}`);
       }
     } catch (error) {
       console.error('Errore nel segnare la notifica come letta:', error);
@@ -122,6 +121,32 @@ const NavBar = () => {
   const showNotificationDrawer = () => setNotificationDrawerVisible(true);
   const closeNotificationDrawer = () => setNotificationDrawerVisible(false);
 
+  // Items for the menu
+  const menuItems = [
+    {
+      key: 'profile',
+      label: 'Profilo',
+      icon: <UserOutlined />,
+      onClick: () => { closeDrawer(); navigate('/profile'); },
+    },
+    {
+      key: 'logout',
+      label: 'Logout',
+      icon: <LogoutOutlined />,
+      onClick: handleLogout,
+    },
+    {
+      key: 'notifications',
+      label: (
+        <>
+          Notifiche {unreadCount > 0 && <Badge count={unreadCount} />}
+        </>
+      ),
+      icon: <BellFilled />,
+      onClick: showNotificationDrawer,
+    },
+  ];
+
   return (
     <div className="navbar-custom">
       <div className="navbar-logo" onClick={() => navigate('/')}>
@@ -132,19 +157,7 @@ const NavBar = () => {
       <Button className="navbar-toggler" icon={<MenuOutlined />} onClick={showDrawer} />
 
       <Drawer title="Menu" placement="right" onClose={closeDrawer} open={drawerVisible}>
-        <Menu mode="inline" selectable={false}>
-          <Menu.Item key="profile" onClick={() => { closeDrawer(); navigate('/profile'); }}>
-            <UserOutlined /> Profilo
-          </Menu.Item>
-          <Menu.Item key="logout" onClick={handleLogout}>
-            <LogoutOutlined /> Logout
-          </Menu.Item>
-          {user && (
-            <Menu.Item key="notifications" onClick={showNotificationDrawer}>
-              <BellFilled /> Notifiche {unreadCount > 0 && <Badge count={unreadCount} />}
-            </Menu.Item>
-          )}
-        </Menu>
+        <Menu mode="inline" selectable={false} items={menuItems} />
       </Drawer>
 
       <Drawer
@@ -159,6 +172,7 @@ const NavBar = () => {
             notifications.map((notification) => (
               <Menu.Item
                 key={notification._id}
+                className={notification.read ? 'notification-item-read' : 'notification-item-unread'}
                 onClick={() => handleMarkAsRead(notification._id, notification.data?.tripId)}
               >
                 <div>{notification.message || 'Nuova notifica'}</div>
@@ -187,6 +201,7 @@ const NavBar = () => {
           ) : (
             <Menu.Item key="no-notifications">Nessuna nuova notifica</Menu.Item>
           )}
+
           {notifications.length > 0 && (
             <Menu.Item key="mark-all-read" onClick={handleMarkAllAsRead}>
               Segna tutte come lette
