@@ -9,7 +9,7 @@ const Footer = () => {
         {/* Colonna: Icone Social */}
         <div className="footer-column social-icons">
           <a
-            href="https://www.linkedin.com/in/vladislava-brinza"
+            href="https://www.linkedin.com/in/vladislava-brinza-138b75318"
             target="_blank"
             rel="noopener noreferrer"
             className="social-icon"

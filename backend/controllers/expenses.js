@@ -140,21 +140,41 @@ export const calculateSplit = async (req, res) => {
     const expenses = await Expense.find({ trip: tripId });
     if (!trip) return res.status(404).json({ error: 'Viaggio non trovato' });
 
-    const totalExpenses = expenses.reduce((total, expense) => total + expense.amount, 0);
-    const fairShare = totalExpenses / trip.participants.length;
-
+   
     const balances = {};
     trip.participants.forEach(p => (balances[p.user._id] = 0));
-    expenses.forEach(expense => (balances[expense.paidBy] += expense.amount));
-    trip.participants.forEach(p => (balances[p.user._id] -= fairShare));
 
+    
+    expenses.forEach(expense => {
+      const selectedParticipants = expense.participants; 
+
+     
+      if (!selectedParticipants || selectedParticipants.length === 0) return;
+
+      
+      const fairShare = expense.amount / selectedParticipants.length;
+
+     
+      balances[expense.paidBy] += expense.amount;
+
+      
+      selectedParticipants.forEach(participantId => {
+        balances[participantId] -= fairShare;
+      });
+    });
+
+    
     const creditors = [];
     const debtors = [];
     trip.participants.forEach(p => {
-      if (balances[p.user._id] > 0) creditors.push({ user: p.user, amount: balances[p.user._id] });
-      else if (balances[p.user._id] < 0) debtors.push({ user: p.user, amount: -balances[p.user._id] });
+      if (balances[p.user._id] > 0) {
+        creditors.push({ user: p.user, amount: balances[p.user._id] });
+      } else if (balances[p.user._id] < 0) {
+        debtors.push({ user: p.user, amount: -balances[p.user._id] });
+      }
     });
 
+   
     const transactions = [];
     let i = 0,
       j = 0;
@@ -167,7 +187,8 @@ export const calculateSplit = async (req, res) => {
       if (debtors[j].amount === 0) j++;
     }
 
-    res.status(200).json({ transactions, totalExpenses, participants: trip.participants, balances });
+    
+    res.status(200).json({ transactions, totalExpenses: expenses.reduce((total, expense) => total + expense.amount, 0), participants: trip.participants, balances });
   } catch (error) {
     console.error('Errore nel calcolo delle spese:', error);
     res.status(500).json({ message: 'Errore del server nel calcolo delle spese' });

@@ -2,7 +2,7 @@ import { Form, Input, Button, Select, Checkbox, List, DatePicker } from 'antd';
 import moment from 'moment';
 
 const ExpenseForm = ({
-  participants,
+  participants, 
   expenseData,
   setExpenseData,
   onSubmit,
@@ -11,7 +11,7 @@ const ExpenseForm = ({
 }) => {
   const [form] = Form.useForm();
 
-  // Gestisce il cambiamento della data
+  
   const handleDateChange = (date) => {
     setExpenseData({ ...expenseData, date });
   };

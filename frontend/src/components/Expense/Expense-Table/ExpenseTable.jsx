@@ -5,33 +5,32 @@ import './ExpenseTable.css';
 const { Title } = Typography;
 
 const ExpenseTable = ({ data }) => {
- 
   const columns = [
     {
-      title: 'Da',
+      title: 'Debitore',
       dataIndex: 'from',
       key: 'from',
-      render: (fromUser) => (
+      render: (debtor) => (
         <>
-          <UserOutlined /> {fromUser.name} {fromUser.surname}
+          <UserOutlined /> {debtor?.name} {debtor?.surname}
         </>
       ),
     },
     {
-      title: 'A',
+      title: 'Creditore',
       dataIndex: 'to',
       key: 'to',
-      render: (toUser) => (
+      render: (creditor) => (
         <>
-          <UserOutlined /> {toUser.name} {toUser.surname}
+          <UserOutlined /> {creditor?.name} {creditor?.surname}
         </>
       ),
     },
     {
-      title: 'Importo',
+      title: 'Importo Dovuto',
       dataIndex: 'amount',
       key: 'amount',
-      render: (amount) => `€ ${amount.toFixed(2)}`, 
+      render: (amount) => `€ ${amount.toFixed(2)}`,
     },
   ];
 
@@ -42,9 +41,9 @@ const ExpenseTable = ({ data }) => {
       </Title>
       <Table
         columns={columns}
-        dataSource={data}
+        dataSource={data} 
         pagination={false}
-        rowKey={(record) => `${record.from._id}-${record.to._id}`} 
+        rowKey={(record) => `${record.from._id}-${record.to._id}-${record.amount}`} 
       />
     </div>
   );

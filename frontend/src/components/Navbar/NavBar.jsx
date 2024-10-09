@@ -145,9 +145,11 @@ const NavBar = () => {
             <Nav.Link onClick={handleLogout}>
               <LogoutOutlined className="me-2" /> Logout
             </Nav.Link>
-            <Nav.Link onClick={showNotificationOffcanvas}>
-              <BellFilled className="me-2" /> Notifiche {unreadCount > 0 && <Badge bg="danger">{unreadCount}</Badge>}
-            </Nav.Link>
+            {user && (
+              <Nav.Link onClick={showNotificationOffcanvas}>
+                <BellFilled className="me-2" /> Notifiche {unreadCount > 0 && <Badge bg="danger">{unreadCount}</Badge>}
+              </Nav.Link>
+            )}
           </Nav>
         </Offcanvas.Body>
       </Offcanvas>
@@ -160,7 +162,11 @@ const NavBar = () => {
           <Nav className="flex-column">
             {notifications.length > 0 ? (
               notifications.map((notification) => (
-                <Nav.Item key={notification._id} onClick={() => handleMarkAsRead(notification._id, notification.data?.tripId)} className="notification-item p-3 mb-2 rounded shadow-sm">
+                <Nav.Item
+                  key={notification._id}
+                  onClick={() => handleMarkAsRead(notification._id, notification.data?.tripId)}
+                  className={`notification-item p-3 mb-2 rounded shadow-sm ${notification.read ? 'read' : 'unread'}`}
+                >
                   <div className="fw-bold">{notification.message || 'Nuova notifica'}</div>
                   {notification.type === 'trip_invite' && notification.data?.tripId && (
                     <div className="d-flex gap-2">
@@ -178,7 +184,7 @@ const NavBar = () => {
               <div className="text-center">Nessuna nuova notifica</div>
             )}
             {notifications.length > 0 && (
-              <Button variant="link" onClick={handleMarkAllAsRead} className="mt-3">
+              <Button variant="link" onClick={handleMarkAllAsRead} className="mt-3" id="btn-mark-all-read">
                 Segna tutte come lette
               </Button>
             )}
@@ -186,27 +192,29 @@ const NavBar = () => {
         </Offcanvas.Body>
       </Offcanvas>
 
-      <Nav className="ms-auto d-none d-lg-flex align-items-center">
-        <Nav.Link onClick={showNotificationOffcanvas}>
-          <div className="notification-icon-container">
-            <BellFilled className="notification-icon me-2" />
-            {unreadCount > 0 && <Badge>{unreadCount}</Badge>}
-          </div>
-        </Nav.Link>
-        <Dropdown align="end">
-          <Dropdown.Toggle variant="link" className="d-flex align-items-center">
-            <Image src={userImage} roundedCircle width="40" height="40" className="me-2" style={{ objectFit: 'cover' }} />
-          </Dropdown.Toggle>
-          <Dropdown.Menu>
-            <Dropdown.Item onClick={() => navigate('/profile')}>
-              <UserOutlined className="me-2" /> Profilo
-            </Dropdown.Item>
-            <Dropdown.Item onClick={handleLogout}>
-              <LogoutOutlined className="me-2" /> Logout
-            </Dropdown.Item>
-          </Dropdown.Menu>
-        </Dropdown>
-      </Nav>
+      {user && (
+        <Nav className="ms-auto d-none d-lg-flex align-items-center">
+          <Nav.Link onClick={showNotificationOffcanvas}>
+            <div className="notification-icon-container">
+              <BellFilled className="notification-icon me-2" />
+              {unreadCount > 0 && <Badge>{unreadCount}</Badge>}
+            </div>
+          </Nav.Link>
+          <Dropdown align="end">
+            <Dropdown.Toggle variant="link" className="d-flex align-items-center">
+              <Image src={userImage} roundedCircle width="40" height="40" className="me-2" style={{ objectFit: 'cover' }} />
+            </Dropdown.Toggle>
+            <Dropdown.Menu>
+              <Dropdown.Item onClick={() => navigate('/profile')}>
+                <UserOutlined className="me-2" /> Profilo
+              </Dropdown.Item>
+              <Dropdown.Item onClick={handleLogout}>
+                <LogoutOutlined className="me-2" /> Logout
+              </Dropdown.Item>
+            </Dropdown.Menu>
+          </Dropdown>
+        </Nav>
+      )}
     </Navbar>
   );
 };

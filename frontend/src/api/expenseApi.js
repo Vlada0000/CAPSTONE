@@ -100,16 +100,49 @@ export const getExpensesByUser = async (token) => {
   return response.json();
 };
 
+
 export const calculateSplit = async (tripId, token) => {
-  const response = await fetch(`${API_URL}/${tripId}/split`, {
-    headers: {
-      'Authorization': `Bearer ${token}`,
-    },
-  });
-
-  if (!response.ok) {
-    throw new Error('Errore nel calcolo della suddivisione delle spese');
-  }
-
-  return response.json();
-};
+    try {
+      const response = await fetch(`${API_URL}/${tripId}/split`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+  
+      const data = await response.json();
+  
+      if (!data.transactions || !data.participants) {
+        throw new Error('Dati mancanti nel calcolo delle spese');
+      }
+  
+      const filteredTransactions = data.transactions.map((transaction) => {
+        
+        const selectedParticipants = Array.isArray(transaction.selectedParticipants)
+          ? transaction.selectedParticipants
+          : [];
+  
+        const amountPerParticipant = selectedParticipants.length > 0 
+          ? transaction.amount / selectedParticipants.length 
+          : 0;
+  
+        return {
+          ...transaction,
+          selectedParticipants,
+          amountPerParticipant,
+        };
+      });
+  
+      return {
+        transactions: filteredTransactions,
+        totalExpenses: data.totalExpenses || 0,
+        participants: data.participants,
+        balances: data.balances || {},
+      };
+    } catch (error) {
+      console.error('Errore nel calcolo delle spese:', error);
+      throw error;
+    }
+  };
+  
+  
+  

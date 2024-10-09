@@ -15,6 +15,7 @@ const { Title } = Typography;
 const ExpenseDashboard = () => {
   const { user } = useAuth();
   const { tripId } = useParams();
+  
   const [splitResults, setSplitResults] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
@@ -26,11 +27,27 @@ const ExpenseDashboard = () => {
     const fetchSplit = async () => {
       try {
         const splitData = await calculateSplit(tripId, user.token);
-        
-        setSplitResults(splitData.transactions || []);
+
+        const filteredParticipants = splitData.transactions.map((transaction) => {
+          
+          const selectedParticipants = transaction.selectedParticipants;
+
+          
+          const amountPerParticipant = selectedParticipants.length > 0 
+            ? transaction.amount / selectedParticipants.length 
+            : 0;
+
+          return {
+            ...transaction,
+            participants: selectedParticipants,
+            amountPerParticipant,
+          };
+        });
+
+        setSplitResults(filteredParticipants);
         setTotalExpenses(splitData.totalExpenses || 0);
         setBalances(splitData.balances || []);
-        
+
         if (Array.isArray(splitData.participants)) {
           const chartData = splitData.participants.map(({ user }) => ({
             name: user.name,
@@ -51,7 +68,8 @@ const ExpenseDashboard = () => {
 
     fetchSplit();
   }, [tripId, user.token]);
-
+  
+  
   if (loading) {
     return (
       <div className="expense-dashboard-loading">

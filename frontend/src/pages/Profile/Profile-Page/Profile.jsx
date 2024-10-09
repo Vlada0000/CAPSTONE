@@ -22,6 +22,7 @@ import Dashboard from '../Dashboard/Dashboard';
 import EditProfileForm from '../Profile-Form/EditProfileForm';
 import PasswordChangeForm from '../Profile-Form/PasswordChangeForm';
 import moment from 'moment';
+import defaultImage from '../../../assets/images/user.jpg';
 import './Profile.css';
 
 const { Sider, Content } = Layout;
@@ -56,7 +57,7 @@ const Profile = () => {
           surname: data.surname,
           email: data.email,
           birthdate: data.birthdate ? moment(data.birthdate).format('YYYY-MM-DD') : '',
-          profileImage: data.profileImage || '/default-profile.png',
+          profileImage: data.profileImage || defaultImage,
         });
         const tripsData = await getUserTrips(token);
         setTrips(tripsData);
@@ -92,7 +93,7 @@ const Profile = () => {
         email: profileData.email,
         birthdate: formattedBirthdate,
       };
-      const response = await updateUserProfile(updatedProfile, token);
+      await updateUserProfile(updatedProfile, token);
       setUser((prevUser) => ({ ...prevUser, ...updatedProfile }));
       message.success('Profilo aggiornato con successo!');
     } catch (error) {
@@ -230,9 +231,9 @@ const Profile = () => {
       >
         <div className="profile-sider-header">
           <img
-            src={profileData.profileImage}
-            alt="Profile"
+            src={profileData.profileImage || defaultImage}
             className="profile-sider-avatar"
+            alt="User Avatar"
           />
           <h2 className="profile-sider-name">
             {profileData.name} {profileData.surname}
@@ -249,7 +250,7 @@ const Profile = () => {
               setSelectedMenuKey(key);
             }
           }}
-          items={menuItems} 
+          items={menuItems}
         />
       </Sider>
 
@@ -292,4 +293,3 @@ const Profile = () => {
 };
 
 export default Profile;
-
