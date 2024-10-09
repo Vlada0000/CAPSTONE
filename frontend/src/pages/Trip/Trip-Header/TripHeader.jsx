@@ -118,11 +118,11 @@ const TripHeader = ({ trip, user, onTripUpdate, navigate }) => {
             <Title className="trip-title">{trip.name}</Title>
             <Text className="trip-description">{trip.description}</Text>
             <div className="trip-dates">
-              <Text>
+              <Text className='text-white'>
                 <strong>Data inizio:</strong>{' '}
                 {moment(trip.startDate).format('DD/MM/YYYY')}
               </Text>
-              <Text style={{ marginLeft: '20px' }}>
+              <Text style={{ marginLeft: '20px' }} className="text-white">
                 <strong>Data fine:</strong>{' '}
                 {moment(trip.endDate).format('DD/MM/YYYY')}
               </Text>
@@ -130,10 +130,9 @@ const TripHeader = ({ trip, user, onTripUpdate, navigate }) => {
             {trip.organizer._id === user._id && (
               <div className="trip-actions">
                 <Button
-                  type="primary"
+                  type="button"
                   icon={<EditOutlined />}
                   onClick={() => setIsModalVisible(true)}
-                  style={{ marginRight: '10px' }}
                 >
                   Modifica
                 </Button>

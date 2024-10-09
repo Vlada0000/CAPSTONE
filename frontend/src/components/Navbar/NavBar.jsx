@@ -137,7 +137,7 @@ const NavBar = () => {
         <Offcanvas.Header closeButton>
           <Offcanvas.Title>Menu</Offcanvas.Title>
         </Offcanvas.Header>
-        <Offcanvas.Body>
+        <Offcanvas.Body className="offcanvas-body">
           <Nav className="flex-column">
             <Nav.Link onClick={() => { closeOffcanvas(); navigate('/profile'); }}>
               <UserOutlined className="me-2" /> Profilo
@@ -155,10 +155,10 @@ const NavBar = () => {
       </Offcanvas>
 
       <Offcanvas show={notificationOffcanvasVisible} onHide={closeNotificationOffcanvas} placement="end">
-        <Offcanvas.Header closeButton>
+        <Offcanvas.Header closeButton className="offcanvas-header">
           <Offcanvas.Title>Notifiche</Offcanvas.Title>
         </Offcanvas.Header>
-        <Offcanvas.Body>
+        <Offcanvas.Body className="notification-offcanvas-body">
           <Nav className="flex-column">
             {notifications.length > 0 ? (
               notifications.map((notification) => (
@@ -170,10 +170,10 @@ const NavBar = () => {
                   <div className="fw-bold">{notification.message || 'Nuova notifica'}</div>
                   {notification.type === 'trip_invite' && notification.data?.tripId && (
                     <div className="d-flex gap-2">
-                      <Button variant="success" onClick={(e) => { e.stopPropagation(); handleAcceptInvite(notification._id, notification.data.tripId); }}>
+                      <Button variant="success" className="button-accept" onClick={(e) => { e.stopPropagation(); handleAcceptInvite(notification._id, notification.data.tripId); }}>
                         <CheckOutlined />
                       </Button>
-                      <Button variant="danger" onClick={(e) => { e.stopPropagation(); handleRejectInvite(notification._id); }}>
+                      <Button variant="danger" className="button-decline" onClick={(e) => { e.stopPropagation(); handleRejectInvite(notification._id); }}>
                         <CloseOutlined />
                       </Button>
                     </div>
@@ -197,7 +197,7 @@ const NavBar = () => {
           <Nav.Link onClick={showNotificationOffcanvas}>
             <div className="notification-icon-container">
               <BellFilled className="notification-icon me-2" />
-              {unreadCount > 0 && <Badge>{unreadCount}</Badge>}
+              {unreadCount > 0 && <Badge className="notification-badge">{unreadCount}</Badge>}
             </div>
           </Nav.Link>
           <Dropdown align="end">

@@ -16,7 +16,7 @@ const UserTrips = ({ trips }) => {
 
   return (
     <div className="user-trips-container">
-      <Title level={3}>I miei Viaggi</Title>
+      <Title level={3} className="user-trips-title">I miei Viaggi</Title>
       {trips.length === 0 ? (
         <Empty description="Non ci sono viaggi disponibili" />
       ) : (
@@ -33,14 +33,22 @@ const UserTrips = ({ trips }) => {
                   />
                 }
                 onClick={() => handleNavigate(trip._id)}
-                className="trip-card"
+                className="trip-card" 
               >
                 <Meta
-                  title={trip.name}
+                  title={
+                    <span className="trip-card-title"> 
+                      {trip.name}
+                    </span>
+                  }
                   description={
                     <>
                       <p>{trip.description}</p>
-                      <Tag icon={<EnvironmentOutlined />} color="blue">
+                      <Tag
+                        icon={<EnvironmentOutlined />}
+                        color="blue"
+                        className="trip-card-country" 
+                      >
                         {trip.country}
                       </Tag>
                     </>
@@ -56,4 +64,3 @@ const UserTrips = ({ trips }) => {
 };
 
 export default UserTrips;
-

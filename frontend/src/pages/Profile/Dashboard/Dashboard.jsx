@@ -80,7 +80,7 @@ const Dashboard = ({ profileData, trips, handleFileChange, handleUploadImage }) 
                 <Text strong>Cognome:</Text> {profileData.surname}
               </List.Item>
               <List.Item>
-                <Text strong>Email:</Text> {profileData.email}
+                <Text strong >Email:</Text> {profileData.email}
               </List.Item>
               <List.Item>
                 <Text strong>Data di Nascita:</Text>{' '}

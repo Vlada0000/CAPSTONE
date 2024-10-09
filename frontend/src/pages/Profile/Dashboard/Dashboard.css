@@ -77,7 +77,6 @@
 }
 
 .profile-summary-card {
-  padding: 30px;
   background: #ffffff;
   border-radius: 15px;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
@@ -145,3 +144,4 @@
 .ant-upload-list {
   display: none;
 }
+

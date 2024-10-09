@@ -76,16 +76,3 @@
   color: #0277bd;
 }
 
-@media (max-width: 600px) {
-  .travel-checklist {
-    padding: 25px;
-  }
-
-  .progress-section h4 {
-    font-size: 1rem;
-  }
-
-  .btn {
-    font-size: 0.9rem;
-  }
-}

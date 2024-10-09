@@ -37,12 +37,13 @@
 .trip-header-content {
   text-align: center;
   max-width: 700px;
+  padding: 0 20px; 
 }
 
 .trip-title {
   font-size: 2.5rem;
   font-weight: bold;
-  color: #fffde7;
+  color: #fffde7 !important;
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
 }
 
@@ -52,22 +53,22 @@
   margin: 10px 0;
 }
 
-.trip-dates {
-  margin-top: 15px;
-  color: #fff9c4;
-  font-weight: bold;
-}
-
 .trip-actions {
   margin-top: 20px;
   display: flex;
   gap: 15px;
+  justify-content: center; 
 }
 
-.trip-edit-modal {
-  .ant-modal-content {
-    border-radius: 15px;
-  }
+.trip-actions button {
+  font-size: 16px; 
+  transition: background-color 0.3s ease;
+  background-color:aqua!important;
+  color:black;
+}
+
+.trip-edit-modal .ant-modal-content {
+  border-radius: 15px;
 }
 
 .trip-edit-form .ant-form-item-label > label {
@@ -92,45 +93,3 @@
   box-shadow: 0 0 8px rgba(255, 111, 0, 0.3);
 }
 
-.ant-btn-primary {
-  background-color: #ff8f00;
-  border: none;
-  border-radius: 12px;
-  font-weight: bold;
-  transition: background-color 0.3s ease;
-}
-
-.ant-btn-primary:hover {
-  background-color: #ff6f00;
-}
-
-.ant-btn-danger {
-  background-color: #e53935;
-  border: none;
-  border-radius: 12px;
-  font-weight: bold;
-  transition: background-color 0.3s ease;
-}
-
-.ant-btn-danger:hover {
-  background-color: #d32f2f;
-}
-
-@media (max-width: 600px) {
-  .trip-title {
-    font-size: 1.8rem;
-  }
-
-  .trip-description {
-    font-size: 1rem;
-  }
-
-  .trip-dates {
-    font-size: 0.9rem;
-  }
-
-  .trip-actions {
-    flex-direction: column;
-    gap: 10px;
-  }
-}

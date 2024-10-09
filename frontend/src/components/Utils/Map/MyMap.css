@@ -21,11 +21,6 @@
     flex: 1;
   }
   
-  .map-toolbar button {
-    margin-left: 10px;
-  }
-  
-  
   .map-container .leaflet-container {
     flex: 1;
     width: 100%;

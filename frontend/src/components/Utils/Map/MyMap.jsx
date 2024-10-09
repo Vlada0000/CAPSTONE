@@ -101,7 +101,7 @@ const MyMap = () => {
           onSearch={handleSearchLocation}
           value={searchInput}
           onChange={(e) => setSearchInput(e.target.value)}
-          style={{ width: 300 }}
+          style={{ width: 250 }}
         />
         <Button
           type="primary"
