@@ -6,26 +6,16 @@ import {
   getExpenseById,
   updateExpense,
   deleteExpense,
+  calculateSplit
 } from '../controllers/expenses.js';
-import { calculateSplit } from '../controllers/expenses.js';
 
 const router = express.Router();
 
-
 router.post('/', authMiddleware, addExpense);
-
-
 router.get('/', authMiddleware, getExpenses);
-
-
 router.get('/:id', authMiddleware, getExpenseById);
-
-
 router.put('/:id', authMiddleware, updateExpense);
-
-
 router.delete('/:id', authMiddleware, deleteExpense);
-
-
 router.get('/:tripId/split', authMiddleware, calculateSplit);
+
 export default router;

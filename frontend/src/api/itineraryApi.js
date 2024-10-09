@@ -1,6 +1,6 @@
 const API_URL = `${process.env.REACT_APP_BACKEND_URL}/api/itineraries`;
 
-// Funzione per ottenere tutti gli itinerari
+
 export const getItineraries = async (tripId, token, page = 1, limit = 10) => {
     const response = await fetch(`${API_URL}/${tripId}?page=${page}&limit=${limit}`, {
       method: 'GET',
@@ -33,7 +33,7 @@ export const getAllItineraries = async (token) => {
   
     return await response.json();
   };
-// Funzione per aggiungere un itinerario
+
 export const addItinerary = async (itineraryData, token) => {
   const response = await fetch(`${API_URL}`, {
     method: 'POST',
@@ -51,7 +51,6 @@ export const addItinerary = async (itineraryData, token) => {
   return await response.json();
 };
 
-// Funzione per aggiornare un itinerario
 export const updateItinerary = async (itineraryId, itineraryData, token) => {
   const response = await fetch(`${API_URL}/${itineraryId}`, {
     method: 'PUT',
@@ -69,7 +68,6 @@ export const updateItinerary = async (itineraryId, itineraryData, token) => {
   return await response.json();
 };
 
-// Funzione per eliminare un itinerario
 export const deleteItinerary = async (itineraryId, token) => {
   const response = await fetch(`${API_URL}/${itineraryId}`, {
     method: 'DELETE',

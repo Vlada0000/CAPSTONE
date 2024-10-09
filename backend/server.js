@@ -22,29 +22,22 @@ dotenv.config();
 const app = express();
 const server = http.createServer(app);
 
-
 app.use(helmet());
 app.use(morgan('dev'));
 
-const allowlist = [process.env.FRONTEND_URL]
-const corsOptionsDelegate = function (req, callback) {
-  let corsOptions;
-  if (allowlist.indexOf(req.header('Origin')) !== -1) {
-    corsOptions = { origin: true };
-  } else {
-    corsOptions = { origin: false };
-  }
+const allowlist = [process.env.FRONTEND_URL];
+const corsOptionsDelegate = (req, callback) => {
+  const corsOptions = allowlist.includes(req.header('Origin')) ? { origin: true } : { origin: false };
   callback(null, corsOptions);
-}
+};
 
-app.use(cors({corsOptionsDelegate}));
+app.use(cors({ corsOptionsDelegate }));
 app.use(express.json());
 
-
-mongoose.connect(process.env.MONGO_URI)
+mongoose
+  .connect(process.env.MONGO_URI)
   .then(() => console.log('MongoDB connesso'))
   .catch((err) => console.error('Errore di connessione a MongoDB:', err));
-
 
 app.use('/api/auth', authRoutes);
 app.use('/api/users', userRoutes);
@@ -58,9 +51,7 @@ app.use((req, res) => {
   res.status(404).json({ error: 'Endpoint non trovato' });
 });
 
-
 app.use(errorHandler);
-
 
 initSocket(server);
 

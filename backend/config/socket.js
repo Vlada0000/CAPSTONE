@@ -21,7 +21,7 @@ export const initSocket = (server) => {
   io.setMaxListeners(20);
   io.on('connection', handleConnection);
 
-  console.log('Socket.IO server initialized');
+  console.log('Socket.IO server inizializzato');
 };
 
 const handleConnection = async (socket) => {
@@ -41,7 +41,7 @@ const handleConnection = async (socket) => {
 
       socket.user = user;
       socket.join(user._id.toString());
-      console.log(`User ${user._id} joined personal room`);
+      console.log(`User ${user._id} si è connesso`);
 
       socket.on('joinRoom', (tripId) => handleJoinRoom(socket, tripId));
       socket.on('sendMessage', (messageData) => handleSendMessage(socket, messageData));
@@ -58,7 +58,7 @@ const handleConnection = async (socket) => {
 
 const handleJoinRoom = (socket, tripId) => {
   socket.join(tripId);
-  console.log(`User ${socket.id} joined trip room: ${tripId}`);
+  console.log(`User ${socket.id} si è unito al viaggio: ${tripId}`);
 };
 
 const handleSendMessage = async (socket, messageData) => {
@@ -105,7 +105,7 @@ const handleSendMessage = async (socket, messageData) => {
 };
 
 const handleDisconnect = (socket) => {
-  console.log(`User disconnected: ${socket.id}`);
+  console.log(`User disconnesso: ${socket.id}`);
 };
 
 export const emitGlobalEvent = (event, data, userId = null) => {

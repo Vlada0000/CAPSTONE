@@ -67,25 +67,6 @@ export const getUserTrips = async (token) => {
     return response.json();
   };
   
- 
-  export const getUsers = async (search = '', token) => {
-    const query = search ? `?search=${encodeURIComponent(search)}` : '';
-    const response = await fetch(`${API_URL}${query}`, {
-      method: 'GET',
-      headers: {
-        'Authorization': `Bearer ${token}`,
-        'Content-Type': 'application/json',
-      },
-    });
-  
-    if (!response.ok) {
-      throw new Error('Errore nel recupero degli utenti');
-    }
-  
-    return response.json();
-  };
-  
-  
   export const updateUserProfile = async (userData, token) => {
     const response = await fetch(`${API_URL}/me`, {
       method: 'PUT',
@@ -103,7 +84,6 @@ export const getUserTrips = async (token) => {
     return response.json();
   };
   
-
 export const uploadProfileImage = async (file, token) => {
     const formData = new FormData();
     formData.append('profileImage', file);

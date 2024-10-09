@@ -1,7 +1,6 @@
 import Notification from '../models/Notification.js';
 import { emitGlobalEvent } from '../config/socket.js';
 
-
 export const getNotifications = async (req, res) => {
   try {
     const notifications = await Notification.find({ recipient: req.user._id })
@@ -24,12 +23,9 @@ export const markAsRead = async (req, res) => {
       { new: true }
     );
 
-    if (!notification) {
-      return res.status(404).json({ message: 'Notifica non trovata o non appartenente a questo utente' });
-    }
+    if (!notification) return res.status(404).json({ message: 'Notifica non trovata o non appartenente a questo utente' });
 
     emitGlobalEvent(`notificationRead_${req.user._id}`, { notificationId: notification._id, recipient: req.user._id });
-
     res.json(notification);
   } catch (error) {
     console.error('Errore nel marcare la notifica come letta:', error);
@@ -40,9 +36,7 @@ export const markAsRead = async (req, res) => {
 export const markAllAsRead = async (req, res) => {
   try {
     await Notification.updateMany({ recipient: req.user._id, read: false }, { read: true });
-
     emitGlobalEvent(`allNotificationsRead_${req.user._id}`, { recipient: req.user._id });
-
     res.json({ message: 'Tutte le notifiche sono state marcate come lette' });
   } catch (error) {
     console.error('Errore nel marcare tutte le notifiche come lette:', error);

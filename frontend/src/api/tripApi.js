@@ -1,6 +1,5 @@
 const API_URL = `${process.env.REACT_APP_BACKEND_URL}/api/trips`;; 
 
-// Funzione per ottenere tutti i viaggi
 export const getTrips = async (token, page = 1, limit = 10) => {
     const response = await fetch(`${API_URL}?page=${page}&limit=${limit}`, {
       method: 'GET',
@@ -19,7 +18,7 @@ export const getTrips = async (token, page = 1, limit = 10) => {
     return data.trips || [];
   };
   
-// Funzione per ottenere i partecipanti di un viaggio
+
 export const getParticipants = async (tripId, token) => {
     const response = await fetch(`${API_URL}/${tripId}/participants`, {
       headers: {
@@ -35,7 +34,7 @@ export const getParticipants = async (tripId, token) => {
     return await response.json();
   };
   
-// Funzione per creare un nuovo viaggio
+
 export const createTrip = async (tripData, token) => {
   const response = await fetch(API_URL, {
     method: 'POST',
@@ -54,7 +53,6 @@ export const createTrip = async (tripData, token) => {
   return await response.json();
 };
 
-// Funzione per aggiornare un viaggio
 export const updateTrip = async (tripId, tripData, token) => {
   const response = await fetch(`${API_URL}/${tripId}`, {
     method: 'PUT',
@@ -73,7 +71,6 @@ export const updateTrip = async (tripId, tripData, token) => {
   return await response.json();
 };
 
-// Funzione per eliminare un viaggio
 export const deleteTrip = async (tripId, token) => {
   const response = await fetch(`${API_URL}/${tripId}`, {
     method: 'DELETE',
@@ -91,7 +88,6 @@ export const deleteTrip = async (tripId, token) => {
   return await response.json();
 };
 
-// Funzione per aggiungere una foto a un viaggio
 export const addPhotoToTrip = async (tripId, photoFile, token) => {
   const formData = new FormData();
   formData.append('photo', photoFile);
@@ -113,7 +109,7 @@ export const addPhotoToTrip = async (tripId, photoFile, token) => {
   return await response.json();
 };
 
-// Funzione per invitare un utente a un viaggio
+
 export const inviteUserToTrip = async (tripId, email, token) => {
   const response = await fetch(`${API_URL}/${tripId}/invite`, {
     method: 'POST',
@@ -151,7 +147,7 @@ export const removeUserFromTrip = async (tripId, participantId, token) => {
     console.error('Errore durante la rimozione del partecipante:', error);
   }
 };
-// Funzione per accettare un invito al viaggio
+
 export const acceptTripInvitation = async (tripId, token) => {
     try {
       const response = await fetch(`${API_URL}/${tripId}/accept`, {
@@ -175,9 +171,6 @@ export const acceptTripInvitation = async (tripId, token) => {
     }
   };
   
-  
-  
-// Funzione per rifiutare un invito al viaggio
 export const declineTripInvitation = async (tripId, token) => {
     try {
       const response = await fetch(`${API_URL}/${tripId}/decline`, {
@@ -200,7 +193,7 @@ export const declineTripInvitation = async (tripId, token) => {
     }
   };
   
-// Funzione per ottenere i dettagli di un viaggio
+
 export const getTripById = async (tripId, token) => {
   const response = await fetch(`${API_URL}/${tripId}`, {
     method: 'GET',
@@ -218,7 +211,6 @@ export const getTripById = async (tripId, token) => {
   return await response.json();
 };
 
-// Funzione per ottenere le foto dell'album di un viaggio
 export const fetchAlbumPhotos = async (tripId) => {
     try {
       const response = await fetch(`${API_URL}/${tripId}/album`);
@@ -233,8 +225,7 @@ export const fetchAlbumPhotos = async (tripId) => {
       throw new Error(error.message || 'Errore durante il recupero dell\'album');
     }
   };
-  
-  // Funzione per caricare le foto nell'album di un viaggio
+
   export const uploadAlbumPhotos = async (tripId, photos) => {
     const formData = new FormData();
     
