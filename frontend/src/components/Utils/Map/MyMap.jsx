@@ -6,11 +6,25 @@ import { EnvironmentOutlined, DeleteOutlined } from '@ant-design/icons';
 import RecenterMap from './RecenterMap';
 import MapClickHandler from './MapClickHandler';
 import MarkersList from './MarkersList';
+import L from 'leaflet';
+import markerIconPng from 'leaflet/dist/images/marker-icon.png';
+import markerShadowPng from 'leaflet/dist/images/marker-shadow.png'
 import './MyMap.css';
 
 const { BaseLayer } = LayersControl;
 
-const InteractiveMap = () => {
+const DefaultIcon = L.icon({
+  iconUrl: markerIconPng,
+  shadowUrl: markerShadowPng,
+  iconSize: [25, 41], 
+  iconAnchor: [12, 41], 
+  popupAnchor: [1, -34], 
+  shadowSize: [41, 41], 
+});
+
+L.Marker.prototype.options.icon = DefaultIcon;
+
+const MyMap = () => {
   const [markers, setMarkers] = useState([]);
   const [searchInput, setSearchInput] = useState('');
   const [position, setPosition] = useState([51.505, -0.09]);
@@ -137,4 +151,4 @@ const InteractiveMap = () => {
   );
 };
 
-export default InteractiveMap;
+export default MyMap;
