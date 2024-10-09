@@ -8,7 +8,6 @@ import {
   MenuOutlined,
 } from '@ant-design/icons';
 
-
 const Sidebar = ({ activeSection, setActiveSection }) => {
   const [visible, setVisible] = useState(false);
 
@@ -20,9 +19,31 @@ const Sidebar = ({ activeSection, setActiveSection }) => {
     setVisible(false);
   };
 
+  const menuItems = [
+    {
+      key: 'participants',
+      icon: <UserOutlined />,
+      label: 'Partecipanti',
+    },
+    {
+      key: 'itineraries',
+      icon: <FileOutlined />,
+      label: 'Itinerari',
+    },
+    {
+      key: 'expenses',
+      icon: <DollarOutlined />,
+      label: 'Spese',
+    },
+    {
+      key: 'chat',
+      icon: <MessageOutlined />,
+      label: 'Chat',
+    },
+  ];
+
   return (
     <>
-     
       <Button
         type="primary"
         icon={<MenuOutlined />}
@@ -38,30 +59,17 @@ const Sidebar = ({ activeSection, setActiveSection }) => {
         closable={true}
         onClose={closeDrawer}
         open={visible}
-        
       >
         <Menu
           mode="inline"
           selectedKeys={[activeSection]}
           onClick={(e) => {
             setActiveSection(e.key);
-            closeDrawer(); 
+            closeDrawer();
           }}
           style={{ height: '100%' }}
-        >
-          <Menu.Item key="participants" icon={<UserOutlined />}>
-            Partecipanti
-          </Menu.Item>
-          <Menu.Item key="itineraries" icon={<FileOutlined />}>
-            Itinerari
-          </Menu.Item>
-          <Menu.Item key="expenses" icon={<DollarOutlined />}>
-            Spese
-          </Menu.Item>
-          <Menu.Item key="chat" icon={<MessageOutlined />}>
-            Chat
-          </Menu.Item>
-        </Menu>
+          items={menuItems} 
+        />
       </Drawer>
     </>
   );

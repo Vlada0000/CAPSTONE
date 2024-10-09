@@ -294,7 +294,7 @@ export const removeUserFromTrip = async (req, res) => {
     const removalNotification = new Notification({
       recipient: removedParticipant.user,
       sender: userId,
-      type: 'removed_from_trip',
+      type: 'participant_removed',
       message: `Sei stato rimosso dal viaggio "${trip.name}".`,
       tripId: trip._id,
       data: { tripId: trip._id },

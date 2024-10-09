@@ -1,15 +1,15 @@
 import { useState, useEffect } from 'react';
-import { Menu, Badge, Image, Button, Drawer } from 'antd';
+import { Navbar, Nav, Button, Offcanvas, Badge, Image, Dropdown } from 'react-bootstrap';
+import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../../context/authContext';
 import {
-  BellFilled,
-  UserOutlined,
-  LogoutOutlined,
   MenuOutlined,
+  UserOutlined, 
+  LogoutOutlined,
+  BellFilled,
   CheckOutlined,
   CloseOutlined,
 } from '@ant-design/icons';
-import { useNavigate } from 'react-router-dom';
-import { useAuth } from '../../context/authContext';
 import {
   getNotifications,
   markNotificationAsRead,
@@ -28,8 +28,8 @@ const NavBar = () => {
   const navigate = useNavigate();
   const { onNotification, offNotification, isSocketInitialized } = useSocket();
 
-  const [drawerVisible, setDrawerVisible] = useState(false);
-  const [notificationDrawerVisible, setNotificationDrawerVisible] = useState(false);
+  const [offcanvasVisible, setOffcanvasVisible] = useState(false);
+  const [notificationOffcanvasVisible, setNotificationOffcanvasVisible] = useState(false);
 
   const userImage = user?.profileImage || defaultImage;
 
@@ -106,8 +106,13 @@ const NavBar = () => {
   };
 
   const handleRejectInvite = async (notificationId) => {
-    try {
-      await declineTripInvitation(notificationId, user.token);
+    try { 
+      const notification = notifications.find((n) => n._id === notificationId);
+      if (!notification || !notification.data.tripId) {
+        throw new Error('ID del viaggio non trovato nella notifica');
+      }
+      const tripId = notification.data.tripId; 
+      await declineTripInvitation(tripId, user.token);
       await handleMarkAsRead(notificationId);
       setNotifications((prev) => prev.filter((n) => n._id !== notificationId));
     } catch (error) {
@@ -115,124 +120,101 @@ const NavBar = () => {
     }
   };
 
-  const showDrawer = () => setDrawerVisible(true);
-  const closeDrawer = () => setDrawerVisible(false);
+  const showOffcanvas = () => setOffcanvasVisible(true);
+  const closeOffcanvas = () => setOffcanvasVisible(false);
 
-  const showNotificationDrawer = () => setNotificationDrawerVisible(true);
-  const closeNotificationDrawer = () => setNotificationDrawerVisible(false);
-
-  // Items for the menu
-  const menuItems = [
-    {
-      key: 'profile',
-      label: 'Profilo',
-      icon: <UserOutlined />,
-      onClick: () => { closeDrawer(); navigate('/profile'); },
-    },
-    {
-      key: 'logout',
-      label: 'Logout',
-      icon: <LogoutOutlined />,
-      onClick: handleLogout,
-    },
-    {
-      key: 'notifications',
-      label: (
-        <>
-          Notifiche {unreadCount > 0 && <Badge count={unreadCount} />}
-        </>
-      ),
-      icon: <BellFilled />,
-      onClick: showNotificationDrawer,
-    },
-  ];
+  const showNotificationOffcanvas = () => setNotificationOffcanvasVisible(true);
+  const closeNotificationOffcanvas = () => setNotificationOffcanvasVisible(false);
 
   return (
-    <div className="navbar-custom">
-      <div className="navbar-logo" onClick={() => navigate('/')}>
-        <img src={logo} alt="Travel Mate" className="navbar-logo-img" />
-        <span className="navbar-logo-text">Travel Mate</span>
-      </div>
+    <Navbar bg="light" expand="lg" className="navbar-custom p-3">
+    <Navbar.Brand onClick={() => navigate('/')} className="d-flex align-items-center">
+      <img src={logo} alt="Travel Mate" className="navbar-logo-img me-2" />
+      <span className="navbar-logo-text fw-bold">Travel Mate</span>
+    </Navbar.Brand>
+    <Navbar.Toggle aria-controls="basic-navbar-nav" className="d-none" />
 
-      <Button className="navbar-toggler" icon={<MenuOutlined />} onClick={showDrawer} />
+    <Button variant="primary" className="navbar-toggler d-lg-none" onClick={showOffcanvas}>
+      <MenuOutlined />
+    </Button>
 
-      <Drawer title="Menu" placement="right" onClose={closeDrawer} open={drawerVisible}>
-        <Menu mode="inline" selectable={false} items={menuItems} />
-      </Drawer>
+    <Offcanvas show={offcanvasVisible} onHide={closeOffcanvas} placement="end" className="notification-offcanvas-body">
+      <Offcanvas.Header closeButton className="offcanvas-header">
+        <Offcanvas.Title className="offcanvas-title">Menu</Offcanvas.Title>
+      </Offcanvas.Header>
+      <Offcanvas.Body className="offcanvas-body">
+        <Nav className="flex-column">
+          <Nav.Link onClick={() => { closeOffcanvas(); navigate('/profile'); }} className="d-flex align-items-center">
+            <UserOutlined className="me-2" /> Profilo
+          </Nav.Link>
+          <Nav.Link onClick={handleLogout} className="d-flex align-items-center">
+            <LogoutOutlined className="me-2" /> Logout
+          </Nav.Link>
+          <Nav.Link onClick={showNotificationOffcanvas} className="d-flex align-items-center">
+            <BellFilled className="me-2" /> Notifiche {unreadCount > 0 && <Badge bg="danger" className="notification-badge">{unreadCount}</Badge>}
+          </Nav.Link>
+        </Nav>
+      </Offcanvas.Body>
+    </Offcanvas>
 
-      <Drawer
-        title="Notifiche"
-        placement="right"
-        onClose={closeNotificationDrawer}
-        open={notificationDrawerVisible}
-        width="480px"
-      >
-        <Menu mode="inline" selectable={false}>
+    <Offcanvas show={notificationOffcanvasVisible} onHide={closeNotificationOffcanvas} placement="end" className="notification-offcanvas-body">
+      <Offcanvas.Header closeButton className="offcanvas-header">
+        <Offcanvas.Title className="offcanvas-title">Notifiche</Offcanvas.Title>
+      </Offcanvas.Header>
+      <Offcanvas.Body className="offcanvas-body">
+        <Nav className="flex-column">
           {notifications.length > 0 ? (
             notifications.map((notification) => (
-              <Menu.Item
-                key={notification._id}
-                className={notification.read ? 'notification-item-read' : 'notification-item-unread'}
-                onClick={() => handleMarkAsRead(notification._id, notification.data?.tripId)}
-              >
-                <div>{notification.message || 'Nuova notifica'}</div>
+              <Nav.Item key={notification._id} onClick={() => handleMarkAsRead(notification._id, notification.data?.tripId)} className="notification-item p-3 mb-2 rounded shadow-sm">
+                <div className="fw-bold">{notification.message || 'Nuova notifica'}</div>
                 {notification.type === 'trip_invite' && notification.data?.tripId && (
                   <div style={{ display: 'flex', gap: '10px' }}>
-                    <Button
-                      type="link"
-                      icon={<CheckOutlined />}
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        handleAcceptInvite(notification._id, notification.data.tripId);
-                      }}
-                    />
-                    <Button
-                      type="link"
-                      icon={<CloseOutlined />}
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        handleRejectInvite(notification._id);
-                      }}
-                    />
+                    <Button variant="success" className="button-accept" onClick={(e) => { e.stopPropagation(); handleAcceptInvite(notification._id, notification.data.tripId); }}>
+                      <CheckOutlined />
+                    </Button>
+                    <Button variant="danger" className="button-decline" onClick={(e) => { e.stopPropagation(); handleRejectInvite(notification._id); }}>
+                      <CloseOutlined />
+                    </Button>
                   </div>
                 )}
-              </Menu.Item>
+              </Nav.Item>
             ))
           ) : (
-            <Menu.Item key="no-notifications">Nessuna nuova notifica</Menu.Item>
+            <div className="text-center">Nessuna nuova notifica</div>
           )}
-
           {notifications.length > 0 && (
-            <Menu.Item key="mark-all-read" onClick={handleMarkAllAsRead}>
+            <Button variant="link" onClick={handleMarkAllAsRead} className=" mt-3" id="btn-mark-all-read">
               Segna tutte come lette
-            </Menu.Item>
+            </Button>
           )}
-        </Menu>
-      </Drawer>
+        </Nav>
+      </Offcanvas.Body>
+    </Offcanvas>
 
-      <Menu mode="horizontal" className="navbar-menu">
-        {user && (
-          <>
-            <Menu.Item key="notifications" onClick={showNotificationDrawer}>
-              <BellFilled className="notification-icon" />
-              {unreadCount > 0 && <Badge count={unreadCount} className="notification-badge" />}
-            </Menu.Item>
-            <Menu.SubMenu
-              key="user"
-              title={<Image src={userImage} alt="User Avatar" style={{ width: 30, height: 30, borderRadius: '50%' }} />}
-            >
-              <Menu.Item key="profile" onClick={() => navigate('/profile')}>
-                <UserOutlined /> Profilo
-              </Menu.Item>
-              <Menu.Item key="logout" onClick={handleLogout}>
-                <LogoutOutlined /> Logout
-              </Menu.Item>
-            </Menu.SubMenu>
-          </>
-        )}
-      </Menu>
-    </div>
-  );
+    <Nav className="ms-auto d-none d-lg-flex align-items-center">
+    <Nav.Link onClick={showNotificationOffcanvas} className="d-flex align-items-center">
+  <div className="notification-icon-container">
+    <BellFilled className="notification-icon me-2" />
+    {unreadCount > 0 && <Badge className="notification-badge">{unreadCount}</Badge>}
+  </div>
+</Nav.Link>
+
+      <Dropdown align="end">
+        <Dropdown.Toggle variant="link" className="dropdown-toggle d-flex align-items-center">
+          <Image src={userImage} roundedCircle width="40" height="40" className="me-2 border" style={{ objectFit: 'cover', borderRadius: '50%' }} />
+        </Dropdown.Toggle>
+        <Dropdown.Menu className="dropdown-menu">
+          <Dropdown.Item onClick={() => navigate('/profile')} className="dropdown-item d-flex align-items-center">
+            <UserOutlined className="me-2" /> Profilo
+          </Dropdown.Item>
+          <Dropdown.Item onClick={handleLogout} className="dropdown-item d-flex align-items-center">
+            <LogoutOutlined className="me-2" /> Logout
+          </Dropdown.Item>
+        </Dropdown.Menu>
+      </Dropdown>
+    </Nav>
+  </Navbar>
+);
 };
 
 export default NavBar;

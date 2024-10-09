@@ -25,12 +25,19 @@ const server = http.createServer(app);
 
 app.use(helmet());
 app.use(morgan('dev'));
-app.use(cors({
-  origin: process.env.FRONTEND_URL || 'http://localhost:3000',
-  methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization'],
-  credentials: true,
-}));
+
+const allowlist = [process.env.FRONTEND_URL]
+const corsOptionsDelegate = function (req, callback) {
+  let corsOptions;
+  if (allowlist.indexOf(req.header('Origin')) !== -1) {
+    corsOptions = { origin: true };
+  } else {
+    corsOptions = { origin: false };
+  }
+  callback(null, corsOptions);
+}
+
+app.use(cors({corsOptionsDelegate}));
 app.use(express.json());
 
 

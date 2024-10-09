@@ -14,13 +14,11 @@ import {
   DollarOutlined,
   MessageOutlined,
   CheckOutlined,
-  CameraOutlined
+  CameraOutlined,
 } from '@ant-design/icons';
 import './TripDetailsPage.css';
 import TravelCheckList from '../../../components/Utils/Check-List/TravelCheckList';
 import PhotoAlbum from '../PhotoAlbum';
-
-
 
 const { Header, Content } = Layout;
 
@@ -54,6 +52,15 @@ const TripDetailPage = () => {
     setTrip(updatedTrip);
   };
 
+  const menuItems = [
+    { key: 'participants', icon: <UserOutlined />, label: 'Partecipanti' },
+    { key: 'itineraries', icon: <FileOutlined />, label: 'Itinerari' },
+    { key: 'photoAlbum', icon: <CameraOutlined />, label: 'Album ricordi' },
+    { key: 'expenses', icon: <DollarOutlined />, label: 'Spese' },
+    { key: 'chat', icon: <MessageOutlined />, label: 'Chat' },
+    { key: 'travelCheckList', icon: <CheckOutlined />, label: 'Travel Check List' },
+  ];
+
   if (loading) {
     return (
       <div className="spinner-container">
@@ -78,28 +85,10 @@ const TripDetailPage = () => {
         <Menu
           mode="horizontal"
           selectedKeys={[activeSection]}
+          items={menuItems}
           onClick={(e) => setActiveSection(e.key)}
           className="trip-detail-menu"
-        >
-          <Menu.Item key="participants" icon={<UserOutlined />}>
-            Partecipanti
-          </Menu.Item>
-          <Menu.Item key="itineraries" icon={<FileOutlined />}>
-            Itinerari
-          </Menu.Item>
-          <Menu.Item key="photoAlbum" icon={<CameraOutlined />}>
-            Album ricordi
-          </Menu.Item>
-          <Menu.Item key="expenses" icon={<DollarOutlined />}>
-            Spese
-          </Menu.Item>
-          <Menu.Item key="chat" icon={<MessageOutlined />}>
-            Chat
-          </Menu.Item>
-          <Menu.Item key="travelCheckList" icon={<CheckOutlined />}>
-            Travel Check List
-          </Menu.Item>
-        </Menu>
+        />
       </Header>
       <Content className="trip-detail-content">
         {activeSection === 'participants' && (
@@ -113,7 +102,7 @@ const TripDetailPage = () => {
         {activeSection === 'photoAlbum' && <PhotoAlbum tripId={tripId} />}
         {activeSection === 'expenses' && <Expenses tripId={tripId} />}
         {activeSection === 'chat' && <Chat tripId={tripId} />}
-        {activeSection === 'travelCheckList' && <TravelCheckList  />}
+        {activeSection === 'travelCheckList' && <TravelCheckList />}
       </Content>
     </Layout>
   );

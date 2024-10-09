@@ -57,7 +57,7 @@
 .menu-toggle {
   display: none;
   position: absolute;
-  top: 20px;
+  top: 100px;
   left: 20px;
   z-index: 10;
   background: #ffffff;
@@ -89,7 +89,6 @@
   background: linear-gradient(135deg, #ffffff, #f7f7f7);
 }
 
-/* Stile per i form di modifica profilo e password */
 .edit-profile-form,
 .password-change-form {
   background: #ffffff;
@@ -118,7 +117,6 @@
   margin-right: 10px;
 }
 
-/* Modal per confermare la cancellazione del profilo */
 .ant-modal-confirm-title {
   font-size: 20px;
   font-weight: bold;

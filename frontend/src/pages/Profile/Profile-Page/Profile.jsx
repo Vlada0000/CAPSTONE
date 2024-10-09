@@ -150,6 +150,35 @@ const Profile = () => {
     });
   };
 
+  const menuItems = [
+    {
+      key: 'dashboard',
+      icon: <LineChartOutlined />,
+      label: 'Dashboard',
+    },
+    {
+      key: 'edit-profile',
+      icon: <UserOutlined />,
+      label: 'Modifica Profilo',
+    },
+    {
+      key: 'change-password',
+      icon: <LockOutlined />,
+      label: 'Cambia Password',
+    },
+    {
+      key: 'delete-profile',
+      icon: <SettingOutlined />,
+      label: 'Cancella Profilo',
+    },
+    {
+      key: 'logout',
+      icon: <LogoutOutlined />,
+      label: 'Logout',
+      onClick: logout,
+    },
+  ];
+
   const renderContent = () => {
     switch (selectedMenuKey) {
       case 'dashboard':
@@ -214,34 +243,16 @@ const Profile = () => {
           mode="inline"
           selectedKeys={[selectedMenuKey]}
           onClick={({ key }) => {
-            if (key === 'logout') {
-              logout();
-            } else if (key === 'delete-profile') {
+            if (key === 'delete-profile') {
               showDeleteConfirm();
             } else {
               setSelectedMenuKey(key);
             }
           }}
-        >
-          <Menu.Item key="dashboard" icon={<LineChartOutlined />}>
-            Dashboard
-          </Menu.Item>
-          <Menu.Item key="edit-profile" icon={<UserOutlined />}>
-            Modifica Profilo
-          </Menu.Item>
-          <Menu.Item key="change-password" icon={<LockOutlined />}>
-            Cambia Password
-          </Menu.Item>
-          <Menu.Item key="delete-profile" icon={<SettingOutlined />}>
-            Cancella Profilo
-          </Menu.Item>
-          <Menu.Item key="logout" icon={<LogoutOutlined />}>
-            Logout
-          </Menu.Item>
-        </Menu>
+          items={menuItems} 
+        />
       </Sider>
 
-      {/* Drawer per schermi piccoli */}
       <Drawer
         title="Menu"
         placement="left"
@@ -254,37 +265,19 @@ const Profile = () => {
           mode="inline"
           selectedKeys={[selectedMenuKey]}
           onClick={({ key }) => {
-            if (key === 'logout') {
-              logout();
-            } else if (key === 'delete-profile') {
+            if (key === 'delete-profile') {
               showDeleteConfirm();
             } else {
               setSelectedMenuKey(key);
               setDrawerVisible(false);
             }
           }}
-        >
-          <Menu.Item key="dashboard" icon={<LineChartOutlined />}>
-            Dashboard
-          </Menu.Item>
-          <Menu.Item key="edit-profile" icon={<UserOutlined />}>
-            Modifica Profilo
-          </Menu.Item>
-          <Menu.Item key="change-password" icon={<LockOutlined />}>
-            Cambia Password
-          </Menu.Item>
-          <Menu.Item key="delete-profile" icon={<SettingOutlined />}>
-            Cancella Profilo
-          </Menu.Item>
-          <Menu.Item key="logout" icon={<LogoutOutlined />}>
-            Logout
-          </Menu.Item>
-        </Menu>
+          items={menuItems}
+        />
       </Drawer>
 
       <Layout>
         <Content className="profile-content">
-          {/* Icona per aprire il Drawer su schermi piccoli */}
           <Button
             className="menu-toggle"
             icon={<MenuOutlined />}
@@ -299,3 +292,4 @@ const Profile = () => {
 };
 
 export default Profile;
+

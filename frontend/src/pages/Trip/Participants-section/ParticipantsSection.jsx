@@ -64,8 +64,8 @@ const ParticipantsSection = ({ trip, user, onTripUpdate }) => {
     <div className="participants-section">
       <Card title="Partecipanti" className="participants-card">
         <div className="row">
-          {trip.participants.map((participant) => (
-            <div key={participant.user._id} className="col-12 col-sm-6 col-md-4 col-lg-3 mb-3">
+          {trip.participants.map((participant, index) => (
+            <div key={participant.user._id || participant.user.email || index} className="col-sm-12 col-md-6 col-lg-4 mb-3">
               <Card
                 className="participant-card"
                 actions={
@@ -113,8 +113,8 @@ const ParticipantsSection = ({ trip, user, onTripUpdate }) => {
       </Card>
 
       {user._id === trip.organizer._id && (
-        <div className="col-12 col-md-4 mt-3">
-          <Card className="invite-card">
+        <div className="col-sm-12 col-md-6 col-lg-4 mt-3">
+          <Card className="invite-card ">
             <Form layout="inline" onFinish={handleInviteUser}>
               <Form.Item>
                 <Input
