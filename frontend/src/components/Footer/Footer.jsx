@@ -9,7 +9,7 @@ const Footer = () => {
         {/* Colonna: Icone Social */}
         <div className="footer-column social-icons">
           <a
-            href="https://www.linkedin.com/"
+            href="https://www.linkedin.com/in/vladislava-brinza"
             target="_blank"
             rel="noopener noreferrer"
             className="social-icon"
@@ -18,7 +18,7 @@ const Footer = () => {
             <LinkedinOutlined className="social-icon-style" />
           </a>
           <a
-            href="https://www.github.com/"
+            href="https://www.github.com/Vlada0000"
             target="_blank"
             rel="noopener noreferrer"
             className="social-icon"

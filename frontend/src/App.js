@@ -9,22 +9,17 @@ import PrivateRoute from './components/PrivateRoute';
 import { AuthProvider } from './context/authContext';
 import Profile from './pages/Profile/Profile-Page/Profile';
 import TripDetailsPage from './pages/Trip/Trip-Page/TripDetailsPage';
-import { SocketProvider } from './context/socketContext'
+import { SocketProvider } from './context/socketContext';
 import ExpenseDashboard from './components/Expense/Expense-Dashboard/ExpenseDashboard';
 import Chat from './components/Utils/Chat/Chat';
 
-
-
-
 function App() {
-  
-
   return (
     <Router>
       <AuthProvider>
         <SocketProvider>
           <div className="App">
-            <NavBar /> 
+            <NavBar />
             <div className="main-content">
               <Routes>
                 <Route path="/login" element={<Login />} />
@@ -44,7 +39,6 @@ function App() {
                     </PrivateRoute>
                   }
                 />
-               
                 <Route
                   path="/trips/:tripId"
                   element={
@@ -53,9 +47,8 @@ function App() {
                     </PrivateRoute>
                   }
                 />
-               
                 <Route
-                   path="/trips/:tripId/expenses/dashboard" 
+                  path="/trips/:tripId/expenses/dashboard"
                   element={
                     <PrivateRoute>
                       <ExpenseDashboard />
@@ -63,14 +56,13 @@ function App() {
                   }
                 />
                 <Route
-                    path="/trips/:tripId/chat"
+                  path="/trips/:tripId/chat"
                   element={
                     <PrivateRoute>
                       <Chat />
                     </PrivateRoute>
                   }
                 />
-                
                 <Route path="*" element={<NotFound />} />
               </Routes>
             </div>

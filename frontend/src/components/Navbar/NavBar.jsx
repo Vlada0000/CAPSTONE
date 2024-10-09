@@ -27,7 +27,6 @@ const NavBar = () => {
   const { user, logout } = useAuth();
   const navigate = useNavigate();
   const { onNotification, offNotification, isSocketInitialized } = useSocket();
-
   const [offcanvasVisible, setOffcanvasVisible] = useState(false);
   const [notificationOffcanvasVisible, setNotificationOffcanvasVisible] = useState(false);
 
@@ -95,9 +94,7 @@ const NavBar = () => {
 
   const handleAcceptInvite = async (notificationId, tripId) => {
     try {
-      if (!tripId) {
-        throw new Error('ID del viaggio non trovato nella notifica.');
-      }
+      if (!tripId) throw new Error('ID del viaggio non trovato nella notifica.');
       await acceptTripInvitation(tripId, user.token);
       await handleMarkAsRead(notificationId, tripId);
     } catch (error) {
@@ -108,9 +105,8 @@ const NavBar = () => {
   const handleRejectInvite = async (notificationId) => {
     try { 
       const notification = notifications.find((n) => n._id === notificationId);
-      if (!notification || !notification.data.tripId) {
-        throw new Error('ID del viaggio non trovato nella notifica');
-      }
+      if (!notification || !notification.data.tripId) throw new Error('ID del viaggio non trovato nella notifica');
+      
       const tripId = notification.data.tripId; 
       await declineTripInvitation(tripId, user.token);
       await handleMarkAsRead(notificationId);
@@ -128,93 +124,91 @@ const NavBar = () => {
 
   return (
     <Navbar bg="light" expand="lg" className="navbar-custom p-3">
-    <Navbar.Brand onClick={() => navigate('/')} className="d-flex align-items-center">
-      <img src={logo} alt="Travel Mate" className="navbar-logo-img me-2" />
-      <span className="navbar-logo-text fw-bold">Travel Mate</span>
-    </Navbar.Brand>
-    <Navbar.Toggle aria-controls="basic-navbar-nav" className="d-none" />
+      <Navbar.Brand onClick={() => navigate('/')} className="d-flex align-items-center">
+        <img src={logo} alt="Travel Mate" className="navbar-logo-img me-2" />
+        <span className="navbar-logo-text fw-bold">Travel Mate</span>
+      </Navbar.Brand>
 
-    <Button variant="primary" className="navbar-toggler d-lg-none" onClick={showOffcanvas}>
-      <MenuOutlined />
-    </Button>
+      <Button variant="primary" className="navbar-toggler d-lg-none" onClick={showOffcanvas}>
+        <MenuOutlined />
+      </Button>
 
-    <Offcanvas show={offcanvasVisible} onHide={closeOffcanvas} placement="end" className="notification-offcanvas-body">
-      <Offcanvas.Header closeButton className="offcanvas-header">
-        <Offcanvas.Title className="offcanvas-title">Menu</Offcanvas.Title>
-      </Offcanvas.Header>
-      <Offcanvas.Body className="offcanvas-body">
-        <Nav className="flex-column">
-          <Nav.Link onClick={() => { closeOffcanvas(); navigate('/profile'); }} className="d-flex align-items-center">
-            <UserOutlined className="me-2" /> Profilo
-          </Nav.Link>
-          <Nav.Link onClick={handleLogout} className="d-flex align-items-center">
-            <LogoutOutlined className="me-2" /> Logout
-          </Nav.Link>
-          <Nav.Link onClick={showNotificationOffcanvas} className="d-flex align-items-center">
-            <BellFilled className="me-2" /> Notifiche {unreadCount > 0 && <Badge bg="danger" className="notification-badge">{unreadCount}</Badge>}
-          </Nav.Link>
-        </Nav>
-      </Offcanvas.Body>
-    </Offcanvas>
+      <Offcanvas show={offcanvasVisible} onHide={closeOffcanvas} placement="end">
+        <Offcanvas.Header closeButton>
+          <Offcanvas.Title>Menu</Offcanvas.Title>
+        </Offcanvas.Header>
+        <Offcanvas.Body>
+          <Nav className="flex-column">
+            <Nav.Link onClick={() => { closeOffcanvas(); navigate('/profile'); }}>
+              <UserOutlined className="me-2" /> Profilo
+            </Nav.Link>
+            <Nav.Link onClick={handleLogout}>
+              <LogoutOutlined className="me-2" /> Logout
+            </Nav.Link>
+            <Nav.Link onClick={showNotificationOffcanvas}>
+              <BellFilled className="me-2" /> Notifiche {unreadCount > 0 && <Badge bg="danger">{unreadCount}</Badge>}
+            </Nav.Link>
+          </Nav>
+        </Offcanvas.Body>
+      </Offcanvas>
 
-    <Offcanvas show={notificationOffcanvasVisible} onHide={closeNotificationOffcanvas} placement="end" className="notification-offcanvas-body">
-      <Offcanvas.Header closeButton className="offcanvas-header">
-        <Offcanvas.Title className="offcanvas-title">Notifiche</Offcanvas.Title>
-      </Offcanvas.Header>
-      <Offcanvas.Body className="offcanvas-body">
-        <Nav className="flex-column">
-          {notifications.length > 0 ? (
-            notifications.map((notification) => (
-              <Nav.Item key={notification._id} onClick={() => handleMarkAsRead(notification._id, notification.data?.tripId)} className="notification-item p-3 mb-2 rounded shadow-sm">
-                <div className="fw-bold">{notification.message || 'Nuova notifica'}</div>
-                {notification.type === 'trip_invite' && notification.data?.tripId && (
-                  <div style={{ display: 'flex', gap: '10px' }}>
-                    <Button variant="success" className="button-accept" onClick={(e) => { e.stopPropagation(); handleAcceptInvite(notification._id, notification.data.tripId); }}>
-                      <CheckOutlined />
-                    </Button>
-                    <Button variant="danger" className="button-decline" onClick={(e) => { e.stopPropagation(); handleRejectInvite(notification._id); }}>
-                      <CloseOutlined />
-                    </Button>
-                  </div>
-                )}
-              </Nav.Item>
-            ))
-          ) : (
-            <div className="text-center">Nessuna nuova notifica</div>
-          )}
-          {notifications.length > 0 && (
-            <Button variant="link" onClick={handleMarkAllAsRead} className=" mt-3" id="btn-mark-all-read">
-              Segna tutte come lette
-            </Button>
-          )}
-        </Nav>
-      </Offcanvas.Body>
-    </Offcanvas>
+      <Offcanvas show={notificationOffcanvasVisible} onHide={closeNotificationOffcanvas} placement="end">
+        <Offcanvas.Header closeButton>
+          <Offcanvas.Title>Notifiche</Offcanvas.Title>
+        </Offcanvas.Header>
+        <Offcanvas.Body>
+          <Nav className="flex-column">
+            {notifications.length > 0 ? (
+              notifications.map((notification) => (
+                <Nav.Item key={notification._id} onClick={() => handleMarkAsRead(notification._id, notification.data?.tripId)} className="notification-item p-3 mb-2 rounded shadow-sm">
+                  <div className="fw-bold">{notification.message || 'Nuova notifica'}</div>
+                  {notification.type === 'trip_invite' && notification.data?.tripId && (
+                    <div className="d-flex gap-2">
+                      <Button variant="success" onClick={(e) => { e.stopPropagation(); handleAcceptInvite(notification._id, notification.data.tripId); }}>
+                        <CheckOutlined />
+                      </Button>
+                      <Button variant="danger" onClick={(e) => { e.stopPropagation(); handleRejectInvite(notification._id); }}>
+                        <CloseOutlined />
+                      </Button>
+                    </div>
+                  )}
+                </Nav.Item>
+              ))
+            ) : (
+              <div className="text-center">Nessuna nuova notifica</div>
+            )}
+            {notifications.length > 0 && (
+              <Button variant="link" onClick={handleMarkAllAsRead} className="mt-3">
+                Segna tutte come lette
+              </Button>
+            )}
+          </Nav>
+        </Offcanvas.Body>
+      </Offcanvas>
 
-    <Nav className="ms-auto d-none d-lg-flex align-items-center">
-    <Nav.Link onClick={showNotificationOffcanvas} className="d-flex align-items-center">
-  <div className="notification-icon-container">
-    <BellFilled className="notification-icon me-2" />
-    {unreadCount > 0 && <Badge className="notification-badge">{unreadCount}</Badge>}
-  </div>
-</Nav.Link>
-
-      <Dropdown align="end">
-        <Dropdown.Toggle variant="link" className="dropdown-toggle d-flex align-items-center">
-          <Image src={userImage} roundedCircle width="40" height="40" className="me-2 border" style={{ objectFit: 'cover', borderRadius: '50%' }} />
-        </Dropdown.Toggle>
-        <Dropdown.Menu className="dropdown-menu">
-          <Dropdown.Item onClick={() => navigate('/profile')} className="dropdown-item d-flex align-items-center">
-            <UserOutlined className="me-2" /> Profilo
-          </Dropdown.Item>
-          <Dropdown.Item onClick={handleLogout} className="dropdown-item d-flex align-items-center">
-            <LogoutOutlined className="me-2" /> Logout
-          </Dropdown.Item>
-        </Dropdown.Menu>
-      </Dropdown>
-    </Nav>
-  </Navbar>
-);
+      <Nav className="ms-auto d-none d-lg-flex align-items-center">
+        <Nav.Link onClick={showNotificationOffcanvas}>
+          <div className="notification-icon-container">
+            <BellFilled className="notification-icon me-2" />
+            {unreadCount > 0 && <Badge>{unreadCount}</Badge>}
+          </div>
+        </Nav.Link>
+        <Dropdown align="end">
+          <Dropdown.Toggle variant="link" className="d-flex align-items-center">
+            <Image src={userImage} roundedCircle width="40" height="40" className="me-2" style={{ objectFit: 'cover' }} />
+          </Dropdown.Toggle>
+          <Dropdown.Menu>
+            <Dropdown.Item onClick={() => navigate('/profile')}>
+              <UserOutlined className="me-2" /> Profilo
+            </Dropdown.Item>
+            <Dropdown.Item onClick={handleLogout}>
+              <LogoutOutlined className="me-2" /> Logout
+            </Dropdown.Item>
+          </Dropdown.Menu>
+        </Dropdown>
+      </Nav>
+    </Navbar>
+  );
 };
 
 export default NavBar;

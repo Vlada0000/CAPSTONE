@@ -6,7 +6,7 @@ import './Dashboard.css';
 const { Title, Text } = Typography;
 
 const Dashboard = ({ profileData, trips, handleFileChange, handleUploadImage }) => {
-  // Calcolo delle statistiche
+  
   const totalTrips = trips.length;
   const visitedCountries = [...new Set(trips.map((trip) => trip.country))].length;
   const progress = (visitedCountries / 195) * 100; 

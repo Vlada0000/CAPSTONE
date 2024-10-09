@@ -8,7 +8,6 @@ const CreateTripDrawer = ({ isDrawerVisible, handleDrawerCancel, newTrip, setNew
   const [startDateValid, setStartDateValid] = useState(null);
   const [endDateValid, setEndDateValid] = useState(null);
 
-  // Gestione delle date
   const handleStartDateValid = (date) => {
     setNewTrip({ ...newTrip, startDate: date });
     setStartDateValid(date);
@@ -77,7 +76,7 @@ const CreateTripDrawer = ({ isDrawerVisible, handleDrawerCancel, newTrip, setNew
           required
           rules={[{ required: true, message: 'Seleziona la data di inizio' }]}
         >
-          {/* Integrazione di DateValidator per la Data di Inizio */}
+        
           <DateValidator
             onDateValid={handleStartDateValid}
             onDateInvalid={handleDateInvalid}
@@ -101,7 +100,7 @@ const CreateTripDrawer = ({ isDrawerVisible, handleDrawerCancel, newTrip, setNew
             }),
           ]}
         >
-          {/* Integrazione di DateValidator per la Data di Fine */}
+        
           <DateValidator
             onDateValid={handleEndDateValid}
             onDateInvalid={handleDateInvalid}
