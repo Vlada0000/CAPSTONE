@@ -70,9 +70,9 @@ const LoginPage = () => {
   return (
     <Row justify="center" align="middle" style={{ height: '100vh' }}>
       <Col xs={22} sm={16} md={12} lg={8}>
-        <Card className="login-card" style={{ padding: '40px', borderRadius: '15px', boxShadow: '0 8px 16px rgba(0, 0, 0, 0.1)' }}>
+        <Card className="login-card">
           <div className="text-center mb-4">
-            <img src={logo} alt="Travel Mate Logo" className="login-logo" style={{ width: '120px' }} />
+            <img src={logo} alt="Travel Mate Logo" className="login-logo" />
           </div>
 
           <div className="auth-toggle mb-3 text-center">
@@ -164,7 +164,7 @@ const LoginPage = () => {
             </Form.Item>
 
             <Form.Item>
-              <Button type="primary" htmlType="submit" block style={{ borderRadius: '8px' }}>
+              <Button  htmlType="submit" block style={{ borderRadius: '8px' }}>
                 {isLogin ? 'Login' : 'Register'}
               </Button>
             </Form.Item>

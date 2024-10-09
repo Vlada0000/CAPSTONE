@@ -2,6 +2,8 @@ import { useState, useEffect } from 'react';
 import { Form, Button, ProgressBar, InputGroup, FormControl, Modal } from 'react-bootstrap';
 import PackingList from './PackingList';
 import './TravelCheckList.css';
+import { useAuth } from '../../../context/authContext'; 
+import { useParams } from 'react-router-dom';  
 
 const packingItems = {
   beach: ['Costume da bagno', 'Asciugamano', 'Protezione solare', 'Occhiali da sole', 'Infradito'],
@@ -11,6 +13,10 @@ const packingItems = {
 };
 
 const TravelChecklist = () => {
+  const { user } = useAuth();  
+  const { tripId } = useParams(); 
+  const userId = user ? user._id : null;  
+
   const [tripType, setTripType] = useState('');
   const [checklist, setChecklist] = useState([]);
   const [newItem, setNewItem] = useState('');
@@ -19,19 +25,27 @@ const TravelChecklist = () => {
   const [editingIndex, setEditingIndex] = useState(null);
   const [editingText, setEditingText] = useState('');
 
+  
+  const checklistKey = `travelChecklist_${userId}_${tripId}`;
+
   useEffect(() => {
-    const savedChecklist = localStorage.getItem('travelChecklist');
+    if (!userId || !tripId) return; 
+
+    const savedChecklist = localStorage.getItem(checklistKey);
     if (savedChecklist) {
       const parsedChecklist = JSON.parse(savedChecklist);
       setChecklist(parsedChecklist);
       calculateProgress(parsedChecklist);
     }
-  }, []);
+  }, [userId, tripId]);
 
+  
   useEffect(() => {
-    localStorage.setItem('travelChecklist', JSON.stringify(checklist));
+    if (!userId || !tripId) return; 
+
+    localStorage.setItem(checklistKey, JSON.stringify(checklist));
     calculateProgress(checklist);
-  }, [checklist]);
+  }, [checklist, userId, tripId]);
 
   const calculateProgress = (list) => {
     if (list.length === 0) {
@@ -65,7 +79,7 @@ const TravelChecklist = () => {
     setChecklist([]);
     setTripType('');
     setProgress(0);
-    localStorage.removeItem('travelChecklist');
+    localStorage.removeItem(checklistKey);
   };
 
   return (
@@ -110,7 +124,7 @@ const TravelChecklist = () => {
           </InputGroup>
 
           <div className="mt-3 d-flex justify-content-between">
-            <Button variant="success" onClick={() => localStorage.setItem('travelChecklist', JSON.stringify(checklist))}>
+            <Button variant="success" onClick={() => localStorage.setItem(checklistKey, JSON.stringify(checklist))}>
               Salva Checklist
             </Button>
             <Button variant="danger" onClick={handleResetChecklist}>

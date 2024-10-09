@@ -1,25 +1,57 @@
 .expense-table {
-    padding: 24px;
-  }
-  
-  .table-title {
-    margin-bottom: 24px;
-    color: #1890ff;
-  }
-  
+  padding: 24px;
+}
+
+.table-title {
+  margin-bottom: 24px;
+  color: #1890ff;
+  text-align: center;
+}
+
+.expense-table .ant-table {
+  background-color: #fff;
+  border-radius: 8px;
+}
+
+.expense-table .ant-table-thead > tr > th {
+  background-color: #fafafa;
+  font-weight: bold;
+  color: #333;
+}
+
+.expense-table .ant-table-tbody > tr > td {
+  padding: 16px;
+  font-size: 16px;
+}
+
+.expense-card {
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  padding: 16px;
+  background-color: #fff;
+  transition: box-shadow 0.3s ease;
+}
+
+.expense-card:hover {
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+}
+
+@media (max-width: 576px) {
   .expense-table .ant-table {
-    background-color: #fff;
-    border-radius: 8px;
+    display: none;
   }
-  
-  .expense-table .ant-table-thead > tr > th {
-    background-color: #fafafa;
-    font-weight: bold;
-    color: #333;
+
+  .expense-list {
+    display: block;
   }
-  
-  .expense-table .ant-table-tbody > tr > td {
-    padding: 16px;
-    font-size: 16px;
+}
+
+@media (min-width: 576px) {
+  .expense-list {
+    display: none;
   }
-  
+
+  .expense-table .ant-table {
+    display: block;
+  }
+}

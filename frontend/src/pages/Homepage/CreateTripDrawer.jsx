@@ -5,22 +5,31 @@ import DateValidator from '../../components/DateValidator';
 const { TextArea } = Input;
 
 const CreateTripDrawer = ({ isDrawerVisible, handleDrawerCancel, newTrip, setNewTrip, handleCreateTrip }) => {
-  const [startDateValid, setStartDateValid] = useState(null);
-  const [endDateValid, setEndDateValid] = useState(null);
+  const [startDateValid, setStartDateValid] = useState(false);
+  const [endDateValid, setEndDateValid] = useState(false);
+  const [startDate, setStartDate] = useState(null);
+  const [endDate, setEndDate] = useState(null);
 
   const handleStartDateValid = (date) => {
+    setStartDate(date);
     setNewTrip({ ...newTrip, startDate: date });
-    setStartDateValid(date);
+    setStartDateValid(true); 
   };
 
   const handleEndDateValid = (date) => {
+    setEndDate(date);
     setNewTrip({ ...newTrip, endDate: date });
-    setEndDateValid(date);
+    setEndDateValid(true); 
   };
 
-  const handleDateInvalid = () => {
-    setStartDateValid(null);
-    setEndDateValid(null);
+  const handleStartDateInvalid = () => {
+    setStartDateValid(false); 
+    setEndDate(null); 
+    setEndDateValid(false);
+  };
+
+  const handleEndDateInvalid = () => {
+    setEndDateValid(false); 
   };
 
   return (
@@ -76,10 +85,9 @@ const CreateTripDrawer = ({ isDrawerVisible, handleDrawerCancel, newTrip, setNew
           required
           rules={[{ required: true, message: 'Seleziona la data di inizio' }]}
         >
-        
           <DateValidator
             onDateValid={handleStartDateValid}
-            onDateInvalid={handleDateInvalid}
+            onDateInvalid={handleStartDateInvalid}
             minDate={null} 
             placeholder="Seleziona la data di inizio"
           />
@@ -92,7 +100,7 @@ const CreateTripDrawer = ({ isDrawerVisible, handleDrawerCancel, newTrip, setNew
             { required: true, message: 'Seleziona la data di fine' },
             () => ({
               validator(_, value) {
-                if (!endDateValid || (startDateValid && value && value.isAfter(startDateValid))) {
+                if (!endDateValid || (startDate && value && value.isAfter(startDate))) {
                   return Promise.resolve();
                 }
                 return Promise.reject(new Error('La data di fine deve essere successiva alla data di inizio'));
@@ -100,16 +108,20 @@ const CreateTripDrawer = ({ isDrawerVisible, handleDrawerCancel, newTrip, setNew
             }),
           ]}
         >
-        
           <DateValidator
             onDateValid={handleEndDateValid}
-            onDateInvalid={handleDateInvalid}
-            minDate={startDateValid} 
+            onDateInvalid={handleEndDateInvalid}
+            minDate={startDate} 
             placeholder="Seleziona la data di fine"
           />
         </Form.Item>
 
-        <Button type="primary" onClick={handleCreateTrip} block disabled={!startDateValid || !endDateValid}>
+        <Button 
+          type="primary" 
+          onClick={handleCreateTrip} 
+          block 
+          disabled={!startDateValid || !endDateValid}
+        >
           Crea Viaggio
         </Button>
       </Form>

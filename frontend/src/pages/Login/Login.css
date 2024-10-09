@@ -2,7 +2,6 @@ body{
   background-image: url('../../assets/images/background.jpg');
 }
 .login-card {
-  padding: 40px;
   border-radius: 15px;
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
   transition: all 0.3s ease;
@@ -25,17 +24,7 @@ body{
 }
 
 .toggle-button.active-btn {
-  background-color: #1890ff;
-  color: white;
+  background-color: lightcyan;
+  color: black;
   border-color: #1890ff;
-}
-
-.toggle-button {
-  height: 40px;
-}
-
-@media (max-width: 768px) {
-  .login-card {
-    padding: 20px;
-  }
 }

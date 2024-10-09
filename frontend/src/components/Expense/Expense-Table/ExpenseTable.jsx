@@ -1,4 +1,4 @@
-import { Table, Typography } from 'antd';
+import { Table, Typography, Card, List } from 'antd';
 import { UserOutlined } from '@ant-design/icons';
 import './ExpenseTable.css';
 
@@ -41,9 +41,29 @@ const ExpenseTable = ({ data }) => {
       </Title>
       <Table
         columns={columns}
-        dataSource={data} 
+        dataSource={data}
         pagination={false}
-        rowKey={(record) => `${record.from._id}-${record.to._id}-${record.amount}`} 
+        rowKey={(record) => `${record.from._id}-${record.to._id}-${record.amount}`}
+      />
+      <List
+        className="expense-list"
+        grid={{ gutter: 16, column: 1 }}
+        dataSource={data}
+        renderItem={(item) => (
+          <List.Item>
+            <Card className="expense-card">
+              <p>
+                <strong>Debitore:</strong> {item.from.name} {item.from.surname}
+              </p>
+              <p>
+                <strong>Creditore:</strong> {item.to.name} {item.to.surname}
+              </p>
+              <p>
+                <strong>Importo Dovuto:</strong> € {item.amount.toFixed(2)}
+              </p>
+            </Card>
+          </List.Item>
+        )}
       />
     </div>
   );
