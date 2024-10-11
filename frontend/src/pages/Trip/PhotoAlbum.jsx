@@ -1,8 +1,10 @@
 import { useState, useEffect } from 'react';
 import { Container, Form, Button, Alert, Spinner, Carousel } from 'react-bootstrap';
 import { fetchAlbumPhotos, uploadAlbumPhotos } from '../../api/tripApi'; 
+import { useAuth } from '../../context/authContext'; 
 
 const PhotoAlbum = ({ tripId }) => {
+  const { user } = useAuth(); 
   const [photos, setPhotos] = useState([]);
   const [selectedFiles, setSelectedFiles] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -12,7 +14,7 @@ const PhotoAlbum = ({ tripId }) => {
   useEffect(() => {
     const loadPhotos = async () => {
       try {
-        const albumPhotos = await fetchAlbumPhotos(tripId); 
+        const albumPhotos = await fetchAlbumPhotos(tripId, user.token); 
         setPhotos(albumPhotos);
       } catch (err) {
         setError(err.message);
@@ -20,7 +22,7 @@ const PhotoAlbum = ({ tripId }) => {
     };
 
     loadPhotos();
-  }, [tripId]);
+  }, [tripId, user.token]);
 
   const handleFileChange = (e) => {
     setSelectedFiles(e.target.files);
@@ -39,7 +41,7 @@ const PhotoAlbum = ({ tripId }) => {
     setSuccessMessage('');
 
     try {
-      const uploadedPhotos = await uploadAlbumPhotos(tripId, selectedFiles); 
+      const uploadedPhotos = await uploadAlbumPhotos(tripId, selectedFiles, user.token); 
       setSuccessMessage('Foto caricate con successo!');
       setPhotos((prevPhotos) => [...prevPhotos, ...uploadedPhotos]);
       setSelectedFiles([]);

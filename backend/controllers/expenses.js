@@ -131,53 +131,62 @@ export const deleteExpense = async (req, res) => {
     res.status(400).json({ error: error.message });
   }
 };
-
 export const calculateSplit = async (req, res) => {
   const { tripId } = req.params;
 
   try {
     const trip = await Trip.findById(tripId).populate('participants.user');
-    const expenses = await Expense.find({ trip: tripId });
     if (!trip) return res.status(404).json({ error: 'Viaggio non trovato' });
 
-   
+    const expenses = await Expense.find({ trip: tripId });
+
     const balances = {};
-    trip.participants.forEach(p => (balances[p.user._id] = 0));
-
-    
-    expenses.forEach(expense => {
-      const selectedParticipants = expense.participants; 
-
-     
-      if (!selectedParticipants || selectedParticipants.length === 0) return;
-
-      
-      const fairShare = expense.amount / selectedParticipants.length;
-
-     
-      balances[expense.paidBy] += expense.amount;
-
-      
-      selectedParticipants.forEach(participantId => {
-        balances[participantId] -= fairShare;
-      });
-    });
-
-    
-    const creditors = [];
-    const debtors = [];
     trip.participants.forEach(p => {
-      if (balances[p.user._id] > 0) {
-        creditors.push({ user: p.user, amount: balances[p.user._id] });
-      } else if (balances[p.user._id] < 0) {
-        debtors.push({ user: p.user, amount: -balances[p.user._id] });
+      if (p.user) {
+        balances[p.user._id] = 0; 
       }
     });
 
-   
+    expenses.forEach(expense => {
+    
+      const selectedParticipants = expense.participants.filter(participantId =>
+        trip.participants.some(p => p.user && p.user._id.equals(participantId))
+      );
+
+      if (!selectedParticipants || selectedParticipants.length === 0) return;
+
+      const fairShare = expense.amount / selectedParticipants.length; 
+
+      if (expense.paidBy && balances[expense.paidBy] !== undefined) {
+        balances[expense.paidBy] += expense.amount;
+      }
+
+      selectedParticipants.forEach(participantId => {
+        if (balances[participantId] !== undefined) {
+          balances[participantId] -= fairShare;
+        }
+      });
+    });
+
+    const creditors = [];
+    const debtors = [];
+    trip.participants.forEach(p => {
+      const user = p.user;
+      if (!user) return; 
+
+      const balance = balances[user._id];
+
+      if (balance > 0) {
+       
+        creditors.push({ user, amount: balance });
+      } else if (balance < 0) {
+       
+        debtors.push({ user, amount: -balance });
+      }
+    });
+
     const transactions = [];
-    let i = 0,
-      j = 0;
+    let i = 0, j = 0;
     while (i < creditors.length && j < debtors.length) {
       const amountToPay = Math.min(creditors[i].amount, debtors[j].amount);
       transactions.push({ from: debtors[j].user, to: creditors[i].user, amount: amountToPay });
@@ -187,10 +196,22 @@ export const calculateSplit = async (req, res) => {
       if (debtors[j].amount === 0) j++;
     }
 
-    
-    res.status(200).json({ transactions, totalExpenses: expenses.reduce((total, expense) => total + expense.amount, 0), participants: trip.participants, balances });
+    res.status(200).json({
+      transactions,
+      totalExpenses: expenses.reduce((total, expense) => total + expense.amount, 0),
+      participants: trip.participants.map(p => ({
+        ...p.user,
+        name: p.user.name,
+        _id: p.user._id     
+      })),
+      balances,
+    });
+
   } catch (error) {
     console.error('Errore nel calcolo delle spese:', error);
     res.status(500).json({ message: 'Errore del server nel calcolo delle spese' });
   }
 };
+
+
+

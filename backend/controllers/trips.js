@@ -301,15 +301,32 @@ export const declineTripInvitation = async (req, res) => {
 export const addPhotoToTrip = async (req, res) => {
   const { tripId } = req.params;
   const photo = req.file;
+  const userId = req.user._id; 
 
   if (!photo) return res.status(400).json({ message: 'Nessuna foto fornita' });
 
   try {
-    const trip = await Trip.findById(tripId);
+    const trip = await Trip.findById(tripId).populate('participants.user');
     if (!trip) return res.status(404).json({ message: 'Viaggio non trovato' });
 
     trip.photoUrl = photo.path;
     await trip.save();
+
+    const otherParticipants = trip.participants.filter(p => p.user._id.toString() !== userId.toString());
+
+    const notifications = otherParticipants.map(async (participant) => {
+      const notification = new Notification({
+        recipient: participant.user._id,
+        sender: userId,
+        type: 'photo_added',
+        message: `Una nuova foto è stata aggiunta al viaggio "${trip.name}"`,
+        data: { tripId: trip._id },
+      });
+      await notification.save();
+      emitGlobalEvent(`notification_${participant.user._id}`, notification);
+    });
+
+    await Promise.all(notifications);
 
     res.status(200).json({ message: 'Foto caricata con successo', trip });
   } catch (error) {
@@ -320,16 +337,33 @@ export const addPhotoToTrip = async (req, res) => {
 export const addPhotosToAlbum = async (req, res) => {
   const { tripId } = req.params;
   const photos = req.files;
+  const userId = req.user._id; 
 
   if (!photos || photos.length === 0) return res.status(400).json({ message: 'Nessuna foto fornita' });
 
   try {
-    const trip = await Trip.findById(tripId);
+    const trip = await Trip.findById(tripId).populate('participants.user');
     if (!trip) return res.status(404).json({ message: 'Viaggio non trovato' });
 
     const photoUrls = photos.map(photo => photo.path);
     trip.album = [...trip.album, ...photoUrls];
     await trip.save();
+
+    const otherParticipants = trip.participants.filter(p => p.user._id.toString() !== userId.toString());
+
+    const notifications = otherParticipants.map(async (participant) => {
+      const notification = new Notification({
+        recipient: participant.user._id,
+        sender: userId,
+        type: 'photos_added',
+        message: `Nuove foto sono state aggiunte all'album del viaggio "${trip.name}"`,
+        data: { tripId: trip._id },
+      });
+      await notification.save();
+      emitGlobalEvent(`notification_${participant.user._id}`, notification);
+    });
+
+    await Promise.all(notifications);
 
     res.status(200).json({ message: 'Foto aggiunte con successo all\'album', photos: photoUrls });
   } catch (error) {

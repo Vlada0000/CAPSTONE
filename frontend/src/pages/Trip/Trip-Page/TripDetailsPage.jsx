@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Layout, Spin, message, Menu } from 'antd';
+import { Layout, Spin, message, Menu, Button } from 'antd';
 import { useParams, useNavigate } from 'react-router-dom';
 import { getTripById } from '../../../api/tripApi';
 import { useAuth } from '../../../context/authContext';
@@ -15,6 +15,7 @@ import {
   MessageOutlined,
   CheckOutlined,
   CameraOutlined,
+  ArrowLeftOutlined, 
 } from '@ant-design/icons';
 import './TripDetailsPage.css';
 import TravelCheckList from '../../../components/Utils/Check-List/TravelCheckList';
@@ -91,6 +92,12 @@ const TripDetailPage = () => {
         />
       </Header>
       <Content className="trip-detail-content">
+        <Button
+          type="text"
+          icon={<ArrowLeftOutlined />} 
+          onClick={() => navigate('/')} 
+          className="back-button"
+        />
         {activeSection === 'participants' && (
           <ParticipantsSection
             trip={trip}

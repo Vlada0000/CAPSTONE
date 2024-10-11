@@ -9,7 +9,7 @@ import './Login.css';
 
 const { Title, Text } = Typography;
 
-const LoginPage = () => {
+const Login = () => {
   const [isLogin, setIsLogin] = useState(true);
   const [errorMessage, setErrorMessage] = useState('');
   const [formData, setFormData] = useState({
@@ -26,6 +26,9 @@ const LoginPage = () => {
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
+    if (errorMessage) {
+      setErrorMessage(''); 
+    }
   };
 
   const handleSubmit = async () => {
@@ -35,6 +38,7 @@ const LoginPage = () => {
         if (response.token) {
           localStorage.setItem('token', response.token);
           login(response.token);
+          setErrorMessage(''); 
           navigate('/');
         } else {
           throw new Error('Token non trovato');
@@ -43,6 +47,7 @@ const LoginPage = () => {
         await registerApi(formData); 
         message.success('Registrazione completata! Effettua il login.');
         setIsLogin(true); 
+        setErrorMessage('');  
         navigate('/login');
       }
     } catch (error) {
@@ -63,6 +68,7 @@ const LoginPage = () => {
     if (tokenFromUrl) {
       localStorage.setItem('token', tokenFromUrl);
       login(tokenFromUrl);  
+      setErrorMessage('');  
       navigate('/', { replace: true });
     }
   }, [location, login, navigate]);
@@ -78,7 +84,7 @@ const LoginPage = () => {
           <div className="auth-toggle mb-3 text-center">
             <Button
               type={isLogin ? 'primary' : 'default'}
-              onClick={() => setIsLogin(true)}
+              onClick={() => { setIsLogin(true); setErrorMessage(''); }} 
               className={`toggle-button ${isLogin ? 'active-btn' : ''}`}
               style={{ width: '45%', marginRight: '10px' }}
             >
@@ -86,7 +92,7 @@ const LoginPage = () => {
             </Button>
             <Button
               type={!isLogin ? 'primary' : 'default'}
-              onClick={() => setIsLogin(false)}
+              onClick={() => { setIsLogin(false); setErrorMessage(''); }}  
               className={`toggle-button ${!isLogin ? 'active-btn' : ''}`}
               style={{ width: '45%' }}
             >
@@ -171,7 +177,7 @@ const LoginPage = () => {
           </Form>
 
           <div className="text-center">
-            <Button type="link" onClick={() => setIsLogin(!isLogin)}>
+            <Button type="link" onClick={() => { setIsLogin(!isLogin); setErrorMessage(''); }}>
               {isLogin ? 'Crea un nuovo account' : 'Hai già un account? Login'}
             </Button>
           </div>
@@ -181,4 +187,4 @@ const LoginPage = () => {
   );
 };
 
-export default LoginPage;
+export default Login;

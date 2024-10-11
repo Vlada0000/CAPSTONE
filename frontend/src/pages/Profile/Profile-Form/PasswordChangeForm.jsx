@@ -18,7 +18,7 @@ const PasswordChangeForm = ({
 
   return (
     <div className="password-change-form-container">
-      <Title level={2}>Cambia Password</Title>
+      <Title level={2} className="text-center">Cambia Password</Title>
       <Form layout="vertical" className="password-change-form">
         <Form.Item label="Vecchia Password">
           <Input.Password

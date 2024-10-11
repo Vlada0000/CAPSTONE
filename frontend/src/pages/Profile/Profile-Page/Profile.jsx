@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Layout, Menu, Spin, message, Drawer, Button, Modal } from 'antd';
+import { Layout, Spin, message, Menu, Drawer, Button, Modal } from 'antd';
 import {
   UserOutlined,
   SettingOutlined,
@@ -8,7 +8,9 @@ import {
   LineChartOutlined,
   MenuOutlined,
   ExclamationCircleOutlined,
+  HomeOutlined, 
 } from '@ant-design/icons';
+import { useNavigate } from 'react-router-dom'; 
 import { useAuth } from '../../../context/authContext';
 import {
   getLoggedInUserProfile,
@@ -30,6 +32,7 @@ const { confirm } = Modal;
 
 const Profile = () => {
   const { user, setUser, logout } = useAuth();
+  const navigate = useNavigate(); 
   const [profileData, setProfileData] = useState({
     name: '',
     surname: '',
@@ -108,11 +111,19 @@ const Profile = () => {
       return;
     }
     try {
-      const result = await uploadProfileImage(file, token);
+      const result = await uploadProfileImage(file, token); 
+
+      setUser((prevUser) => ({
+        ...prevUser,
+        profileImage: result.user.profileImage, 
+      }));
+  
+     
       setProfileData((prevData) => ({
         ...prevData,
-        profileImage: result.user.profileImage,
+        profileImage: result.user.profileImage, 
       }));
+  
       message.success('Immagine del profilo aggiornata con successo!');
     } catch (error) {
       message.error("Errore durante il caricamento dell'immagine");
@@ -153,6 +164,12 @@ const Profile = () => {
 
   const menuItems = [
     {
+      key: 'home', 
+      icon: <HomeOutlined />, 
+      label: 'Home',
+      onClick: () => navigate('/'), 
+    },
+    {
       key: 'dashboard',
       icon: <LineChartOutlined />,
       label: 'Dashboard',
@@ -177,7 +194,7 @@ const Profile = () => {
       icon: <LogoutOutlined />,
       label: 'Logout',
       onClick: logout,
-    },
+    }
   ];
 
   const renderContent = () => {

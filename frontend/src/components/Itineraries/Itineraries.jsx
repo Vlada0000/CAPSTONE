@@ -41,11 +41,11 @@ const Itineraries = () => {
       const itineraryData = { trip: tripId, ...values };
       const addedItinerary = await addItinerary(itineraryData, user.token);
       setItineraries((prev) => [...prev, addedItinerary]);
-      message.success('Itinerario aggiunto con successo!');
+      message.success('Tappa aggiunta con successo!');
       setIsPanelOpen(false);
     } catch (error) {
-      console.error('Errore durante l\'aggiunta dell\'itinerario:', error);
-      message.error("Errore durante l'aggiunta dell'itinerario");
+      console.error('Errore durante l\'aggiunta della tappa:', error);
+      message.error("Errore durante l'aggiunta della tappa");
     }
   };
 
@@ -57,12 +57,12 @@ const Itineraries = () => {
           itinerary._id === editingItinerary._id ? updatedItinerary : itinerary
         )
       );
-      message.success('Itinerario aggiornato con successo!');
+      message.success('Tappa aggiornata con successo!');
       setEditingItinerary(null);
       setIsPanelOpen(false);
     } catch (error) {
-      console.error('Errore durante l\'aggiornamento dell\'itinerario:', error);
-      message.error("Errore durante l'aggiornamento dell'itinerario");
+      console.error('Errore durante l\'aggiornamento della tappa:', error);
+      message.error("Errore durante l'aggiornamento della tappa");
     }
   };
 
@@ -70,10 +70,10 @@ const Itineraries = () => {
     try {
       await deleteItinerary(id, user.token);
       setItineraries((prev) => prev.filter((itinerary) => itinerary._id !== id));
-      message.success('Itinerario eliminato con successo');
+      message.success('Tappa eliminata con successo');
     } catch (error) {
-      console.error('Errore durante l\'eliminazione dell\'itinerario:', error);
-      message.error("Errore durante l'eliminazione dell'itinerario");
+      console.error('Errore durante l\'eliminazione della tappa:', error);
+      message.error("Errore durante l'eliminazione della tappa");
     }
   };
 
@@ -111,7 +111,7 @@ const Itineraries = () => {
   const collapseItems = [
     {
       key: '1',
-      label: editingItinerary ? 'Modifica Itinerario' : 'Aggiungi Itinerario',
+      label: editingItinerary ? 'Modifica Tappa' : 'Aggiungi Tappa',
       children: (
         <ItineraryForm
           initialValues={editingItinerary || { location: '', date: null, activities: '', notes: '' }}
@@ -123,7 +123,7 @@ const Itineraries = () => {
   ];
 
   return (
-    <Card title="Gestisci Itinerari">
+    <Card title="Gestisci Itinerario">
       <Collapse
         activeKey={isPanelOpen ? ['1'] : []}
         onChange={() => setIsPanelOpen(!isPanelOpen)}

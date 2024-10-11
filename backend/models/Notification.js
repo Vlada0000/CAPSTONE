@@ -12,6 +12,8 @@ const notificationSchema = new mongoose.Schema(
         'trip_declined',
         'trip_updated',
         'trip_deleted',
+        'photo_added',
+        'photos_added',
         'participant_removed',
         'itinerary_added',
         'itinerary_updated',

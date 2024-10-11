@@ -10,7 +10,7 @@ import {
   updatePassword
 } from '../controllers/users.js';
 import authMiddleware from '../middlewares/auth.js'; 
-import upload from '../config/cloudinary.js'; 
+import upload from '../middlewares/upload.js';
 
 const router = express.Router();
 

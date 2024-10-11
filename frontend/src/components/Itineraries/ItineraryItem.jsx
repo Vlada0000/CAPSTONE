@@ -40,7 +40,7 @@ const ItineraryItem = ({ itinerary, onEdit, onDelete }) => (
         <EditOutlined />
       </Button>,
       <Popconfirm
-        title="Sicuro di voler eliminare questo itinerario?"
+        title="Sicuro di voler eliminare questa tappa?"
         onConfirm={() => onDelete(itinerary._id)}
       >
         <Button

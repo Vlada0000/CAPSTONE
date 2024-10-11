@@ -211,43 +211,51 @@ export const getTripById = async (tripId, token) => {
   return await response.json();
 };
 
-export const fetchAlbumPhotos = async (tripId) => {
-    try {
-      const response = await fetch(`${API_URL}/${tripId}/album`);
-      const result = await response.json();
-  
-      if (!response.ok) {
-        throw new Error(result.message || 'Errore nel recupero delle foto dell\'album');
-      }
-  
-      return result.album;
-    } catch (error) {
-      throw new Error(error.message || 'Errore durante il recupero dell\'album');
-    }
-  };
-
-  export const uploadAlbumPhotos = async (tripId, photos) => {
-    const formData = new FormData();
-    
-    Array.from(photos).forEach((file) => {
-      formData.append('photos', file);
+export const fetchAlbumPhotos = async (tripId, token) => {
+  try {
+    const response = await fetch(`${API_URL}/${tripId}/album`, {
+      method: 'GET',
+      headers: {
+        'Authorization': `Bearer ${token}`,
+      },
     });
-  
-    try {
-      const response = await fetch(`${API_URL}/${tripId}/album`, {
-        method: 'POST',
-        body: formData,
-      });
-  
-      const result = await response.json();
-  
-      if (!response.ok) {
-        throw new Error(result.message || 'Errore nel caricamento delle foto');
-      }
-  
-      return result.photos;
-    } catch (error) {
-      throw new Error(error.message || 'Si è verificato un errore');
+    
+    const result = await response.json();
+
+    if (!response.ok) {
+      throw new Error(result.message || 'Errore nel recupero delle foto dell\'album');
     }
-  };
-  
+
+    return result.album;
+  } catch (error) {
+    throw new Error(error.message || 'Errore durante il recupero dell\'album');
+  }
+};
+
+export const uploadAlbumPhotos = async (tripId, photos, token) => {
+  const formData = new FormData();
+
+  Array.from(photos).forEach((file) => {
+    formData.append('photos', file);
+  });
+
+  try {
+    const response = await fetch(`${API_URL}/${tripId}/album`, {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${token}`, 
+      },
+      body: formData,
+    });
+
+    const result = await response.json();
+
+    if (!response.ok) {
+      throw new Error(result.message || 'Errore nel caricamento delle foto');
+    }
+
+    return result.photos;
+  } catch (error) {
+    throw new Error(error.message || 'Si è verificato un errore');
+  }
+};

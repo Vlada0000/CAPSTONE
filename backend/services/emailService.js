@@ -13,16 +13,17 @@ export const sendWelcomeEmail = async (userEmail, userName) => {
   }
 };
 
-export const sendTripAcceptanceEmail = async (organizerEmail, organizerName, inviteeName) => {
-    try {
-      const subject = 'Invito al viaggio accettato';
-      const text = `Ciao ${organizerName},\n\nBuone notizie! ${inviteeName} ha accettato il tuo invito a partecipare al viaggio.`;
-      const html = `<strong>Ciao ${organizerName},</strong><br/><br/>Buone notizie! ${inviteeName} ha accettato il tuo invito a partecipare al viaggio.`;
-  
-      await sendEmail({ to: organizerEmail, subject, text, html });
-      console.log('Email di accettazione del viaggio inviata con successo');
-    } catch (error) {
-      console.error('Errore nell\'invio dell\'email di accettazione del viaggio:', error);
-    }
-  };
+export const sendProfileDeletionEmail = async (userEmail, userName) => {
+  try {
+    const subject = 'Conferma eliminazione del profilo';
+    const text = `Ciao ${userName},\n\nIl tuo profilo è stato eliminato con successo. Se hai domande o necessiti di assistenza, non esitare a contattarci.`;
+    const html = `<strong>Ciao ${userName},</strong><br/><br/>Il tuo profilo è stato eliminato con successo. Se hai domande o necessiti di assistenza, non esitare a contattarci.`;
+
+    await sendEmail({ to: userEmail, subject, text, html });
+    console.log('Email di conferma eliminazione del profilo inviata con successo');
+  } catch (error) {
+    console.error('Errore nell\'invio dell\'email di conferma eliminazione del profilo:', error);
+  }
+};
+
   

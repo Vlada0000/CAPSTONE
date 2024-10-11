@@ -15,7 +15,7 @@ import {
   getAlbumPhotos
 } from '../controllers/trips.js';
 import authMiddleware from '../middlewares/auth.js';
-import upload from '../config/cloudinary.js';
+import upload from '../middlewares/upload.js';
 
 const router = express.Router();
 
@@ -33,7 +33,7 @@ router.delete('/:tripId/participants/:participantId', authMiddleware, removeUser
 router.patch('/:tripId/accept', authMiddleware, acceptTripInvitation);
 router.patch('/:tripId/decline', authMiddleware, declineTripInvitation);
 
-router.post('/:tripId/album', upload.array('photos', 10), addPhotosToAlbum);
-router.get('/:tripId/album', getAlbumPhotos);
+router.post('/:tripId/album', upload.array('photos', 10), authMiddleware, addPhotosToAlbum);
+router.get('/:tripId/album', authMiddleware, getAlbumPhotos);
 
 export default router;

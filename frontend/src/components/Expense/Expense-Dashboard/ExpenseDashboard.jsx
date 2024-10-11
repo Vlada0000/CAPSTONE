@@ -1,8 +1,9 @@
 import { useState, useEffect } from 'react';
 import { calculateSplit } from '../../../api/expenseApi';
 import { useAuth } from '../../../context/authContext';
-import { Layout, Spin, Alert, Row, Col, Card, Typography } from 'antd';
-import { useParams } from 'react-router-dom';
+import { Layout, Spin, Alert, Row, Col, Card, Typography, Button } from 'antd';
+import { useParams, useNavigate } from 'react-router-dom';
+import { ArrowLeftOutlined } from '@ant-design/icons'; 
 
 import ExpensePieChart from '../Expense-PieChart/ExpensePieChart';
 import ExpenseTable from '../Expense-Table/ExpenseTable';
@@ -15,7 +16,8 @@ const { Title } = Typography;
 const ExpenseDashboard = () => {
   const { user } = useAuth();
   const { tripId } = useParams();
-  
+  const navigate = useNavigate(); 
+
   const [splitResults, setSplitResults] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
@@ -27,32 +29,28 @@ const ExpenseDashboard = () => {
     const fetchSplit = async () => {
       try {
         const splitData = await calculateSplit(tripId, user.token);
-
-        const filteredParticipants = splitData.transactions.map((transaction) => {
-          
-          const selectedParticipants = transaction.selectedParticipants;
-
-          
-          const amountPerParticipant = selectedParticipants.length > 0 
-            ? transaction.amount / selectedParticipants.length 
-            : 0;
-
-          return {
-            ...transaction,
-            participants: selectedParticipants,
-            amountPerParticipant,
-          };
-        });
-
-        setSplitResults(filteredParticipants);
+  
+        setSplitResults(splitData.transactions || []);
         setTotalExpenses(splitData.totalExpenses || 0);
         setBalances(splitData.balances || []);
-
-        if (Array.isArray(splitData.participants)) {
-          const chartData = splitData.participants.map(({ user }) => ({
-            name: user.name,
-            value: Math.abs(splitData.balances[user._id] || 0),
-          }));
+  
+        if (Array.isArray(splitData.participants) && splitData.participants.length > 0) {
+          const chartData = splitData.participants.map((participant) => {
+            const participantName = participant?.name; 
+            const participantBalance = splitData.balances[participant._id] || 0;
+           
+            const type = participantBalance > 0 
+              ? 'creditore' 
+              : participantBalance < 0 
+              ? 'debitore' 
+              : ''; 
+            
+            return {
+              name: type ? `${participantName} (${type})` : participantName, 
+              value: Math.abs(participantBalance),  
+            };
+          });
+  
           setPieChartData(chartData);
         } else {
           console.error('Partecipanti mancanti o non in formato array');
@@ -65,10 +63,9 @@ const ExpenseDashboard = () => {
         setLoading(false);
       }
     };
-
+  
     fetchSplit();
   }, [tripId, user.token]);
-  
   
   if (loading) {
     return (
@@ -90,6 +87,15 @@ const ExpenseDashboard = () => {
   return (
     <Layout className="expense-dashboard-layout">
       <Content className="expense-dashboard-content">
+        <Button
+          type="link"
+          onClick={() => navigate(-1)} 
+          icon={<ArrowLeftOutlined />} 
+          className="back-button"
+          style={{ marginBottom: '20px' }}
+        >
+        </Button>
+
         <Title level={2} className="dashboard-title">Dashboard Spese</Title>
         <Row gutter={[24, 24]}>
           <Col xs={24} lg={16}>

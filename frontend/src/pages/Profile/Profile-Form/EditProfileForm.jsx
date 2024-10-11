@@ -12,7 +12,7 @@ const EditProfileForm = ({ profileData, handleInputChange, handleSaveChanges }) 
 
   return (
     <div className="edit-profile-form-container">
-      <Title level={2}>Modifica Profilo</Title>
+      <Title level={2} className="text-center">Modifica Profilo</Title>
       <Form layout="vertical" className="edit-profile-form">
         <Form.Item label="Nome">
           <Input
