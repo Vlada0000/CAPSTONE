@@ -11,7 +11,6 @@ const ExpenseForm = ({
 }) => {
   const [form] = Form.useForm();
 
-  
   const handleDateChange = (date) => {
     setExpenseData({ ...expenseData, date });
   };
@@ -23,7 +22,7 @@ const ExpenseForm = ({
       onFinish={onSubmit}
       initialValues={{
         ...expenseData,
-        date: expenseData.date ? moment(expenseData.date) : null,
+        date: isEditing ? null : (expenseData.date ? moment(expenseData.date) : null),
       }}
     >
       {/* Campo per l'importo */}
@@ -61,7 +60,7 @@ const ExpenseForm = ({
         rules={[{ required: true, message: 'Seleziona una data' }]}
       >
         <DatePicker
-          value={expenseData.date ? moment(expenseData.date) : null}
+          value={isEditing ? null : (expenseData.date ? moment(expenseData.date) : null)}
           onChange={handleDateChange}
           format="DD/MM/YYYY"
           style={{ width: '100%' }}
