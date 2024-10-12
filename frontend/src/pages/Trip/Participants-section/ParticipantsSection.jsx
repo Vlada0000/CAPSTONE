@@ -116,15 +116,17 @@ const ParticipantsSection = ({ trip, user, onTripUpdate }) => {
         <div className="col-sm-12 col-md-6 col-lg-4 mt-3">
           <Card className="invite-card ">
             <Form layout="inline" onFinish={handleInviteUser}>
-              <Form.Item>
-                <Input
+               <Tooltip title="Invita solo utenti registrati">
+                 <Form.Item>
+                   <Input
                   prefix={<MailOutlined />}
                   value={emailToInvite}
                   onChange={(e) => setEmailToInvite(e.target.value)}
                   placeholder="Email partecipante"
                   required
-                />
-              </Form.Item>
+                  />
+                </Form.Item>
+                </Tooltip>
               <Form.Item>
                 <Button type="primary" htmlType="submit">
                   Invita
