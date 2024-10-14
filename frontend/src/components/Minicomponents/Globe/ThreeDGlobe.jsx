@@ -22,7 +22,7 @@ function ThreeDGlobe() {
       <Stars radius={300} depth={50} count={5000} factor={7} fade speed={1} />
       <Globe />
       <OrbitControls
-        enableZoom={true}
+        enableZoom={false}
         enablePan={false}
         rotateSpeed={0.5}
         autoRotate
