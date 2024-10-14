@@ -113,10 +113,10 @@ const ParticipantsSection = ({ trip, user, onTripUpdate }) => {
       </Card>
 
       {user._id === trip.organizer._id && (
-        <div className="col-sm-12 col-md-6 col-lg-4 mt-3">
+        <div className="col-sm-12 col-md-12 col-lg-12 mt-3">
           <Card className="invite-card ">
             <Form layout="inline" onFinish={handleInviteUser}>
-               <Tooltip title="Invita solo utenti registrati">
+               <Tooltip title="Invita solo utenti registrati all'app">
                  <Form.Item>
                    <Input
                   prefix={<MailOutlined />}

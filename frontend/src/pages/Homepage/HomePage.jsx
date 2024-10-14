@@ -14,7 +14,7 @@ import {
   CalendarOutlined,
 } from '@ant-design/icons';
 import './HomePage.css';
-import ThreeDGlobe from '../../components/Utils/Globe/ThreeDGlobe';
+import ThreeDGlobe from '../../components/Minicomponents/Globe/ThreeDGlobe';
 import { useAuth } from '../../context/authContext';
 import { useNavigate } from 'react-router-dom';
 import { getTrips, createTrip } from '../../api/tripApi';

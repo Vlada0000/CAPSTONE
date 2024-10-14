@@ -5,7 +5,7 @@ import { getTripById } from '../../../api/tripApi';
 import { useAuth } from '../../../context/authContext';
 import Itineraries from '../../../components/Itineraries/Itineraries';
 import Expenses from '../../../components/Expense/ExpensePage/Expenses';
-import Chat from '../../../components/Utils/Chat/Chat';
+import Chat from '../../../components/Minicomponents/Chat/Chat';
 import ParticipantsSection from '../Participants-section/ParticipantsSection';
 import TripHeader from '../Trip-Header/TripHeader';
 import {
@@ -18,7 +18,7 @@ import {
   ArrowLeftOutlined, 
 } from '@ant-design/icons';
 import './TripDetailsPage.css';
-import TravelCheckList from '../../../components/Utils/Check-List/TravelCheckList';
+import TravelCheckList from '../../../components/Minicomponents/Check-List/TravelCheckList';
 import PhotoAlbum from '../PhotoAlbum';
 
 const { Header, Content } = Layout;

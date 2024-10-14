@@ -11,7 +11,7 @@ import Profile from './pages/Profile/Profile-Page/Profile';
 import TripDetailsPage from './pages/Trip/Trip-Page/TripDetailsPage';
 import { SocketProvider } from './context/socketContext';
 import ExpenseDashboard from './components/Expense/Expense-Dashboard/ExpenseDashboard';
-import Chat from './components/Utils/Chat/Chat';
+import Chat from './components/Minicomponents/Chat/Chat';
 
 function App() {
   return (
