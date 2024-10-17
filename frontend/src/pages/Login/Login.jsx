@@ -113,7 +113,7 @@ const Login = () => {
             {isLogin ? 'Login con Google' : 'Registrati con Google'}
           </Button>
           
-          <Divider>or</Divider>
+          <Divider>o</Divider>
 
           {errorMessage && <Text type="danger">{errorMessage}</Text>}
 

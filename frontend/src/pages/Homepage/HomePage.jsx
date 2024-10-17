@@ -28,8 +28,8 @@ const { Title, Text } = Typography;
 const HomePage = () => {
   const { user, loading } = useAuth();
   const [trips, setTrips] = useState([]);
-  const [currentPage, setCurrentPage] = useState(1); 
-  const [pageSize] = useState(6); 
+  const [currentPage, setCurrentPage] = useState(1);
+  const [pageSize] = useState(6);
   const [newTrip, setNewTrip] = useState({
     name: '',
     description: '',
@@ -82,7 +82,7 @@ const HomePage = () => {
         startDate: null,
         endDate: null,
       });
-      setIsDrawerVisible(false); 
+      setIsDrawerVisible(false);
       fetchTrips();
     } catch (error) {
       console.error('Errore nella creazione del viaggio:', error);
@@ -90,20 +90,18 @@ const HomePage = () => {
   };
 
   const showCreateDrawer = () => {
-    setIsDrawerVisible(true); 
+    setIsDrawerVisible(true);
   };
 
   const handleDrawerCancel = () => {
-    setIsDrawerVisible(false); 
+    setIsDrawerVisible(false);
     setNewTrip({ name: '', description: '', startDate: null, endDate: null });
   };
 
-   
-   const paginatedTrips = trips.slice(
+  const paginatedTrips = trips.slice(
     (currentPage - 1) * pageSize,
     currentPage * pageSize
   );
-
 
   if (loading) {
     return (
@@ -116,20 +114,20 @@ const HomePage = () => {
   return (
     <div className="homepage-container">
       <div className="hero-section">
-        <ThreeDGlobe />
-        <div className="hero-overlay">
-          <Title className="hero-title animate__animated animate__fadeInDown">
-            Benvenuto, {user.name}!
-          </Title>
-          <Text className="hero-subtitle animate__animated animate__fadeInUp">
+        <div className="globe-container">
+          <ThreeDGlobe />
+        </div>
+        <div className="hero-overlay animate-hero-content">
+          <Title className="hero-title">Benvenuto, {user.name}!</Title>
+          <Text className="hero-subtitle">
             Esplora il mondo. Pianifica i tuoi viaggi con facilità.
           </Text>
           <Button
-            type="primary"
-            size="large"
+            type="button"
+            size="medium"
             icon={<PlusOutlined />}
             onClick={showCreateDrawer}
-            className="create-trip-button animate__animated animate__fadeInUp"
+            className="create-trip-button"
           >
             Crea Nuovo Viaggio
           </Button>
@@ -170,9 +168,7 @@ const HomePage = () => {
                   >
                     <Meta
                       title={trip.name}
-                      description={
-                        trip.description || 'Nessuna descrizione disponibile.'
-                      }
+                      description={trip.description || 'Nessuna descrizione disponibile.'}
                     />
                     <div className="trip-dates">
                       <CalendarOutlined style={{ marginRight: '8px' }} />
@@ -183,20 +179,18 @@ const HomePage = () => {
                 </Col>
               ))}
             </Row>
-            <div className="pagination-container ">
-              <Pagination 
+            <div className="pagination-container">
+              <Pagination
                 current={currentPage}
                 pageSize={pageSize}
                 total={trips.length}
                 onChange={handlePageChange}
-                showSizeChanger={false} 
+                showSizeChanger={false}
               />
             </div>
           </>
         ) : (
-          <p className="no-trips-message">
-            Non hai ancora creato nessun viaggio.
-          </p>
+          <p className="no-trips-message">Non hai ancora creato nessun viaggio.</p>
         )}
       </div>
 

@@ -1,12 +1,16 @@
+.homepage-container{
+  background-image: url('../../assets/images/home.jpg');
+  background-size: cover;
+  background-repeat: no-repeat;
+}
 .hero-section {
+  position: relative;
+  width: 100%;
+  height: 100vh;
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  height: 100vh;
-  background: linear-gradient(135deg, #e3f2fd, #bbdefb);
-  padding: 0;
-  position: relative;
-  overflow: hidden;
+  justify-content: center;
+  flex-direction: column;
 }
 
 .hero-overlay {
@@ -14,11 +18,16 @@
   left: 5%;
   z-index: 2;
   max-width: 40%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center; 
+  align-items: center;    
+
 }
 
 .hero-title {
   font-size: 4rem;
-  color: #0d47a1!important;
+  color: #0d47a1 !important;
   font-weight: 800;
   animation: fadeInLeft 1s ease;
 }
@@ -32,6 +41,46 @@
 
 .create-trip-button {
   animation: fadeInLeft 2s ease;
+  background-color: #bbdefb;
+}
+
+.globe-container {
+  width: 100%;
+  height: 100%;
+  animation: fadeInGlobe 1.2s ease-in-out forwards;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.animate-hero-content {
+  opacity: 0;
+  animation: fadeInContent 1.5s ease-in-out forwards;
+  animation-delay: 1.2s;
+  text-align: center;
+  margin-top: 20px;
+}
+
+@keyframes fadeInGlobe {
+  from {
+    opacity: 0;
+    transform: translateY(-50px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInContent {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 @keyframes fadeInLeft {
@@ -45,20 +94,8 @@
   }
 }
 
-.three-d-globe {
-  position: absolute;
-  right: 0;
-  top: 0;
-  width: 60%;
-  height: 100vh;
-  z-index: 1;
-  background: #000;
-}
-
 .trips-section {
-  
   padding: 40px;
-  background: #ffffff;
   border-radius: 20px;
   box-shadow: 0 5px 25px rgba(0, 0, 0, 0.1);
 }
@@ -106,7 +143,7 @@
 
 .trip-dates {
   margin-top: 15px;
-  color: #616161!important;
+  color: #616161 !important;
   display: flex;
   align-items: center;
 }
@@ -124,3 +161,11 @@
   height: 80vh;
 }
 
+@media (max-width: 480px) {
+  .hero-subtitle {
+    font-size: 0.9rem; 
+  }
+  .hero-title {
+    font-size:1.5rem!important;
+  }
+}

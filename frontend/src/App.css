@@ -4,6 +4,9 @@
 body {
   font-family: "Exo", sans-serif;
   font-weight: 600; 
+  background-image: url('./assets/images/backgroundIM.jpg');
+  background-size: cover; 
+  background-position: center;
 }
 
 h1, h2, h3, h4, h5, h6 {

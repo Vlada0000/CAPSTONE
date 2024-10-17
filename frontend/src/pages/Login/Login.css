@@ -1,10 +1,22 @@
-body{
-  background-image: url('../../assets/images/background.jpg');
+@keyframes fadeInUp {
+  0% {
+    opacity: 0;
+    transform: translateY(30px); 
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0); 
+  }
 }
+
 .login-card {
   border-radius: 15px;
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
   transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+  background: transparent;
+  opacity: 0; 
+  animation: fadeInUp 0.8s ease forwards; 
 }
 
 .login-card:hover {
@@ -17,10 +29,17 @@ body{
 }
 
 .google-login-btn {
-  background-color: #db4437;
-  border: none;
-  color: white;
-  height: 45px;
+  background-color: lightblue;
+  border-radius: 40px;
+  color: gray;
+  transition: background-color 0.3s ease, transform 0.3s ease; 
+}
+
+.google-login-btn:hover {
+  background-color: #1890ff;
+  color: white; 
+  transform: scale(1.05); 
+  cursor: pointer; 
 }
 
 .toggle-button.active-btn {

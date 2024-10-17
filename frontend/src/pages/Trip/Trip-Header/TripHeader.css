@@ -67,29 +67,3 @@
   color:black;
 }
 
-.trip-edit-modal .ant-modal-content {
-  border-radius: 15px;
-}
-
-.trip-edit-form .ant-form-item-label > label {
-  font-weight: bold;
-  color: #ff8f00;
-}
-
-.ant-input,
-.ant-picker,
-.ant-input-textarea,
-.ant-upload {
-  border-radius: 12px;
-  border: 1px solid #ffcc80;
-  transition: border-color 0.3s ease-in-out;
-}
-
-.ant-input:focus,
-.ant-picker-focused .ant-picker-input > input,
-.ant-input-textarea:focus,
-.ant-upload:hover {
-  border-color: #ff6f00;
-  box-shadow: 0 0 8px rgba(255, 111, 0, 0.3);
-}
-

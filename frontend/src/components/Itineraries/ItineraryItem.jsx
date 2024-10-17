@@ -9,13 +9,9 @@ const ItineraryItem = ({ itinerary, onEdit, onDelete }) => (
     style={{
       display: 'flex',
       alignItems: 'center',
-      padding: '20px',
-      background: '#fff',
-      borderRadius: '15px',
       border: '1px solid #eaeaea',
       boxShadow: '0 4px 12px rgba(0, 0, 0, 0.1)',
       transition: 'box-shadow 0.3s ease, transform 0.3s ease',
-      marginBottom: '20px',
     }}
     actions={[
       <Button

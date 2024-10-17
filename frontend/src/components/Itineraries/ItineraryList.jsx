@@ -24,7 +24,7 @@ const ItineraryList = ({
       )}
     />
     <Pagination
-      className="itinerary-pagination mb-3"
+      className="itinerary-pagination mb-3 mt-2 d-flex justify-content-center"
       current={currentPage}
       pageSize={pageSize}
       total={itineraries.length}

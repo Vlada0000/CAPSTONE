@@ -279,7 +279,7 @@ const Profile = () => {
         width={260}
       >
         <Menu
-          theme="dark"
+          theme="light"
           mode="inline"
           selectedKeys={[selectedMenuKey]}
           onClick={({ key }) => {

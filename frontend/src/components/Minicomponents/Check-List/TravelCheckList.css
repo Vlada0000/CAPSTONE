@@ -1,5 +1,4 @@
 .travel-checklist {
-  background: linear-gradient(135deg, #e1f5fe, #b3e5fc);
   padding: 40px;
   border-radius: 20px;
   box-shadow: 0 5px 25px rgba(0, 0, 0, 0.1);
@@ -75,4 +74,51 @@
   font-weight: bold;
   color: #0277bd;
 }
+@media (max-width: 768px) {
+  .travel-checklist {
+    padding: 20px;
+    margin: 20px;
+    max-width: 100%; 
+  }
 
+  .progress-bar {
+    height: 15px; 
+  }
+
+  .input-group {
+    margin-top: 15px;
+  }
+
+  .form-control {
+    font-size: 14px;
+  }
+
+  .btn-primary, .btn-danger {
+    font-size: 14px; 
+    padding: 10px 20px; 
+  }
+
+  .modal-content {
+    padding: 10px;
+  }
+}
+
+@media (max-width: 480px) {
+  .travel-checklist {
+    padding: 15px;
+    margin: 10px;
+  }
+
+  .progress-bar {
+    height: 12px;
+  }
+
+  .form-control {
+    font-size: 12px;
+  }
+
+  .btn-primary, .btn-danger {
+    font-size: 12px;
+    padding: 8px 16px;
+  }
+}
