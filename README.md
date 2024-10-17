@@ -46,7 +46,7 @@ Mappa interattiva: Leaflet (per visualizzare la mappa dell'itinerario)
 
 🖼️ Screenshot
 
-<img width="1470" alt="Screenshot 2024-10-09 alle 17 09 41" src="https://github.com/user-attachments/assets/12947441-1dfd-4d42-ad9c-8689aec1c49e">
+<img width="1468" alt="Screenshot 2024-10-14 alle 19 42 51" src="https://github.com/user-attachments/assets/5c62bee5-8e55-4da4-b4a5-d40744bd9a16">
 <img width="1470" alt="Screenshot 2024-10-09 alle 17 11 06" src="https://github.com/user-attachments/assets/a7983d79-fa82-467f-98f6-4d25bda875c3">
 
 	
