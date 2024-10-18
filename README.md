@@ -39,7 +39,7 @@ Archiviazione immagini: Cloudinary (per il caricamento e la gestione delle immag
 
 Autenticazione: JSON Web Tokens (JWT)
 
-Notifiche in tempo reale: WebSocket
+Notifiche in tempo reale: Socket.IO
 
 Mappa interattiva: Leaflet (per visualizzare la mappa dell'itinerario)
 
